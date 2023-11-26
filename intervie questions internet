@@ -1,0 +1,335 @@
+1)C code for adding and deleting nodes in a linked list. Modify the same for circular linked list
+
+2)Differences between arrays and Linked Lists and point out their advantages and disadvantages
+
+3)There is a mod 60 hardware counter. It generates a overflow interrupt. I can access the count value register of the counter. Write a program to show the time in Hour Minute and Seconds to user.
+
+4)Write a program to find out the number of digits in decimal representation of a user input no.
+
+5)Let's suppose Modulus operation (%) is not supported by a system. Write a program to implement modulus operation
+
+6) Write a program to print a no in reverse in decimal format
+
+7)  Reverse a string without using a temporary variable for swapping
+
+8) Demonstrate the use of function pointers
+
+9) Write a program to toggle an arbitrary bit of a number. Don't modify other bits
+
+
+Count no of set bits in a 32 bit number. Modify the prog so that the loop can't run more than no of set bits in that no.
+
+Find repeated characters in a string
+
+Memory organisation in C
+
+How Malloc() allocates memory from heap internally
+
+How a task is preemptied when a interrupt comes. Where the status etc. of the task is stored.
+
+What are the different task queuing types in RTOS
+
+Interrupt handling in RTOS. How it is divided into Top half and Bottom half. What is the advantage
+
+What is use of Volatile variable in C.
+
+What is priority inversion in OS, how it happens. How to avoid it.
+
+Static and extern type of variable in C. Where are they allocated. Scope and lifetime. Can we use them in another C file?
+
+sizeof(int), sizeof(int*), sizeof(int**), Write your own sizeof() function
+
+
+How much memory is actually allocated in malloc(0). Why it is non-zero. Why Malloc allocates more memory than asked for?
+
+
+Which one will behave how in which OS, which one crashes faster. Why?
+while(1)
+int *p = (int*)malloc(10);
+
+while(1){
+int *p = (int*)malloc(10);
+memset(p, 1, 10);
+}
+
+
+WLAN frame exchange basics: How an AP associates with an STA
+
+
+https://www.geeksforgeeks.org/qualcomm-interview-experience-off-campus/
+
+https://www.geeksforgeeks.org/qualcomm-interview-experience-for-fresher-off-campus-2021/
+
+
+FAQs
+Here are some of the commonly asked questions in the Qualcomm interview-
+
+Write a program to Delete a node , given only a pointer to the node in a Circular linked list
+What is caching? What are the different types of available Cache schemes?
+Given a set of ‘a’ white balls and ‘b’ black balls, what is the probability of drawing a white ball on your kth draw? (Draw balls without replacement)
+Draw CMOS based ckt of various logic gates
+What is Latency and Throughput?
+What is pipe-lining in processor
+
+
+
+Aptitude topics
+Time, speed and distance, ratio and proportion, percentages, profit and loss, seating arrangement, number series, puzzles, etc.
+
+
+/* There were 13 questions from C and 2 questions from Logical section that were very simple*/
+
+Q1) Write a program to display Xth bit of a given number.
+
+Q2) What does in *p++ increment?
+
+Q3) What is the difference between char a[]="string" and char *a="string" ?
+
+Q4) What is the output?
+
+main()
+{
+printf("%x",-1<<4);
+}
+
+Q5) What is the difference between array of pointers and pointer to an array ? Explain with example.
+
+Q6) What is the output ?
+
+main()
+{
+int a, b, c, abc=0;
+a = b = c = 40;
+
+if(c) {
+int abc;
+abc = a+b*c;
+}
+printf("c=%d, abc=%d",c,abc);
+}
+
+Q7) What is the output?
+
+main()
+{
+int i=5;
+
+i = i++ +i ++i;
+
+printf("%d",i);
+
+}
+
+Q8) Declare a function pointer and explain with an example using it.
+
+Q9) What is the output?
+
+#define ABC 20
+#define XYZ 10
+#define XXX ABC+XYZ
+
+main()
+{
+int a;
+
+a = XXX * 10;
+
+printf("%d",a);
+
+}
+
+Q10)Write a data structure and print all its elements values implementing a function pointer.
+
+Q11)Write a program to delete a given node from a single link list.
+
+Q12)Write a program to reverse a string.
+
+Q13)What will be the output?
+main()
+{
+char a[]="1234567890";
+char p;
+
+p = (a+1)[5];
+printf("%d",p);
+}
+
+Q14)Logical section question on a simple tricky diagram
+
+Q15)Two numbers add to 110. One number is 150% than the other. What are the two numbers?
+
+Q4) How will you proceed if the kernel source code that you downloaded does not support your board? What are the steps you will take?
+
+Q5) Write all the directories in linux that will be visible to you on your system and the directories of your kernel source code that you have downloaded. Differentiate between both. (Here he asked me whether I am sure of my answers that I wrote wherein I was too confused )
+
+Q6) What is procfs ? What is the importance of procfs? Why it has got that name?
+
+Q7) What is sysfs ?
+
+Q8) What does /dev contain?
+
+Q9) How do you create node for a block device?
+
+Q10)How do you automatically get major number without using udev ? (He asked bcoz I answered udev will automatically update. He wants me to answer by not using udev functions)
+
+Q11)Can the same number be used for creating nodes for both char and block devices?
+
+Q12)Draw the block diagram for a char device driver implementation? (I explained about char device driver by writing all steps. He then asked me further questions )
+
+Q13)Where file_operations have been used in registration? ( I answered cdev_init(my_cdev,&my_fops) and wrote all steps)
+
+Q14)What happens if you pass major number as 0 in register_chrdev_region()?
+
+Q15)Can you make your low-level driver directly interact with application without using core layer ? Is core layer mandatory? ( He asked me this question because I drew the block diagram for keyboard low-level driver with core layer and HLD)
+
+Q16)You have registered your file_operations with VFS layer. What about ISR routine and how will you register ?
+
+Q17)How your driver initialization will take place? What is the entry point for a driver?
+(I answered abt init and exit routines and drivers, modules and kernel service routines do not have pids. So they are invoked in process contexts. He then asked again questions)
+
+Q18)What is a PCB?
+
+Q19)What is a Stack section?
+
+Q20)How will be variables allocated in memory? How will you access heap?
+
+Q21)How many types of interrupts are there?
+(I answered software and hardware. I also said abt Bottom halves)
+
+Q22)What is the difference betw. various BHs and where do you apply?
+
+Q23)Is there any precaution for softirqs running simultaneously? Why and how do you solve?
+(I answered: applying synchronization techniques for shared access)
+
+Q24)Difference betw. various synchronization techinques and when do you need?
+
+Q25)Why semaphores are not used for ISRs?
+
+Q26)How do you implement threads?
+
+Q27)What is the basic difference betw. multiple processes and multiple child processes?
+
+Q28)Did you write any applications? ( I said no.)
+
+Q29)Write a small application to read 4 bytes and write 4 bytes for my device /dev/ttyS0.
+(As it was very simple. I wrote it and he then stopped as if he were satisied by my answers. A Very long interview!)
+
+Q4) How would you allocate memory in kernel?
+
+Q5) Write a data structure with integer and character as its elements.
+
+Q6) What is the size of this data structure? (I answered about structure padding as he was expecting the same answer from me)
+
+Q7) Allocate memory in heap by using the above data structure. How will you allocate then in stack?
+
+Q8) Initialize the above data structure. Implement a function by using which print the values of the data structure elements.
+
+Q9) Asked me to correct some logic about deleting a given node in linked list.
+
+Q10)Asked some personal questions and some discussion went on package
+
+MOST DIFFICULT QUESTION:
+Comparison of the source code with the current kernel running on my system
+
+
+
+Questions:
+- PCI device driver
+- How a driver is selected to drive a device.
+- How probing happens for any new device.
+- Memory cache
+- DMA Memory(Coherent and Stream)
+- Interrupt(softirq, tasklet and workque)
+- Synchronization Primitives(spinlock, mutex)
+- Producer and Consumer problem
+- Asked to synchronize a circular buffer.
+- MMU and IOMMU, etc.
+- Few questions on single linked list.
+
+
+
+How many interrupt lines you have been used in your driver development.
+UART : 1 (RX)
+Ethernet: 2 (RX & TX)
+I2C : what is I2C Clock Stretch, Bus line clear.
+
+How do u debug when an process aborted.
+
+How many Exceptions are there in ARM.
+
+what are the methods or functions to raise execute the interrupt process when interrupt occurs.
+
+
+C-Questions
+1) Find the size of a structure with out size of operator.
+struct  XYZ{
+    int x;
+    float y;
+    char z;
+};
+
+int main(){
+    struct XYZ arr[2];
+    int sz = (char*)&arr[1] - (char*)&arr[0];
+    printf("%d",sz);
+    return 0;
+}
+
+OS
+2) what is the output of the below program
+    Function(void)
+   {
+     fork(); fork(); fork();
+    printf("Hello world");
+   }
+ans: Hello world will be printed for 8 times.
+
+L&T Interview Questions:
+
+1) Timer Interrupts and related drivers.
+2) How to delete similar nodes from a linked list, not by traversing every node.
+3) ARM Internal Architecture.
+4) Power Management Techniques - Experience.
+5) Explain me any driver you worked on.
+6) Interrupt based driver.
+7) Advantages and disadvantages of Polling & Interrupt drivers.
+8) Android Frame work.
+9) What are the different modes in ARM.
+10) How a interrupt will be handled  in Linux.
+11) What is the difference between IRQ & FIQ.
+
+1.how the synchronisation works in single processor system(spinlock_irq_save).
+2.how external devices access the physical address.
+3.can we access the variable in all the functions below
+
+func1()
+func2()
+static int a;
+func3()
+func4()
+
+
+func1()
+func2()
+int a;
+func3()
+func4()
+
+4.why stack is always in higher location.
+5. what is the difference between global and static
+6. have u debug any issues using jtag/ any other debugger.
+if yes, how can we get the call stack in the debugger.
+
+
+https://www.tutorialsdaddy.com/courses/linux-device-driver-and-linux-kernel-interview-question/lessons/linux-device-driver-interview-questions/
+
+In a multiprocessor system, how will the L1/L2 caches (non-shared) know about the consistency of the shared data? (I was given a scenario which meant this.)
+
+How do you check if 2 buffers overlap?
+
+
+write a 32byte aligned mem alloc
+
+
+
+

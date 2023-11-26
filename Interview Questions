@@ -1,0 +1,285 @@
+								Write C code to all the programs
+
+Given an array A of N positive numbers. The task is to find the position where equilibrium first occurs in the array. Equilibrium position in an array is a position such that the sum of elements before it is equal to the sum of elements after it.
+Input:
+2
+1
+1
+5
+1 3 5 2 2
+
+Output:
+1
+3
+
+
+Given an array arr[] and a number K where K is smaller than size of array, the task is to find the Kth smallest element in the given array. It is given that all array elements are distinct.
+Input:
+2
+6
+7 10 4 3 20 15
+3
+5
+7 10 4 20 15
+4
+Output:
+7
+15
+
+
+Given two sorted arrays arr1[] and arr2[] in non-decreasing order with size n and m. The task is to merge the two sorted arrays into one sorted array (in non-decreasing order).
+Input: arr1[] = {10};
+       arr2[] = {2, 3};
+Output: arr1[] = {2}
+        arr2[] = {3, 10}  
+
+Input: arr1[] = {1, 5, 9, 10, 15, 20};
+       arr2[] = {2, 3, 8, 13};
+Output: arr1[] = {1, 2, 3, 5, 8, 9}
+        arr2[] = {10, 13, 15, 20} 
+
+
+
+Given a string S. The task is to print all permutations of a given string.
+Input:
+2
+ABC
+ABSG
+
+Output:
+ABC ACB BAC BCA CAB CBA 
+ABGS ABSG AGBS AGSB ASBG ASGB BAGS BASG BGAS BGSA BSAG BSGA GABS GASB GBAS GBSA GSAB GSBA SABG SAGB SBAG SBGA SGAB SGBA
+
+
+
+Given a string S, find length of the longest substring with all distinct characters.  For example, for input "abca", the output is 3 as "abc" is the longest substring with all distinct characters.
+
+Your task  is to implement the function atoi. The function takes a string(str) as argument and converts it to an integer and returns it. 
+
+Check if a string can be obtained by rotating another string 2 places
+     Input: string1 = “amazon”, string2 = “azonam”
+    Output: Yes
+    // rotated anti-clockwise
+
+    Input: string1 = “amazon”, string2 = “onamaz”
+    Output: Yes
+    // rotated clockwise
+
+Given an string in roman no format (s)  your task is to convert it to integer .
+Example:
+Input
+2
+V
+III 
+Output
+5
+3
+
+Given a singly linked list of size N. The task is to rotate the linked list counter-clockwise by k nodes, where k is a given positive integer smaller than or equal to length of the linked list. 
+Input:
+N = 8
+value[] = {1,2,3,4,5,6,7,8}
+k = 4
+Output: 5 6 7 8 1 2 3 4
+
+
+Given two singly linked lists of size N and M, write a program to get the point where two linked lists intersect each other.
+LinkList1 = {10,20,5,10}
+LinkList2 = {30,40,50,5,10}
+Output: 5
+
+
+Detect and Remove Loop in a Linked List
+Write a function detectAndRemoveLoop() that checks whether a given Linked List contains loop and if loop is present then removes the loop and returns true. If the list doesn’t contain loop then it returns false. Below diagram shows a linked list with a loop. detectAndRemoveLoop() must change the below list to 1->2->3->4->5->NULL.
+
+You are given a pointer/ reference to the node which is to be deleted from the linked list of N nodes. The task is to delete the node. Pointer/ reference to head node is not given. 
+Note: No head reference is given to you.
+
+
+Implement Queue using Linked List 
+
+Queue using two Stacks
+
+
+Stack using two queues 
+
+Suppose there is a circle. There are N petrol pumps on that circle. You will be given two sets of data.
+1. The amount of petrol that every petrol pump has.
+2. Distance from that petrol pump to the next petrol pump.
+Find a starting point where the truck can start to get through the complete circle without exhausting its petrol in between.
+Note :  Assume for 1 litre petrol, the truck can go 1 unit of distance.
+Input:
+N = 4
+Petrol = 4 6 7 4
+Distance = 6 5 3 5
+Output: 1
+Explanation: There are 4 petrol pumps with
+amount of petrol and distance to next
+petrol pump value pairs as {4, 6}, {6, 5},
+{7, 3} and {4, 5}. The first point from
+where truck can make a circular tour is
+2nd petrol pump. Output in this case is 1
+(index of 2nd petrol pump). 
+
+
+Given a matrix of dimension r*c where each cell in the matrix can have values 0, 1 or 2 which has the following meaning:
+0 : Empty cell
+1 : Cells have fresh oranges
+2 : Cells have rotten oranges
+
+So, we have to determine what is the minimum time required to rot all oranges. A rotten orange at index [i,j] can rot other fresh orange at indexes [i-1,j], [i+1,j], [i,j-1], [i,j+1] (up, down, left and right) in unit time. If it is impossible to rot every orange then simply return -1.
+
+Input:
+The first line of input contains an integer T denoting the number of test cases. Each test case contains two integers r and c, where r is the number of rows and c is the number of columns in the array a[]. Next line contains space separated r*c elements each in the array a[].
+
+Output:
+Print an integer which denotes the minimum time taken to rot all the oranges (-1 if it is impossible)
+
+You are given N elements and your task is to Implement a Stack in which you can get minimum element in O(1) time.
+Input:
+push(2)
+push(3)
+pop()
+getMin()
+push(1)
+getMin()
+Output: 3 2 1
+Explanation: In the first test case for
+query 
+push(2)  the stack will be {2}
+push(3)  the stack will be {2 3}
+pop()    poped element will be 3 the
+         stack will be {2}
+getMin() min element will be 2 
+push(1)  the stack will be {2 1}
+getMin() min element will be 1
+
+Given two binary trees, the task is to find if both of them are identical or not.  
+Input:
+     1          1
+   /   \      /   \
+  2     3    2     3
+Output: Yes
+Explanation: There are two trees both
+having 3 nodes and 2 edges, both trees
+are identical having the root as 1,
+left child of 1 is 2 and right child
+of 1 is 3.
+
+Given a binary tree, find its height.
+Input:
+      1
+    /  \
+   2    3
+Output: 2
+Input:
+  2
+   \
+    1
+   /
+ 3
+
+
+
+Given a Binary Search Tree (with all values unique) and two node values. Find the Lowest Common Ancestors of the two nodes in the BST.
+Input:
+              5
+           /    \
+         4       6
+        /         \
+       3           7
+                    \
+                     8
+n1 = 7, n2 = 8
+Output: 7
+
+
+Given a binary tree, find if it is height balanced or not. 
+A tree is height balanced if difference between heights of left and right subtrees is not more than one for all nodes of tree. 
+
+A height balanced tree
+        1
+     /     \
+   10      39
+  /
+5
+
+An unbalanced tree
+        1
+     /    
+   10   
+  /
+5
+
+Example 1:
+Input:
+      1
+    /
+   2
+    \
+     3 
+Output: 0
+Explanation: The max difference in height
+of left subtree and right subtree is 2,
+which is greater than 1. Hence unbalanced
+
+
+Given a Binary Tree of size N , You have to count leaves in it. For example, there are two leaves in following tree
+
+        1
+     /      \
+   10      39
+  /
+5
+
+
+
+Given a string S with repeated characters (only lowercase). The task is to rearrange characters in a string such that no two adjacent characters are same.
+
+Note : It may be assumed that the string has only lowercase English alphabets.
+
+Input:
+The first line of input contains an integer T denoting the number of test cases. Then T test cases follow. Each test case contains a single line containing a string of lowercase english alphabets.
+
+Output:
+For each test case in a new line print "1" (without quotes) if the generated string doesn't contains any same adjacent characters, else if no such string is possible to be made print "0" (without quotes).
+
+Constraints:
+1 <= T <= 100
+1 <= length of string <= 104
+
+Example:
+Input:
+3
+geeksforgeeks
+bbbabaaacd
+bbbbb
+
+Output:
+1
+1
+0
+
+
+You are given an empty Binary Min Heap and some queries and your task is to implement the three methods insertKey,  deleteKey,  and extractMin on the Binary Min Heap
+Input:
+Q = 7
+Queries:
+insertKey(4)
+insertKey(2)
+extractMin()
+insertKey(6)
+deleteKey(0)
+extractMin()
+extractMin()
+Output: 2 6 - 1
+
+
+
+
+PS if any doubt ask me 
+
+//////////////////////////////////DO IT TILL HERE THEN I WILL GIVE FURTHER QUESTIONS LIKE RECURSSION ETC
+
+
+

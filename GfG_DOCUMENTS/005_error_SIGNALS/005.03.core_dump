@@ -1,0 +1,100 @@
+https://wiki.archlinux.org/index.php/Core_dump
+
+
+A core dump is a file containing a process's address space (memory) when the process terminates unexpectedly. Core dumps may be produced on-demand (such as by a debugger), or automatically upon termination. Core dumps are triggered by the kernel in response to program crashes, and may be passed to a helper program (such as systemd-coredump) for further processing. A core dump is not typically used by an average user, but may be passed on to developers upon request where it can be invaluable as a post-mortem snapshot of the program's state at the time of the crash, especially if the fault is hard to reliably reproduce
+
+You may use the coredumpctl command to list core dumps. 
+The core dump is written in the current directory of the process at the time of the crash.
+
+Of course core dumps need to be enabled, by default those are usually disabled. Check the output of ulimit -c, if that's 0 then no core file will be written. 
+Run ulimit -c unlimited to enable core dumps; this is a per-process setting which is inherited by processes started by that process.
+
+If a core dump should have been generated but you don't know where, then you could start the process again (if it will without crashing immediately), then check its working directory by doing ls -l /proc/$pid/cwd where $pid is the process ID of the process. That link will point to the current working directory of that process. Chances are the core dump will be there. Otherwise you need to run find on the entire system...
+
+Systems using systemd are usually configured to dump cores to
+
+/var/lib/systemd/coredump/
+You may use the coredumpctl command to list core dumps.
+
+systemd writes coredumps to the journal. coredumpctl list lists the missing coredumps.
+
+The files are stored in /var/lib/systemd/coredump. Use coredumpctl dump to get access to the core files.
+
+For instance, if the PID was 10666, you can use
+
+coredumpctl dump 10666 --output /tmp/core.10666
+Not related to systemd, but if it is still not working, make sure that the coredump limit is turned off:
+
+# ulimit -c unlimited
+Also verify that you can write to the working directory.
+
+
+Enable core dump file
+You can check whether core dump files are enabled with the following command:
+
+ulimit -c
+By default core dump files are disabled, in which case this command will return 0. To enable core dump files, use the following command:
+
+ulimit -c unlimited
+The unlimited argument refers to the core dump file size. By effectively removing a file size limit, we prevent the file from being truncated and from losing out on any useful information.
+
+Degugging core file
+To debug core file, for example: core file's name is "core.httpd.31999", use the following command:
+
+gdb /*path to httpd*/httpd core.httpd.31999
+
+To display the program stack, input "bt" or "where", you may see program stack like follows:
+
+At last input "q" to exit from GDB.
+
+Further more, a core dump file's default name is "core". The core dump file is generally found in the location defined by the core_pattern file, which can be viewed with the following command:
+
+cat /proc/sys/kernel/core_pattern
+To change the name as "core.filename.pid" and location as "/data/coredump", you can use the followint command:
+
+echo “/data/coredump/core.%e.%p”> /proc/sys/kernel/core_pattern
+ps: To execute this command, current login-user must has root privileges
+
+The /proc/sys/kernel/core_pattern file (since Linux 2.6 and 2.4.21) can be set to define a template that is used to name core dump files. The template can contain % specifiers which are substituted by the following values when a core file is created:
+
+%%: a single % character
+%p: PID of dumped process
+%u: (numeric) real UID of dumped process
+%g: (numeric) real GID of dumped process
+%s: number of signal causing dump
+%t: time of dump, expressed as seconds since the Epoch, 1970-01-01 00:00:00 +0000 (UTC)
+%h: hostname (same as nodename returned by uname(2))
+%e: executable filename (without path prefix)
+%E: pathname of executable, with slashes ('/') replaced by exclamation marks ('!').
+%c: core file size soft resource limit of crashing process (since Linux 2.6.24)
+
+Reasons for Not Getting a Core File
+The following list explains the major reasons that a core file might not be generated. This list pertains to both Oracle Solaris and Linux operating systems, unless specified otherwise.
+
+The current user does not have permission to write in the current working directory of the process.
+
+The current user has write permission on the current working directory, but there is already a file named core that has read-only permission.
+
+The current directory does not have enough space or there is no space left.
+
+The current directory has a subdirectory named core.
+
+The current working directory is remote. It might be mapped by NFS (Network File System), and NFS failed just at the time the core dump was about to be created.
+
+Oracle Solaris operating system only: The coreadm tool has been used to configure the directory and name of the core file, but any of the above reasons apply for the configured directory or filename.
+
+The core file size limit is too low. Check your core file limit using the ulimit -c command (Bash shell) or the limit -c command (C shell). If the output from this command is not unlimited, the core dump file size might not be large enough. If this is the case, you will get truncated core dumps or no core dump at all. In addition, ensure that any scripts that are used to launch the VM or your application do not disable core dump creation.
+
+The process is running a setuid program and therefore the operating system will not dump core unless it is configured explicitly.
+
+Java specific: If the process received SIGSEGV or SIGILL but no core dump, it is possible that the process handled it. For example, HotSpot VM uses the SIGSEGV signal for legitimate purposes, such as throwing NullPointerException, deoptimization, and so forth. The signal is unhandled by the Java VM only if the current instruction (PC) falls outside Java VM generated code. These are the only cases in which HotSpot dumps core.
+
+Java specific: The JNI Invocation API was used to create the VM. The standard Java launcher was not used. The custom Java launcher program handled the signal by just consuming it and produced the log entry silently. This situation has occurred with certain Application Servers and Web Servers. These Java VM embedding programs transparently attempt to restart (fail over) the system after an abnormal termination. In this case, the fact that a core dump is not produced is a feature and not a bug.
+
+
+
+
+
+
+
+

@@ -1,0 +1,114 @@
+
+
+
+
+
+
+
+#include<stdio.h> 
+
+int main() 
+{ 
+	int a = 10, b = 5, sum; 
+	while(b > 0) 
+	{ 
+		a++; 
+		b--; 
+	} 
+	printf("Sum = %d",a); 
+	return 0; 
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+To find sum of two numbers without using any operator
+Write a program to find sum of positive integers without using any operator. Only use of printf() is allowed. No other library function can be used.
+Solution
+It’s a trick question. We can use printf() to find sum of two numbers as printf() returns the number of characters printed. The width field in printf() can be used to find the sum of two numbers. We can use ‘*’ which indicates the minimum width of output. For example, in the statement “printf(“%*d”, width, num);”, the specified ‘width’ is substituted in place of *, and ‘num’ is printed within the minimum width specified. If number of digits in ‘num’ is smaller than the specified ‘width’, the output is padded with blank spaces. If number of digits are more, the output is printed as it is (not truncated). In the following program, add() returns sum of x and y. It prints 2 spaces within the width specified using x and y. So total characters printed is equal to sum of x and y. That is why add() returns x+y.
+
+
+#include<stdio.h> 
+  
+int add(int x, int y) 
+{ 
+    return printf("%*c%*c", x, ' ', y, ' '); 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    printf("Sum = %d", add(3, 4)); 
+    return 0; 
+} 
+Output:
+
+       Sum = 7
+
+
+
+The output is seven spaces followed by “Sum = 7”. We can avoid the leading spaces by using carriage return. Thanks to krazyCoder and Sandeep for suggesting this. The following program prints output without any leading spaces.
+
+#include<stdio.h> 
+  
+int add(int x, int y) 
+{ 
+    return printf("%*c%*c", x, '\r', y, '\r'); 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    printf("Sum = %d", add(3, 4)); 
+    return 0; 
+} 
+Output:
+
+      Sum = 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

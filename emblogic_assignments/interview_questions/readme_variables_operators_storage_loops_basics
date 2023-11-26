@@ -1,0 +1,2337 @@
+
+
+=================================================================
+
+External Names:
+
+"External" names are ones that are visible to other compilation units, like non-static functions and variables declared with the "extern" keyword. These names have to be exposed to linkers and loaders. In Ye Olden Days, some linkers and loaders could only handle very short names.
+
+Internal Names:
+
+"Internal" names are ones that are not made visible outside of the module being compiled -- basically anything with "static" scope, or anything local to a function. C compilers have to handle these names, but not anything else.
+
+"Internal names" are names of identifiers within a function (effectively local variable names).
+
+"External names" would be the names of the other identifiers, including the names of functions and any identifiers declared at global scope or declared with storage class extern.
+
+Basically, anything that needs to be "externally visible" is only guaranteed to have 6 (non case sensitive) unique characters, which is extremely limiting.
+
+In practice, this is no longer an issue. C99 increased these limits, and most modern compilers do away or significantly increase these limits.
+
+
+An external name is an identifier with external linkage. For an identifier to have external linkage it must either be a non-static of file scope or specifically declared "extern".
+
+
+
+
+=================================================================
+
+5. Why do variable names beginning with the underscore is not encouraged?
+a) It is not standardized
+b) To avoid conflicts since assemblers and loaders use such names
+c) To avoid conflicts since library routines use such names
+d) To avoid conflicts with environment variables of an operating system
+
+Answer: c
+
+=================================================================
+the keywords are all lowercase. Since uppercase and lowercase characters are not equivalent, 
+
+neither upper case nor camel case....only lower case
+
+=================================================================
+
+compiler and linker resolve the characters uniqueness 
+
+
+================================================================
+
+varible name starting with '$' are not allowed
+or they cant have special variable hypen -, question mark ?
+only with underscore_.
+
+=================================================================
+
+macro preprocessor is a textual substitution
+not a variable.
+
+
+=================================================================
+
+int main;
+
+u can have a variable name and function same.
+
+=================================================================
+
+int i=5;
+
+if((char)i=='5')
+	it will run
+
+=================================================================
+
+
+short int i;
+
+short is the qualifier and int is the basic data type
+
+=================================================================
+int f=0.1;
+
+if(f==0.1)
+
+//it will be unequal
+//because 0.1 is double by default
+
+int f=0.1f;
+if(f==0.1);
+//yes its equal
+//because u told it to make float
+
+Binary floating point math is like this. In most programming languages, it is based on the IEEE 754 standard. The crux of the problem is that numbers are represented in this format as a whole number times a power of two; rational numbers (such as 0.1, which is 1/10) whose denominator is not a power of two cannot be exactly represented.
+
+For 0.1 in the standard binary64 format, the representation can be written exactly as
+
+0.1000000000000000055511151231257827021181583404541015625 in decimal, or
+0x1.999999999999ap-4 in C99 hexfloat notation.
+In contrast, the rational number 0.1, which is 1/10, can be written exactly as
+
+0.1 in decimal, or
+0x1.99999999999999...p-4 in an analogue of C99 hexfloat notation, where the ... represents an unending sequence of 9's.
+The constants 0.2 and 0.3 in your program will also be approximations to their true values. It happens that the closest double to 0.2 is larger than the rational number 0.2 but that the closest double to 0.3 is smaller than the rational number 0.3. The sum of 0.1 and 0.2 winds up being larger than the rational number 0.3 and hence disagreeing with the constant in your code
+
+
+#include<stdio.h> 
+int main() 
+{ 
+   float x = 0.1; 
+   printf("%d %d %d", sizeof(x), sizeof(0.1), sizeof(0.1f)); 
+   return 0; 
+} 
+The output of above program is "4 8 4" on a typical C compiler.
+It actually prints size of float, size of double and size of float
+
+
+=================================================================
+
+char<int<double, size of variable in any system
+
+=================================================================
+int main()
+{
+printf("hi its me %s","shivam rawat \n%san Engineer","i love my work");
+}
+
+//it works but gives warning : too many arguments
+here the second argument will go into first %s, but the thrd argument will be ignored ; output:
+
+
+hi its me shivam rawat                                                
+%san Engineer
+
+
+=================================================================
+
+char *s="hellobye";
+ printf("%s\n",s);
+ printf("%d\n",strlen(s));
+ printf("%d\n",sizeof(s));
+
+//output:
+
+
+hellobye                                                                        
+8                                                                               
+8 
+
+
+=================================================================
+
+
+char *s="hello\n\n\0bye";
+ printf("%s\n",s);
+ printf("%d\n",strlen(s));
+ printf("%d\n",sizeof(s));
+
+//output:
+
+hello                                                                           
+                                                                                
+                                                                                
+7                                                                               
+8 
+
+//remember strlen returns ' size_t ' ( long unsigned int)
+// sizeof returns ' long unsigned  int'
+
+
+
+//the \0 is accepted as a char in the string,
+=================================================================
+
+
+#define a 10
+
+int main(){
+const int a = 5;
+printf("a=%d",a);
+
+
+main.c: In function ‘main’:
+main.c:10:11: error: expected identifier or ‘(’ before numeric constant
+ #define a 10
+           ^
+main.c:14:12: note: in expansion of macro ‘a’
+  const int a = 5;
+            ^
+
+
+=================================================================
+
+int v=010;
+printf("%d",v);
+
+output: 8
+
+it is the octal(0-7) representation for 8
+
+
+=================================================================
+
+#include<stdio.h> 
+enum week{Mon, Tue, Wed, Thur, Fri, Sat, Sun}; 
+int main() 
+{ 
+    enum week day; 
+    day = Wed; 
+    printf("%d",day); 
+    return 0; 
+}  
+Output: 2
+
+
+#include<stdio.h> 
+enum year{Jan, Feb, Mar, Apr, May, Jun, Jul,  
+          Aug, Sep, Oct, Nov, Dec}; 
+int main() 
+{ 
+   int i; 
+   for (i=Jan; i<=Dec; i++)       
+      printf("%d ", i); 
+        
+   return 0; 
+} 
+Output:
+0 1 2 3 4 5 6 7 8 9 10 11
+
+
+
+
+
+=================================================================
+
+#include <stdio.h> 
+#include<string.h>
+
+int main()
+{
+  char *str="x";
+  char c='x';
+  char ary[1];
+  ary[0]=c;
+  
+  printf("%d %d -- %d",strlen(str),strlen(ary), ary[0]);
+  
+    return 0;
+}
+//output : 1 5 -- 120
+
+
+
+here  5 is undefined behaviour 
+
+
+
+
+
+=================================================================
+
+#include <stdio.h> 
+#include<string.h>
+
+int main()
+{
+    
+  char str[]="x";
+  char c='x';
+  char ary[1];
+  ary[0]=c;
+  
+  printf("%d %d -- %d",sizeof(str),sizeof(ary), ary[0]);
+  
+    return 0;
+}
+
+//output: 2 1 -- 120  
+
+
+=================================================================
+
+
+[3:18 pm, 27/08/2020] ShivamRawat🙂 😊 😇: When are enum values resolved? In other words, is the following code snippet standard-compliant?
+
+enum{
+    A,
+    B,
+    MAX
+}
+
+#if MAX > 42
+#    error "Woah! MAX is a lot!"
+#endif
+[3:19 pm, 27/08/2020] ShivamRawat 🙂 😊 😇: .
+
+solution
+Whenever the preprocessor is handling a conditional directive, any identifiers that are not defined as macros are treated as 0. So assuming that MAX isn't defined elsewhere as a macro, your snippet of code is equivalent to:
+
+enum{
+    A,
+    B,
+    MAX
+}
+
+#if 0 > 42
+#    error "Woah! MAX is a lot!"
+#endif
+
+
+. 
+
+
+
+=================================================================
+
+    printf("hello\rbye");
+//output: byelo                                                                          
+carriage return moves the cursor back to start
+=================================================================
+
+printf("hell\noooo\rbye");
+hell                                                              byeo 
+
+
+
+=================================================================
+
+
+printf("hell\r\noooobye");
+
+hell                                     
+oooobye
+
+
+=================================================================
+
+constant variable has to be declared and defined at the same time 
+
+//it is wrong
+const int i;
+i=4;
+
+
+main.c: In function ‘main’:
+main.c:9:6: error: assignment of read-only variable ‘p’
+     p=4;
+
+=================================================================
+
+int k=3;
+int *const p=&k;
+int i=9;
+p=&i; //error
+
+is a constant pointer u cant assign it new address.
+
+=================================================================
+
+void func( const int *i)
+{
+*i=90;
+}
+
+int main()
+{
+    const  int  i=10;;
+    func(&i);
+    printf("%d",i);
+    return 0;
+}
+main.c: In function ‘func’:
+main.c:7:3: error: assignment of read-only location ‘*i’
+ *i=90;
+   ^
+
+=================================================================
+
+
+
+void func( int *i)
+{
+*i=90;
+}
+
+int main()
+{
+    const  int  i=10;;
+    func(&i);
+    printf("%d",i);
+    return 0;
+}
+
+
+main.c:13:10: warning: passing argument 1 of ‘func’ discards ‘const’ qualifier f
+rom pointer target type [-Wdiscarded-qualifiers]                                
+main.c:5:6: note: expected ‘int *’ but argument is of type ‘const int *’        
+
+//output:90 
+it changed
+
+=================================================================
+int main()
+{
+    const  int  i=10;;
+    
+    int *const ptr=&i;
+    *ptr=99;
+    printf("%d\n",i);
+    return 0;
+}
+
+main.c:10:20: warning: initialization discards ‘const’ qualifier from pointer ta
+rget type [-Wdiscarded-qualifiers]                                              
+
+output:99 
+
+=================================================================
+
+int main()
+{
+    const  int  i=10;;
+    
+    const int * ptr=&i;
+    *ptr=99;
+    printf("%d\n",i);
+    return 0;
+}
+
+main.c: In function ‘main’:
+main.c:11:9: error: assignment of read-only location ‘*ptr’
+     *ptr=99;
+
+
+
+=================================================================
+
+for (int k=0; k<10; k++)
+	return 0;
+
+compiler implementing c90 does not allow this but c99 allow this.
+
+therefore do use -std=c99 or -st=gnu99 to compile your code
+
+=================================================================
+
+
+int main()
+{
+     float str=3e10;
+    printf("%f",str);
+     return 0;
+}
+//output:
+30000001024.000000                                                              
+
+
+
+int main()
+{
+     float str=3e9;
+    printf("%f",str);
+     return 0;
+}
+3000000000.000000                                                               
+
+
+
+int main()
+{
+     unsigned float str=3e9;
+    printf("%f",str);
+     return 0;
+}
+main.c: In function ‘main’:
+main.c:8:15: error: both ‘unsigned’ and ‘float’ in declaration specifiers
+      unsigned float str=3e9;
+               ^~~~~
+main.c:9:14: warning: format ‘%f’ expects argument of type ‘double’, but argument 2 has type ‘unsigned int’ [-Wformat=]
+     printf("%f",str);
+              ^
+
+
+
+
+
+int main()
+{
+     unsigned double str=3e9;
+    printf("%f",str);
+     return 0;
+}
+main.c: In function ‘main’:
+main.c:8:15: error: both ‘unsigned’ and ‘double’ in declaration specifiers
+      unsigned double str=3e9;
+               ^~~~~~
+main.c:9:14: warning: format ‘%f’ expects argument of type ‘double’, but argument 2 has type ‘unsigned int’ [-Wformat=]
+     printf("%f",str);
+
+
+
+=================================================================
+
+char *v="fsfdfffafafafqkf	njfbhbhbfhfhvqdqc";
+
+to print it we can use %s,%d,%c but not the %f
+
+=================================================================
+
+    char[] str="jbdh";
+
+
+main.c: In function ‘main’:
+main.c:8:9: error: expected identifier or ‘(’ before ‘[’ token
+     char[] str="jbdh";
+         ^
+
+=================================================================
+float int i=9; 
+
+main.c: In function ‘main’:
+main.c:8:7: error: two or more data types in declaration specifiers
+ float int i=9;
+       ^~~
+
+
+
+=================================================================
+
+int k=5;
+float k=9;
+
+error of conflicting types
+
+
+=================================================================
+
+int i=-3;
+ int k=i%2;
+ printf("%d",k);
+
+//output:
+-1                                                                              
+
+
+=================================================================
+
+int main()
+{
+ int i=3;
+ int k=i%-2;
+ 
+ int l=i/-2;
+ printf("%d %d",k,l);
+ 
+ return 0;
+}
+
+//output:
+1 -1                                                                            
+
+
+=================================================================
+int main()
+{
+ int i=-3;
+ int k=i%-2;
+ 
+ int l=i/-2;
+ printf("%d %d",k,l);
+ 
+ return 0;
+}
+
+//output:
+-1 1                                                                            
+
+
+
+=================================================================
+
+ int i=7.8%2.8;
+ int i=7%2.8;
+ int i=7.5%7;
+ int i=7.0%7;
+
+
+//all show same error
+main.c: In function ‘main’:
+main.c:8:11: error: invalid operands to binary % (have ‘double’ and ‘double’)
+  int i=7.8%2.8
+
+
+=================================================================
+
+int i=97%'a';
+   printf(" %d",i);
+
+//output:
+0 
+
+
+int i=90%'a';
+   printf(" %d",i);
+
+//output:
+ 90                                                                             
+
+
+int i=100%'a';
+   printf(" %d",i);
+
+//output:
+3
+
+
+int i=200%('a'+'b');
+   printf(" %d",i);
+
+//output:
+5 
+
+=================================================================
+
+int a=3;
+ int b= ++a + a++ + --a;
+printf("b=%d",b);
+
+// un defined behaviour
+
+
+
+=================================================================
+int a=10,b=5,c=5;
+int d;
+d= a==(b+c);
+
+//it ok , d will get initalized with 1
+
+=================================================================
+int x=1,y=0,z=5;
+ int a=x && y|| z++;
+ printf("%d %d %d",x,y,z);
+
+1 0 6                                                                           
+=================================================================
+
+int x=1,y=0,z=5;
+ int a=--x && ++y || z--;
+ printf("%d %d %d",x,y,z);
+
+0 0 4
+
+=================================================================
+  int x=1,y=0,z=5;
+ int a= ++x && y && --z;
+ printf("%d %d %d",x,y,z);
+
+
+2 0 5                                                                           
+=================================================================
+
+ int x=1,y=0,z=3;
+   x>y?printf("%d",z): return z;
+
+
+main.c: In function ‘main’:
+main.c:10:24: error: expected expression before ‘return’
+    x>y?printf("%d",z): return z;
+                        ^~~~~~
+
+
+
+=================================================================
+
+int x=0,y=2,z=3;
+ int a= x&y|z;
+ printf("%d",a);
+
+3 
+
+
+=================================================================
+
+logical operators are sequence points
+
+When a sequence point occurs, it basically means that you are guaranteed that all previous operations are complete.
+
+Changing a variable twice without an intervening sequence point is one example of undefined behaviour.
+
+For example, i = i++; is undefined because there's no sequence point between the two changes to i.
+
+The following are the sequence points described in the standard:
+
+Between the evaluations of the function designator and actual arguments in a function call and the actual call;
+Between the evaluations of the first and second operands of the operators &&, ||, and ,;
+Between the evaluations of the first operand of the conditional ?: operator and whichever of the second and third operands is evaluated;
+The end of a full declarator;
+Between the evaluation of a full expression and the next full expression to be evaluated. The following are full expressions:
+an initializer;
+the expression in an expression statement;
+the controlling expression of a selection statement (if or switch);
+the controlling expression of a while or do statement;
+each of the expressions of a for statement;
+the expression in a return statement.
+Immediately before a library function returns;
+After the actions associated with each formatted input/output function conversion specifier;
+Immediately before and immediately after each call to a comparison function, and also between any call to a comparison function and any movement of the objects passed as arguments to that call.
+
+
+=================================================================
+
+int i=0;
+ i=i++;
+ printf("%d ",i);
+ i=++i;
+ printf("%d ",i);
+
+0 1
+
+=================================================================
+
+int i=0;
+ i+=i++;
+ printf("%d ",i);
+ i=++i;
+ printf("%d ",i);
+
+1 2
+ 
+=================================================================
+
+
+
+
+int i=0;
+ i+=i++;
+ printf("%d ",i);
+ i+=++i;
+ printf("%d ",i);
+
+1 4
+
+//undefinedd behaviour.
+
+=================================================================
+
+int a=10,b=5,c=5;
+ int d;
+ d=b+c == a;
+ printf("%d",d);
+
+
+1
+
+=================================================================
+
+int a=10,b=5,c=3;
+  b != !a;
+  c = !!a;
+printf("%d\t%d",b,c);
+
+
+5	1
+
+
+
+!= is a relational operator. It is just used to check the values of both the operands,there it just checks with b and !a that means it does not change the value of b
+
+And in next ! Is logical operator and it reverse the value of operand i.e if it is true it become false and vice versa here 1st !a makes a false I.e 0 next !a makes it 1 that is c=1
+
+
+=================================================================
+relation operators cant be used in structures
+
+
+=================================================================
+
+#include <stdio.h>
+
+int main()
+{
+        int i=10;
+        int *j=&i;
+
+        printf("%d\n",*j++);
+        //printf("%d\n",*(j++));
+    //both are same first fetch value and then increment the position
+ return 0;
+}
+//output: 10
+
+
+
+ok..   ++post has high precedence  then *  
+but, it is post ...first value will be fectched ...... because of *
+then display 
+then increment
+
+=================================================================
+        int i=10;
+        int *j=&i;
+        int *k=j++;
+
+        int r=j-k;
+        printf("%d",r);
+
+//output: 1
+
+=================================================================
+int a=5,b=-7,c=0,d;
+        d= ++a && ++b || ++c;
+        printf("\n%d %d %d %d",a,b,c,d);
+
+//output: 6 -6 0 1
+
+=================================================================
+
+int a=-5;
+        int k=(a++ ,++a);
+        printf("%d %d",k,a);
+//output: -3 -3
+
+=================================================================
+
+f = 1 1 1 1
+
+since f is the 15 in hex
+
+=================================================================
+
+Decimal Number	4-bit Binary Number	Hexadecimal Number
+0		0000				0
+1		0001				1
+2		0010				2
+3		0011				3
+4		0100				4
+5		0101				5
+6		0110				6
+7		0111				7
+8		1000				8
+9		1001				9
+10		1010				A
+11		1011				B
+12		1100				C
+13		1101				D
+14		1110				E
+15		1111				F
+16		0001 0000			10 (1+0)
+17		0001 0001			11 (1+1)
+
+
+=================================================================
+int k=7;
+        int x = 0 == 1 && k++;
+        printf("%d %d\n",x,k);
+//output:
+0 7
+
+
+
+int k=7;
+        int x = 1 == 1 && k++;
+        printf("%d%d\n",x,k);
+//output: 1 8
+
+
+
+int k=0;
+        int x = 1 == 1 && k || k++;
+        printf("%d%d\n",x,k);
+//output: 0 1
+
+
+=================================================================
+
+char a='a';
+        int x = (a%10)++;
+        printf(" %d\n",x);
+
+
+xyz.c: In function ‘main’:
+xyz.c:6:16: error: lvalue required as increment operand
+  int x = (a%10)++;
+                ^~
+
+
+
+=================================================================
+
+        1<2? return 1: return 2;
+
+xyz.c:5:7: error: expected expression before ‘return’
+  1<2? return 1: return 2;
+       ^~~~~~
+
+=================================================================
+
+unsigned int x= -5;
+        printf("%d",x);
+
+//output: -5
+
+
+unsigned int x= -77;
+        printf("%d",x);
+
+//output: -77
+
+=================================================================
+
+
+int x=2,y=1;
+        x*=x+y;
+        printf("%d",x);
+
+//output: 6
+
+
+
+int x=2,y=1;
+        x=x*x+y;
+        printf("%d",x);
+//output: 5
+
+
+=================================================================
+
+
+int x=2, y=2;
+        x/=x/y;
+        printf("%d\n",x);
+
+//output: 2
+
+=================================================================
+
+
+ int x=1, y=0;
+        x && =y;
+        x ||=y;
+
+
+xyz.c:6:7: error: expected expression before ‘=’ token
+  x && =y;
+       ^
+xyz.c:7:6: error: expected expression before ‘=’ token
+  x ||=y;
+      ^
+
+
+
+=================================================================
+
+int x=10;
+        x %= 23;
+        printf("%d",x);
+
+//output:10
+
+
+
+=================================================================
+
+ #include <stdio.h>
+
+int main()
+{
+        m();
+        printf("%d",x);
+
+}
+
+int x;
+
+void m()
+{
+        x=4;
+}
+
+
+
+
+xyz.c: In function ‘main’:
+xyz.c:5:2: warning: implicit declaration of function ‘m’ [-Wimplicit-function-declaration]
+  m();
+  ^
+xyz.c:6:14: error: ‘x’ undeclared (first use in this function)
+  printf("%d",x);
+              ^
+xyz.c:6:14: note: each undeclared identifier is reported only once for each function it appears in
+xyz.c: At top level:
+xyz.c:12:6: warning: conflicting types for ‘m’
+ void m()
+      ^
+xyz.c:5:2: note: previous implicit declaration of ‘m’ was here
+  m();
+  ^
+
+
+
+=================================================================
+
+
+ #include <stdio.h>
+int x=5;
+void main()
+{
+        int x=3;
+        printf("%d",x);
+        {
+                x=4;
+        }
+        printf("%d",x);
+}
+
+//output: 3 4
+
+
+=================================================================
+
+
+ #include <stdio.h>
+double i;
+void main()
+{
+        printf("%g",i);
+}
+
+//output: 0
+
+it will give only 0 ... not 0.00000
+
+
+
+
+ #include <stdio.h>
+double i=8.9883;
+void main()
+{
+        printf("%g",i);
+}
+//output: 8.9883
+
+
+ #include <stdio.h>
+double i=8.0000;
+void main()
+{
+        printf("%g",i);
+}
+
+//output: 8
+
+only 8...not 8.0000
+=================================================================
+
+#include<stdio.h>
+int i;
+void main()
+{
+        extern int i;
+
+        if(i==0)
+                printf("scoperules\n");
+
+}
+
+//output: scoperules
+
+
+=================================================================
+#include<stdio.h>
+void main()
+{
+        extern int i;
+
+                printf("scoperules\n");
+
+}
+
+//output: scoperules
+
+
+
+=================================================================
+#include<stdio.h>
+void main()
+{
+        extern arr[];
+
+                printf("scoperules\n");
+
+}
+
+//output: scoperules
+
+xyz.c: In function ‘main’:
+xyz.c:6:9: warning: type defaults to ‘int’ in declaration of ‘arr’ [-Wimplicit-int]
+  extern arr[];
+         ^~~
+
+
+
+=================================================================
+#include<stdio.h>
+void main()
+{
+        int i;
+        for(i=0; i<5; i++)
+        {
+                int a=i;
+        }
+        printf(" %d",a);
+
+
+}
+
+xyz.c: In function ‘main’:
+xyz.c:11:15: error: ‘a’ undeclared (first use in this function)
+  printf(" %d",a);
+               ^
+xyz.c:11:15: note: each undeclared identifier is reported only once for each function it appears in
+
+
+
+=================================================================
+
+
+void main()
+{
+        int i;
+        for(i=0; i<5; i++)
+                int a=i;
+        printf(" %d",a);
+
+
+}
+
+
+xyz.c: In function ‘main’:
+xyz.c:9:17: error: expected expression before ‘int’
+                 int a=i;
+                 ^~~
+xyz.c:10:22: error: ‘a’ undeclared (first use in this function)
+         printf(" %d",a);
+                      ^
+xyz.c:10:22: note: each undeclared identifier is reported only once for each function it appears in
+
+
+
+=================================================================
+
+global variable declared before main or after main
+ie...in global section ...have same scope and lifetime of scope.
+
+=================================================================
+//i dont belive it ..i cant prove it...//
+// so  be carefull before u say it.
+
+
+// so make programs and see every case.....
+array size are optional during array declaration by using 'auto' keyword.
+but not 'static', 'extern', 'register'
+
+
+=================================================================
+//case:1
+
+#include<stdlib.h>
+
+auto int arr1[];
+void main()
+{
+        auto int arr2[];
+
+}
+
+
+
+xyz.c:5:10: error: file-scope declaration of ‘arr1’ specifies ‘auto’
+ auto int arr1[];
+          ^~~~
+xyz.c: In function ‘main’:
+xyz.c:8:11: error: array size missing in ‘arr2’
+  auto int arr2[];
+           ^~~~
+xyz.c: At top level:
+xyz.c:5:10: warning: array ‘arr1’ assumed to have one element
+ auto int arr1[];
+          ^~~~
+
+
+=================================================================
+//case :2
+
+
+#include<stdlib.h>
+static int arr2[];
+void main()
+{
+
+
+}
+//but here no error
+//it compile fine.
+
+
+
+
+=================================================================
+
+//case : 3  
+
+#include<stdlib.h>
+void main()
+{
+
+static int arr2[];
+
+}
+
+
+xyz.c: In function ‘main’:
+xyz.c:7:12: error: storage size of ‘arr2’ isn’t known
+ static int arr2[];
+            ^~~~
+
+
+
+
+=================================================================
+//case : 4
+
+
+#include<stdlib.h>
+extern int arr1[];
+void main()
+{
+        extern int arr2[];
+
+}
+// no error..it works fine
+
+
+=================================================================
+//case : 5
+
+
+#include<stdlib.h>
+extern int arr1[];
+void main()
+{
+        extern int arr2[];
+
+        int arr1[];
+
+        int arr2[];
+}
+
+
+xyz.c:9:6: error: array size missing in ‘arr1’
+  int arr1[];
+      ^~~~
+xyz.c:11:6: error: declaration of ‘arr2’ with no linkage follows extern declaration
+  int arr2[];
+      ^~~~
+xyz.c:7:13: note: previous declaration of ‘arr2’ was here
+  extern int arr2[];
+             ^~~~
+xyz.c:11:6: error: array size missing in ‘arr2’
+  int arr2[];
+      ^~~
+=================================================================
+
+//case : 6 
+
+#include<stdlib.h>
+register int  arr1[];
+void main()
+{
+        register int arr2[];
+}
+
+
+xyz.c: In function ‘main’:
+xyz.c:7:15: error: array size missing in ‘arr2’
+  register int arr2[];
+               ^~~~
+xyz.c: At top level:
+xyz.c:4:15: warning: array ‘arr1’ assumed to have one element
+ register int  arr1[];
+               ^~~~
+xyz.c:4:15: error: register name not specified for ‘arr1’
+
+
+
+=================================================================
+//case : 7
+
+
+
+
+
+#include<stdlib.h>
+void main()
+{
+register int  arr1[];
+}
+
+xyz.c: In function ‘main’:
+xyz.c:6:15: error: array size missing in ‘arr1’
+ register int  arr1[];
+               ^~~~
+
+--
+
+#include<stdlib.h>
+register int  arr1[];
+void main()
+{
+
+}
+
+xyz.c:4:15: warning: array ‘arr1’ assumed to have one element
+ register int  arr1[];
+               ^~~~
+xyz.c:4:15: error: register name not specified for ‘arr1’
+
+--
+
+#include<stdlib.h>
+register arr1[];
+void main()
+{
+register   arr2[];
+}
+
+xyz.c:4:10: warning: type defaults to ‘int’ in declaration of ‘arr1’ [-Wimplicit-int]
+ register arr1[];
+          ^~~~
+xyz.c: In function ‘main’:
+xyz.c:7:12: warning: type defaults to ‘int’ in declaration of ‘arr2’ [-Wimplicit-int]
+ register   arr2[];
+            ^~~~
+xyz.c:7:12: error: array size missing in ‘arr2’
+xyz.c: At top level:
+xyz.c:4:10: warning: array ‘arr1’ assumed to have one element
+ register arr1[];
+          ^~~~
+xyz.c:4:10: error: register name not specified for ‘arr1’
+
+
+=================================================================
+
+#include<stdlib.h>
+static int x;
+void main()
+{
+        int x=9;
+        printf("+++%d\n",x);
+        {
+        printf("---%d\n",x);
+                x=4;
+        printf("---%d\n",x);
+        }
+        printf("+++%d\n",x);
+}
+
+//output:
++++9
+---9
+---4
++++4
+
+
+
+
+#include<stdlib.h>
+static int x;
+void main()
+{
+
+        printf("---%d: %p\n",x,&x);
+        int x=9;
+
+        printf("---%d: %p\n",x,&x);
+                x=4;
+        printf("---%d: %p\n",x,&x);
+}
+//output:
+---0: 0x601028
+---9: 0x7ffe910b78bc
+---4: 0x7ffe910b78bc
+
+
+
+=================================================================
+void main()
+{
+
+static double x=5;
+        int x;
+        printf("---%d: %p\n",x,&x);
+}
+
+
+xyz.c: In function ‘main’:
+xyz.c:8:6: error: conflicting types for ‘x’
+  int x;
+      ^
+xyz.c:7:15: note: previous definition of ‘x’ was here
+ static double x=5;
+               ^
+
+
+=================================================================
+
+void main()
+{
+        register int i=0;
+        int *p=&i;
+        *p=11;
+        printf("%d %d",i,*p);
+}
+
+xyz.c: In function ‘main’:
+xyz.c:7:2: error: address of register variable ‘i’ requested
+  int *p=&i;
+  ^~~
+=================================================================
+void main()
+{
+        register int i=0;
+        i=10;
+        printf("%d ",i);
+}
+//output: 10
+
+=================================================================
+
+void main()
+{
+        const register  int i=99;
+        i=10;
+        printf("%d ",i);
+}
+
+
+
+xyz.c: In function ‘main’:
+xyz.c:7:3: error: assignment of read-only variable ‘i’
+  i=10;
+   ^
+
+=================================================================
+
+int , long ,float can be stored in registers....
+
+u cant declare registers variable globally
+u cant read a value into a regiseter variable (ie...scanf())
+
+=================================================================
+
+#include<stdlib.h>
+
+register int i;
+register int k=99;
+
+void main()
+{
+        i=10;
+        printf("%d ",i);
+}
+
+xyz.c:5:14: error: register name not specified for ‘i’
+ register int i;
+              ^
+xyz.c:6:14: error: register name not specified for ‘k’
+ register int k=99;
+              ^
+
+
+#include<stdlib.h>
+
+void main()
+{
+register int i;
+scanf("%d",&i);
+
+printf("%d ",i);
+}
+
+xyz.c: In function ‘main’:
+xyz.c:8:1: error: address of register variable ‘i’ requested
+ scanf("%d",&i);
+ ^~~~~
+
+
+
+
+
+
+void main()
+{
+        int j=89;
+        register int i;
+        i=j;
+        printf("%d ",i);
+}
+//output: 89
+
+=================================================================
+
+#include<stdlib.h>
+
+void main()
+{
+        static int z=0;
+        register int x=0;
+        if(x<2)
+        {
+                printf("%d\n",z++);
+                x++;
+                main();
+        }
+}
+
+//segmeentation faualt
+
+=================================================================
+void main()
+{
+        register int x;
+        printf("%d\n",x);
+        x=x+99;
+        printf("%d\n",x);
+}
+//output: 
+0
+99
+
+=================================================================
+#include<stdlib.h>
+
+void foo(auto int i);
+
+void main()
+{
+        foo(10);
+}
+
+void foo(auto int i)
+{
+        printf("%d\n",i);
+}
+xyz.c:5:19: error: storage class specified for parameter ‘i’
+ void foo(auto int i);
+                   ^
+xyz.c:12:19: error: storage class specified for parameter ‘i’
+ void foo(auto int i)
+                   ^
+
+/*
+First,quoting C11, chapter 6.7.6.3
+
+The only storage-class specifier that shall occur in a parameter declaration is register.
+
+So, this is explicitly specified in the standard.
+
+That said, this restriction exists because with an explicit storage class like static/ extern, there will be problems in memory management, as function parameters are in the block scope for the function and their lifetimes are limited to the execution of the function body.
+
+A parameter variable cannot outlive the call to the function; otherwise, what would be the effect of the argument in the next call to the same function? So static storage is not meaningful, and auto is redundant.
+
+Since the function parameters has no linkage, extern also makes no sense.
+
+*/
+
+
+
+
+=================================================================
+
+automatic variable have no linkage .....neither internal linkage nor external likage.
+
+=================================================================
+xyz.c:8:7: warning: type defaults to ‘int’ in declaration of ‘i’ [-Wimplicit-int]
+  auto i=10;
+       ^
+=================================================================
+void main()
+{
+int i=99;
+int j=77;
+
+        printf("%d %d %d %d\n",i,j);
+        int k=66;
+        printf("%d %d %d %d\n",k, i,j);
+}
+
+99 77 0 4195744
+66 99 77 7
+
+// so ,values of variaables and then for extra %d..it will gve garbage
+
+=================================================================
+
+Let's start with a simple printf("%s", "abc"). It will print the string abc.
+
+printf("%8s", "abc") will print      abc, including 5 leading spaces: 8 is the "field width". Think of a table of data with column widths so that data in the same column is vertically aligned. The data is by default right-aligned, suitable for numbers.
+
+printf("%-8s", "abc") will print abc     , including 5 trailing spaces: the minus indicates left alignment in the field.
+
+Now for the star: printf("%-*s", 8, "abc") will print the same. The star indicates that the field width (here: 8) will be passed as a parameter to printf. That way it can be changed programmatically.
+
+Now for the "precision", that is : printf("%-*.10s", 8, "1234567890123") will print only 1234567890, ommitting the last three characters: the "precision" is the maximum field width in case of strings. This is one of the rare cases (apart from rounding, which is also controlled by the precision value) where data is truncated by printf.
+
+And finally printf("%-*.*s", 8, 10, "1234567890123") will print the same as before, but the maximum field width is given as a parameter, too.
+
+
+
+
+=================================================================
+
+scanf("%d",i);
+it result in segmentation fault but it compiles.
+=================================================================
+
+char *p;
+        scanf("%s",p);
+        printf("%s",p);
+
+//it works fine...
+
+=================================================================
+char *p;
+        scanf("%s",p);
+        printf("%s",*p);
+
+//segmentataion fault
+
+=================================================================
+
+For printf, the * allows you to specify the minimum field width through an extra parameter, e.g. printf("%*d", 4, 100); specifies a field width of 4. A field width of 4 means that if a number takes less than 4 characters to print, space characters are printed until the field width is filled. If the number takes up more space than the specified field width, the number is printed as-is with no truncation.
+
+For scanf, the * indicates that the field is to be read but ignored, so that e.g. scanf("%*d %d", &i) for the input "12 34" will ignore 12 and read 34 into the integer i.
+
+
+
+=================================================================
+
+enter , space , tab .....act as a delimiter for an input in scanf
+
+
+
+=================================================================
+int x=2,y=0;
+        int z=(y++)?y==1 && x: 0;
+        printf("%d\n",z);
+        return 0;
+
+//output: 0
+
+
+
+=================================================================
+	int x=1;
+        short int i=2;
+        float f=3;
+        if(sizeof((x==2)?f:i)==sizeof(float))
+                printf("float\n");
+        else if(sizeof((x==2)?f:i)== sizeof(short int))
+                printf("short int\n");
+        return 0;
+
+//output: float
+
+=================================================================
+ int y=1,x=0;
+int l=(y++,x++)?y:x;
+printf("%d\n",l);
+
+//output: 1
+
+=================================================================
+
+
+int main()
+{
+        1<2 ? return 1: return 2;
+}
+
+xyz.c: In function ‘main’:
+xyz.c:9:8: error: expected expression before ‘return’
+  1<2 ? return 1: return 2;
+        ^~~~~~
+
+
+?: is an operator not a control flow construct, so the whole thing with operands must be an expression, and return statements (or any statement) are not valid sub-expressions.
+
+?: is not simply a shorthand for if-else (which is a control flow construct); it is semantically different.
+
+if( a > b ) return a; else return b
+
+
+=================================================================
+
+
+int k=8;
+        int m=7;
+        k<m? k++:m=k;
+        printf("%d",k);
+
+xyz.c: In function ‘main’:
+xyz.c:11:12: error: lvalue required as left operand of assignment
+  k<m? k++:m=k;
+            ^
+
+=================================================================
+
+int k=8;
+        int m=7;
+        k > m ? k=k+1:m=m+1;
+        printf("%d",k);
+
+
+xyz.c:11:16: error: lvalue required as left operand of assignment
+  k > m? k=k+1:m=m+1;
+                ^
+
+=================================================================
+
+int a=2;
+         int c=1;
+         c =(c)?a=0 : 2;
+
+         printf("a=%d c=%d",a,c);
+
+//output: a=0 c=0
+
+=================================================================
+This operator returns one of two values depending on the result of an expression. If "expression-1" is evaluated to Boolean true, then expression-2 is evaluated and its value is returned as a final result otherwise expression-3 is evaluated and its value is returned as a final result.
+
+int a=2;
+         int c=1;
+         c =(c)?a=33 : 2;
+         printf("a=%d c=%d",a,c);
+//output: a=33 c=33
+
+--
+int a=2;
+         int c=1;
+         c =(c)?a=-1: 2;
+         printf("a=%d c=%d",a,c);
+//output: a=-1 c=-1
+=================================================================
+
+         int a=2;
+         int c=0;
+         c =(c)?a=0:-1;
+
+         printf("a=%d c=%d",a,c);
+
+//output: a=2 c=-1
+
+=================================================================
+
+void r(int i)
+{
+        if(i>5)
+                exit(0);
+
+        printf("%d\n",i);
+        return r(i++);
+}
+int main()
+{
+        r(1);
+}
+//output: 1111111111111111111111....segfault ..stack overflow
+
+
+void r(int i)
+{
+        if(i>5)
+                exit(0);
+
+        printf("%d\n",i);
+        return r(++i);
+}
+int main()
+{
+        r(1);
+}
+//output: 1 2 3 4 5
+================================================================
+
+void r(int i)
+{
+        if(i>5)
+                exit(0);
+
+        printf("%d\n",i);
+        return r(i++,i);
+}
+int main()
+{
+        r(1);
+}
+
+
+xyz.c: In function ‘r’:
+xyz.c:13:9: error: too many arguments to function ‘r’
+  return r(i++,i);
+         ^
+xyz.c:7:6: note: declared here
+ void r(int i)
+      ^
+================================================================
+
+void r(int i)
+{
+        if(i>5)
+                exit(0);
+
+        printf("%d\n",i);
+        return r((i++,i));
+}
+int main()
+{
+        r(1);
+}
+
+//output: 1 2 3 4 5 
+
+//notice there are two brackets in it ...so it is only one argument ...and the only first argument is contained  in  () which itself is a comma operator case
+//here remember the comma operator.
+//it will first increment the i and then its second operator is given as input to function call which is incremented i
+
+=================================================================
+
+        int y=2;
+        int z=y+(y=10);
+        printf("%d \n",z);
+
+//output: 20
+
+xyz.c: In function ‘main’:
+xyz.c:20:12: warning: operation on ‘y’ may be undefined [-Wsequence-point]
+  int z=y+(y=10);
+           ~^~~~
+
+
+int y=2;
+        int z=y+(y=20)+(y=10);
+        printf("%d \n",z);
+//output: 50
+
+xyz.c:20:19: warning: operation on ‘y’ may be undefined [-Wsequence-point]
+  int z=y+(y=20)+(y=10);
+                 ~~^~~~
+xyz.c:20:19: warning: operation on ‘y’ may be undefined [-Wsequence-point]
+
+
+=================================================================
+
+        int x=2,y=2;
+        float f = y +x/=x/y;
+        printf("%d %f\n",x,f);
+
+xyz.c:11:16: error: lvalue required as left operand of assignment
+  float f = y +x/=x/y;
+                ^~
+//so remeber when ever there is equal = to put a value it must a address/variable but not a constant 
+//since this expression will have values of the variables not the variables itself
+
+=================================================================
+
+        int x=1,y=2;
+        if(x && y == 1)
+                printf("true\n");
+        else
+                printf("false\n");
+//false
+
+
+        int x=1,y=2;
+        if(x && (y == 1))
+                printf("true\n");
+        else
+                printf("false\n");
+
+//false
+
+        int x=1,y=2;
+        if((x&&y) == 1)
+                printf("true\n");
+        else
+                printf("false\n");
+
+//true
+=================================================================
+
+int x=1,y=2;
+int z= x & y == 2;
+printf("%d",z);
+
+//ouptut: 1
+
+
+//here the == operator has higher precedence than the &
+// so it will check y==2 which is true
+//then it will do 1 & 1...which is 1..therefore 'z' is 1 
+
+
+int x=1,y=2;
+        int z= (x&y) == 2;
+        printf("%d\n",z);
+//output: 0
+=================================================================
+
+        int x=3, y=2;
+        int z=x /= y %=2;
+        printf("%d\n",z); 
+
+//error:Floating point exception (core dumped)
+//do 'GDB' and break main, watch x,y,z, step
+
+//first y%=2 will execute... which will become 0
+//and then x/=0 .... this will generate floating point execption
+
+=================================================================
+
+
+        int x=3, y=2;
+        int z= x << ( 1 > 5) ;
+        printf("%d\n",z);
+//output: 3
+
+        int x=3, y=2;
+        int z= x << ( 7 > 5) ;
+        printf("%d\n",z);
+//output: 6
+
+
+=================================================================
+
+        int x=2,y=0;
+        int z= x && y = 1 ;
+
+        printf("%d\n",z);
+
+xyz.c:11:16: error: lvalue required as left operand of assignment
+  int z= x && y = 1 ;
+                 ^
+
+================================================================
+
+double b=3 && 5 & 4 % 3;
+        printf("%lf",b);
+
+//output: 1.000000
+%>&>&& precedence
+
+=================================================================
+
+double b=4*6 + 3*4  <3?4:3;
+        printf("%lf",b);
+//3.000000
+
+*+/ have higher priority with L->R
+less than '<' with L->R
+ternery with R->L
+
+
+=================================================================
+
+ double b=3%0*1-4/2;
+        printf("%lf",b);
+
+//floating pint exception due to 0
+=================================================================
+
+        int a=1, b=2, c=3, d=4, e;
+        e = c+d = b*a;
+        printf("%d, %d\n",e,d);
+
+xyz.c:11:10: error: lvalue required as left operand of assignment
+  e = c+d = b*a;
+          ^
+=================================================================
+
+int p=10, q=20,r;
+        if(r= p =5 || q > 20)
+                printf("%d",r);
+        else
+                printf("Nooo\n");
+
+//output: 1
+> has higher precedence
+=================================================================
+        int x=5;
+        if(x<1);
+        printf("hello");
+
+//output: hello
+
+=================================================================
+
+int main()
+{
+        float x=3.0f;
+
+        switch(x)
+        {
+
+
+        }
+
+}
+
+xyz.c: In function ‘main’:
+xyz.c:11:9: error: switch quantity not an integer
+  switch(x)
+         ^
+xyz.c:9:8: warning: variable ‘x’ set but not used [-Wunused-but-set-variable]
+  float x=3.0f;
+         ^
+=================================================================
+
+int main()
+{
+        int x=3;
+        switch(x)
+        {
+
+
+        }
+
+}
+
+//compile properly
+
+=================================================================
+
+ 
+int f(int);
+int (*fp)(int)=f;
+int f(int var)
+{
+        printf("---var:%d\n",var);
+        return ++var;
+}
+int main()
+{
+
+        f=fp;
+        int var=3;
+        var=(*fp)(var);
+        printf("---var:%d\n",var);
+        return 0;
+}
+
+// here , remember 
+//f=*fp; f=&fp; f=fp;  all will work 
+//but they must be kept inside a function
+//
+//because they are statements ..u cant keep them in data segment 
+//only data(variables/defination/declaration/initialization) 
+//can be kept inside it
+//
+//if u do int x; or int x=5; in global
+//it works
+//
+//but x=5; is not allowed... no storage class found error.
+
+=================================================================
+int x=1;
+if(x>0)
+    printf("++++++");
+else if(x>0)
+    printf("------");
+return 0;
+
+//output:+++++++
+//it runs perfectly fine 
+
+=================================================================
+
+int x=0;
+
+        if(x == 0)
+                printf("true");
+        else if(x=10)
+                printf("false");
+
+        printf("%d\n",x);
+
+        return 0;
+//output: true0
+
+
+=================================================================
+
+                printf(" %d true\n",1);
+
+=================================================================
+
+case labels cant be outside switch
+and switch takes int
+
+u cant have duplicate cases
+
+
+
+=================================================================
+int main()
+{
+        int x=97;
+        switch(x);
+        {
+                case 'a':
+                        printf("yes");
+                        break;
+
+                case 97: printf("no\n");
+                         break;
+        }
+
+        printf(" %d true\n",1);
+        return 0;
+}
+
+xyz.c: In function ‘main’:
+xyz.c:13:3: error: case label not within a switch statement
+   case 'a':
+   ^~~~
+xyz.c:15:4: error: break statement not within loop or switch
+    break;
+    ^~~~~
+xyz.c:17:3: error: case label not within a switch statement
+   case 97: printf("no\n");
+   ^~~~
+xyz.c:18:5: error: break statement not within loop or switch
+     break;
+     ^~~~~
+=================================================================
+
+int main()
+{
+        int x=97;
+        switch(x)
+        {
+                case 'a':
+                        printf("yes");
+                        break;
+
+                case 97: printf("no\n");
+                         break;
+        }
+
+        printf(" %d true\n",1);
+        return 0;
+}
+
+
+
+xyz.c: In function ‘main’:
+xyz.c:17:3: error: duplicate case value
+   case 97: printf("no\n");
+   ^~~~
+xyz.c:13:3: note: previously used here
+   case 'a':
+   ^~~~
+
+=================================================================
+
+u can print anything using printf without semicolon
+
+by putting it in if(), while(), switch(), 
+because it return no of charaters printed.....which is integer.
+
+another way::
+
+#define PRINT
+printf("hello")
+int main()
+{
+if(PRINT)
+}
+
+
+=================================================================
+
+
+comma operator is used to seprate variable declarations,function,arguments,expressions
+and also as, the elements for the statement.
+
+=================================================================
+
+i=(j++,k++);
+//the i will receive the rightmost value always
+
+
+while(i=rand()%100, i==50)
+//here the while statement uses the comman operator 
+//to assignn the value of i and then test it.
+
+===============================================================
+loops are controlled by the variables 
+so we can check them and see if the loop worked fine or terminated prematuraly
+
+=================================================================
+goto: it make u do a local jump
+
+but, longjump() and setjmp() make u jum across functions
+
+
+
+when our program calls setjump() the current state of your program is saved in a structure of type jmp_buf. later, your program can call the longjmp().
+
+but DRAWBACK, when restored to previous saved state , it will loose its refrences to allocated memory between the longjmp() and setjmp(). there any malloc between them is a waste
+
+
+=================================================================
+
+xyz.c: In function ‘main’:
+xyz.c:13:2: warning: statement with no effect [-Wunused-value]
+  for(k)
+  ^~~
+xyz.c:13:7: error: expected ‘;’ before ‘)’ token
+  for(k)
+       ^
+xyz.c:13:7: error: expected expression before ‘)’ token
+xyz.c:14:3: warning: implicit declaration of function ‘pritf’; did you mean ‘printf’? [-Wimplicit-function-declaration]
+   pritf("hello\n");
+   ^~~~~
+=================================================================
+
+        int k=0;
+        for(;;;)
+                printf("hello\n");
+
+xyz.c: In function ‘main’:
+xyz.c:13:8: error: expected expression before ‘;’ token
+  for(;;;)
+        ^
+
+=================================================================
+//an infifnite loop....... but how
+
+char *str="";
+        printf("%d,%s,%c\n",*str,str,*str);
+        do
+        {
+                int x=9;
+        }while(str);
+
+[root@localhost rawat]# ./a.out 
+0,,
+^C      
+[root@localhost rawat]# vim xyz.c 
+
+===============================================================
+
+The two declarations are not the same.
+
+char ptr[] = "string"; declares a char array of size 7 and initializes it with the characters
+s ,t,r,i,n,g and \0. You are allowed to modify the contents of this array.
+
+char *ptr = "string"; declares ptr as a char pointer and initializes it with address of string literal "string" which is read-only. Modifying a string literal is an undefined behavior. What you saw(seg fault) is one manifestation of the undefined behavior
+
+=================================================================
+This is very straight forward if you understand C syntax. Just break it down... the functions each take one parameter. Each of the parameters is a different type...
+
+char *str - This is a single value which is a pointer to a character. When used as a string in C it is implied that in subsequent memory addresses are subsequent charcters in the string, until the end of the string which is marked with a NULL (ascii 0)
+
+char *str[] is an array of many values, each value in the array is a char *str, as above. So, it is an array of null-terminated C strings.
+
+char str[] is an array of characters. It is similar to char *str except that there is no requirement that the last character in the array be null
+
+================================================================
+//to break from both loops
+
+int main()
+{
+        for(int i=0; i<5; i++)
+        {
+                for(int j=0; j<5; j++)
+                {
+                        if (i==3 && j==3)
+                        {
+                                printf("breaking IN %d %d\n",i,j);
+                                break;
+                        }
+
+                }
+                if (i==3 && j==3)
+                {
+                        printf("breaking IN %d %d\n",i,j);
+                        break;
+                }
+        }
+}
+//the outer loop will say j undefined
+
+
+=================================================================
+
+
+int i,j;
+        for(i=0; i<5; i++)
+        {
+                for(j=0; j<5; j++)
+                {
+                        if (i==3 && j==3)
+                        {
+                                printf("breaking IN %d %d\n",i,j);
+                                break;
+                        }
+
+                }
+                if (i==3 && j==3)
+                {
+                        printf("breaking IN %d %d\n",i,j);
+                        break;
+                }
+        }
+
+
+
+
+
+//this will break....
+// as j is defined outside the loops...so it will be visible to booth loops
+//but earlier u declared j in the scope of inner for loop
+===============================================================
+
+

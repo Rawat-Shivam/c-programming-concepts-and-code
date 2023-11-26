@@ -1,0 +1,68 @@
+
+Array parameters treated as pointers because of efficiency. It is inefficient to copy the array data in terms of both memory and time; and most of the times, when we pass an array our intention is to just tell the array we interested in, not to create a copy of the array.
+
+
+Array name gives address of first element of array.
+#include <stdio.h> 
+int main() 
+{ 
+   int arr[] = {10, 20, 30, 40, 50, 60}; 
+   // Assigns address of array to ptr 
+   int *ptr = arr;   
+   printf("Value of first element is %d", *ptr); 
+   return 0; 
+} 
+
+Array members are accessed using pointer arithmetic.
+Compiler uses pointer arithmetic to access array element. For example, an expression like “arr[i]” is treated as *(arr + i) by the compiler. That is why the expressions like *(arr + i) work for array arr, and expressions like ptr[i] also work for pointer ptr.
+
+*****************************************
+#include <stdio.h> 
+int main() 
+{ 
+   int arr[] = {10, 20, 30, 40, 50, 60}; 
+   int *ptr = arr; 
+   printf("arr[2] = %d\n", arr[2]); 
+   printf("*(arr + 2) = %d\n", *(arr + 2)); 
+   printf("ptr[2] = %d\n", ptr[2]); 
+   printf("*(ptr + 2) = %d\n", *(ptr + 2)); 
+   return 0; 
+} 
+
+*****************************************
+
+Array parameters are always passed as pointers, even when we use square brackets.
+#include <stdio.h> 
+int fun(int ptr[]) 
+{ 
+	int x = 100; 
+	// size of a pointer is printed 
+	printf("sizeof(ptr) = %d\n", sizeof(ptr)); 
+	// This allowed because ptr is a pointer, not array 
+	ptr = &x; 
+	printf("*ptr = %d ", *ptr); 
+	return 0; 
+} 
+// Driver code 
+int main() 
+{ 
+	int arr[] = {10, 20, 30, 40, 50, 60}; 
+	fun(arr); 
+	return 0; 
+} 
+prog.c: In function ‘fun’:
+prog.c:8:36: warning: ‘sizeof’ on array function parameter ‘ptr’ will return size of ‘int *’ [-Wsizeof-array-argument]
+ printf("sizeof(ptr) = %d\n", sizeof(ptr)); 
+                                    ^
+prog.c:3:13: note: declared here
+ int fun(int ptr[]) 
+             ^
+prog.c:8:8: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long unsigned int’ [-Wformat=]
+ printf("sizeof(ptr) = %d\n", sizeof(ptr)); 
+        ^
+Output:
+sizeof(ptr) = 8
+*ptr = 100
+
+
+

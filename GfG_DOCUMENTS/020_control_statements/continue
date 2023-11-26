@@ -1,0 +1,8 @@
+
+As the name suggest the continue statement forces the loop to continue or execute the next iteration. When the continue statement is executed in the loop, the code inside the loop following the continue statement will be skipped and next iteration of the loop will begin.
+
+Nested Loops: We can also use break statement while working with nested loops. If the break statement is used in the innermost loop. The control will come out only from the innermost loop.
+
+Infinite Loops: break statement can be included in an infinite loop with a condition in order to terminate the execution of the infinite loop.
+
+

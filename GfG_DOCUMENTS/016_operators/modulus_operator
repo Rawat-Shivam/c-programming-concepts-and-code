@@ -1,0 +1,54 @@
+
+Modulus on Negative Numbers
+What will be the output of the following C program?
+#include <stdio.h> 
+int main() 
+{ 
+   int a = 3, b = -8, c = 2; 
+   printf("%d", a % b / c); 
+   return 0; 
+} 
+Output
+1
+
+******************
+
+% and / have same precedence and left to right associativity. So % is performed first which results in 3 and / is performed next resulting in 1. The emphasis is, sign of left operand is appended to result in case of modulus operator in C
+
+*********************
+
+
+#include <stdio.h> 
+int main() 
+{ 
+   // a positive and b negative. 
+   int a = 3, b = -8; 
+   printf("%d", a % b); 
+   return 0; 
+} 
+Output
+3
+
+#include <stdio.h> 
+int main() 
+{ 
+   // a negative and b positive 
+   int a = -3, b = 8; 
+   printf("%d", a % b); 
+   return 0; 
+} 
+Output
+-3
+
+#include <stdio.h> 
+int main() 
+{ 
+   // a and b both negative 
+   int a = -3, b = -8; 
+   printf("%d", a % b); 
+   return 0; 
+} 
+Output
+-3
+
+

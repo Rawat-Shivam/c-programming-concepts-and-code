@@ -1,0 +1,46 @@
+
+
+					001.03.compiler_alignment
+
+
+
+
+Object File Alignment, Section Alignment, Page Alignment
+
+These are specific to operating system implementer, compiler writers and are beyond the scope of this article. Infact, I don’t have much information.
+
+General Questions:
+1. Is alignment applied for stack?
+
+Yes. The stack is also memory. The system programmer should load the stack pointer with a memory address that is properly aligned. Generally, the processor won’t check stack alignment, it is the programmer’s responsibility to ensure proper alignment of stack memory. Any misalignment will cause run time surprises.
+
+For example, if the processor word length is 32 bit, stack pointer also should be aligned to be multiple of 4 bytes.
+
+2. If char data is placed in a bank other bank 0, it will be placed on wrong data lines during memory read. How the processor handles char type?
+
+Usually, the processor will recognize the data type based on instruction (e.g. LDRB on ARM processor). Depending on the bank it is stored, the processor shifts the byte onto least significant data lines.
+
+3. When arguments passed on stack, are they subjected to alignment?
+
+Yes. The compiler helps programmer in making proper alignment. For example, if a 16-bit value is pushed onto a 32-bit wide stack, the value is automatically padded with zeros out to 32 bits. Consider the following program.
+
+void argument_alignment_check( char c1, char c2 ) 
+{ 
+   // Considering downward stack 
+   // (on upward stack the output will be negative) 
+   printf("Displacement %d\n", (int)&c2 - (int)&c1); 
+} 
+The output will be 4 on a 32 bit machine. It is because each character occupies 4 bytes due to alignment requirements.
+
+4. What will happen if we try to access a misaligned data?
+
+It depends on processor architecture. If the access is misaligned, the processor automatically issues sufficient memory read cycles and packs the data properly onto the data bus. The penalty is on performance. Where as few processors will not have last two address lines, which means there is no-way to access odd byte boundary. Every data access must be aligned (4 bytes) properly. A misaligned access is critical exception on such processors. If the exception is ignored, read data will be incorrect and hence the results.
+
+5. Is there any way to query alignment requirements of a data type.
+
+Yes. Compilers provide non standard extensions for such needs. For example, __alignof() in Visual Studio helps in getting the alignment requirements of data type. Read MSDN for details.
+
+
+
+
+

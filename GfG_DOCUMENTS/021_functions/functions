@@ -1,0 +1,48 @@
+
+3) In C, functions can return any type except arrays and functions. We can get around this limitation by returning pointer to array or pointer to function.
+
+
+A function is a set of statements that take inputs, do some specific computation and produces output.
+
+Why do we need functions?
+
+Functions help us in reducing code redundancy. If functionality is performed at multiple places in software, then rather than writing the same code, again and again, we create a function and call it everywhere. This also helps in maintenance as we have to change at one place if we make future changes to the functionality.
+Functions make code modular. Consider a big file having many lines of codes. It becomes really simple to read and use the code if the code is divided into functions.
+Functions provide abstraction. For example, we can use library functions without worrying about their internal working.
+
+Parameter Passing to functions
+The parameters passed to function are called actual parameters. For example, in the above program 10 and 20 are actual parameters.
+The parameters received by function are called formal parameters. For example, in the above program x and y are formal parameters.
+
+Pass by Value: In this parameter passing method, values of actual parameters are copied to function’s formal parameters and the two types of parameters are stored in different memory locations. So any changes made inside functions are not reflected in actual parameters of caller.
+
+Pass by Reference Both actual and formal parameters refer to same locations, so any changes made inside the function are actually reflected in actual parameters of caller.
+However, in C, we can use pointers to get the effect of pass by reference.
+
+ 
+Following are some important points about functions in C.
+1) Every C program has a function called main() that is called by operating system when a user runs the program.
+
+2) Every function has a return type. If a function doesn’t return any value, then void is used as return type. Moreover, if the return type of the function is void, we still can use return statement in the body of function definition by not specifying any constant, variable, etc. with it, by only mentioning the ‘return;’ statement which would symbolise the termination of the function 
+
+
+4) Empty parameter list in C mean that the parameter list is not specified and function can be called with any parameters. In C, it is not a good idea to declare a function like fun(). To declare a function that can only be called without any parameter, we should use “void fun(void)”.
+As a side note, in C++, empty list means function can only be called without any parameter. In C++, both void fun() and void fun(void) are same.
+
+5)If in a C program, a function is called before its declaration then the C compiler automatically assumes the declaration of that function in the following way:
+int function name();
+And in that case if the return type of that function is different than INT ,compiler would show an error.
+
+
+What is the purpose of a function prototype?
+The Function prototype serves the following purposes –
+
+1) It tells the return type of the data that the function will return.
+2) It tells the number of arguments passed to the function.
+3) It tells the data types of the each of the passed arguments.
+4) Also it tells the order in which the arguments are passed to the function.
+
+Therefore essentially, function prototype specifies the input/output interlace to the function i.e. what to give to the function and what to expect from the function.
+
+Prototype of a function is also called signature of the function.
+

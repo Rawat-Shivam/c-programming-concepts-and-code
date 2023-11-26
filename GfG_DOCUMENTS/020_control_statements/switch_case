@@ -1,0 +1,94 @@
+
+Switch Statement in C/C++
+Switch case statements are a substitute for long if statements that compare a variable to several integral values
+
+the switch statement is a multiway branch statement. It provides an easy way to dispatch execution to different parts of code based on the value of the expression.
+Switch is a control statement that allows a value to change control of execution.
+
+
+The expression provided in the switch should result in a constant value otherwise it would not be valid.
+Valid expressions for switch:
+// Constant expressions allowed
+switch(1+2+23)
+switch(1*2+3%4)
+
+// Variable expression are allowed provided
+// they are assigned with fixed values
+switch(a*b+c*d)
+switch(a+b+c)
+
+Duplicate case values are not allowed.
+
+The default statement is optional.Even if the switch case statement do not have a default statement,
+it would run without any problem.
+
+The break statement is used inside the switch to terminate a statement sequence. When a break statement is reached, the switch terminates, and the flow of control jumps to the next line following the switch statement.
+
+The break statement is optional. If omitted, execution will continue on into the next case. The flow of control will fall through to subsequent cases until a break is reached.
+
+Nesting of switch statements are allowed, which means you can have switch statements inside another switch. However nested switch statements should be avoided as it makes program more complex and less readable.
+
+1) The expression used in switch must be integral type ( int, char and enum). Any other type of expression is not allowed.
+
+3) The default block can be placed anywhere. The position of default doesn’t matter, it is still executed if no match found.
+
+4) The integral expressions used in labels must be a constant expressions
+// A program with variable expressions in labels 
+#include <stdio.h> 
+int main() 
+{ 
+    int x = 2; 
+    int arr[] = {1, 2, 3}; 
+    switch (x) 
+    { 
+        case arr[0]: printf("Choice 1\n");  
+        case arr[1]: printf("Choice 2\n"); 
+        case arr[2]: printf("Choice 3\n"); 
+    } 
+    return 0; 
+} 
+Output:
+Compiler Error: case label does not reduce to an integer constant
+
+5) The statements written above cases are never executed After the switch statement, the control transfers to the matching case, the statements written before case are not executed.
+// Statements before all cases are never executed 
+#include <stdio.h> 
+int main() 
+{ 
+   int x = 1; 
+   switch (x) 
+   { 
+       x = x + 1;  // This statement is not executed 
+       case 1: printf("Choice is 1"); 
+               break; 
+       case 2: printf("Choice is 2"); 
+                break; 
+       default: printf("Choice other than 1 and 2"); 
+                break;                    
+   } 
+   return 0; 
+}  
+Output:
+Choice is 1
+
+
+6) Two case labels cannot have same value
+// Program where two case labels have same value 
+#include <stdio.h> 
+int main() 
+{ 
+   int x = 1; 
+   switch (x) 
+   { 
+       case 2: printf("Choice is 1"); 
+               break; 
+       case 1+1: printf("Choice is 2"); 
+                break; 
+   } 
+   return 0; 
+}  
+Output:
+Compiler Error: duplicate case value
+
+
+

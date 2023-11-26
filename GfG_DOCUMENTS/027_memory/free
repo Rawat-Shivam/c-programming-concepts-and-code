@@ -1,0 +1,6 @@
+
+
+When memory allocation is done, the actual heap space allocated is one word larger than the requested memory. The extra word is used to store the size of the allocation and is later used by free( )
+
+
+

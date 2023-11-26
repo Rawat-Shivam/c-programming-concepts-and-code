@@ -1,0 +1,226 @@
+
+
+					004.01.const
+
+1) Pointer to variable.
+int *ptr;
+
+2) Pointer to constant:Pointer to constant can be declared in following two ways.
+const int *ptr;
+or
+int const *ptr;
+
+3) Constant pointer to variable.
+int *const ptr;
+
+4) constant pointer to constant
+const int *const ptr;
+
+
+
+
+
+There can be any types of constants like integer, float, octal, hexadecimal, character constants etc. Every constant has some range. 
+Defining Constants:
+
+In C/C++ program we can define constants in two ways as shown below:
+Using #define preprocessor directive
+Using a const keyword
+
+Const Qualifier in C
+The qualifier const can be applied to the declaration of any variable to specify that its value will not be changed ( Which depends upon where const variables are stored, we may change the value of const variable by using pointer ). The result is implementation-defined if an attempt is made to change a const.
+
+
+1) Pointer to variable.
+int *ptr; 
+We can change the value of ptr and we can also change the value of object ptr pointing to. Pointer and value pointed by pointer both are stored in the read-write area. See the following code fragment.
+
+#include <stdio.h> 
+int main(void) 
+{ 
+    int i = 10; 
+    int j = 20; 
+    int *ptr = &i; 
+    /* pointer to integer */
+    printf("*ptr: %d\n", *ptr); 
+   
+    /* pointer is pointing to another variable */
+    ptr = &j; 
+    printf("*ptr: %d\n", *ptr); 
+   
+    /* we can change value stored by pointer */
+    *ptr = 100; 
+    printf("*ptr: %d\n", *ptr); 
+   
+    return 0; 
+} 
+Output:
+    *ptr: 10
+    *ptr: 20
+    *ptr: 100
+
+
+
+2) Pointer to constant.
+Pointer to constant can be declared in following two ways.
+
+const int *ptr; 
+or
+
+int const *ptr; 
+
+
+We can change the pointer to point to any other integer variable, but cannot change the value of the object (entity) pointed using pointer ptr. The pointer is stored in the read-write area (stack in the present case). The object pointed may be in the read-only or read-write area. Let us see the following examples.
+
+#include <stdio.h>  
+int main(void) 
+{ 
+    int i = 10;    
+    int j = 20; 
+    /* ptr is pointer to constant */
+    const int *ptr = &i;     
+   
+    printf("ptr: %d\n", *ptr);  
+    /* error: object pointed cannot be modified 
+    using the pointer ptr */    
+    *ptr = 100; 
+   
+    ptr = &j;          /* valid */ 
+    printf("ptr: %d\n", *ptr); 
+   
+    return 0; 
+} 
+Output:
+ error: assignment of read-only location ‘*ptr’
+Following is another example where variable i itself is constant.
+
+
+#include <stdio.h>  
+int main(void) 
+{   
+    /* i is stored in read only area*/
+    int const i = 10;     
+    int j = 20; 
+  
+    /* pointer to integer constant. Here i  
+    is of type "const int", and &i is of  
+    type "const int *".  And p is of type  
+    "const int", types are matching no issue */ 
+    int const *ptr = &i;         
+  
+    printf("ptr: %d\n", *ptr);  
+  
+    /* error */ 
+    *ptr = 100;         
+  
+    /* valid. We call it up qualification. In  
+    C/C++, the type of "int *" is allowed to up  
+    qualify to the type "const int *". The type of  
+    &j is "int *" and is implicitly up qualified by  
+    the compiler to "const int *" */ 
+  
+    ptr = &j;           
+    printf("ptr: %d\n", *ptr); 
+  
+    return 0; 
+} 
+Output:
+
+ error: assignment of read-only location ‘*ptr’
+Down qualification is not allowed in C++ and may cause warnings in C. Following is another example with down qualification.
+
+#include <stdio.h>   
+int main(void) 
+{ 
+    int i = 10; 
+    int const j = 20; 
+  
+    /* ptr is pointing an integer object */
+    int *ptr = &i;  
+  
+    printf("*ptr: %d\n", *ptr);  
+  
+    /* The below assignment is invalid in C++, results in error  
+       In C, the compiler *may* throw a warning, but casting is  
+       implicitly allowed */
+    ptr = &j; 
+  
+    /* In C++, it is called 'down qualification'. The type of expression  
+       &j is "const int *" and the type of ptr is "int *". The  
+       assignment "ptr = &j" causes to implicitly remove const-ness  
+       from the expression &j. C++ being more type restrictive, will not  
+       allow implicit down qualification. However, C++ allows implicit  
+       up qualification. The reason being, const qualified identifiers  
+       are bound to be placed in read-only memory (but not always). If  
+       C++ allows above kind of assignment (ptr = &j), we can use 'ptr'  
+       to modify value of j which is in read-only memory. The  
+       consequences are implementation dependent, the program may fail  
+       at runtime. So strict type checking helps clean code. */
+  
+    printf("*ptr: %d\n", *ptr); 
+  
+    return 0; 
+}  
+  
+
+
+3) Constant pointer to variable.
+
+int *const ptr; 
+
+Above declaration is a constant pointer to an integer variable, means we can change the value of object pointed by pointer, but cannot change the pointer to point another variable.
+
+#include <stdio.h> 
+int main(void) 
+{ 
+   int i = 10; 
+   int j = 20; 
+/* constant pointer to integer */
+   int *const ptr = &i;     
+   
+   printf("ptr: %d\n", *ptr); 
+   
+   *ptr = 100;    /* valid */
+   printf("ptr: %d\n", *ptr); 
+   
+   ptr = &j;        /* error */
+   return 0; 
+} 
+Output:
+ error: assignment of read-only variable ‘ptr’
+
+
+4) constant pointer to constant
+
+const int *const ptr; 
+Above declaration is a constant pointer to a constant variable which means we cannot change value pointed by the pointer as well as we cannot point the pointer to other variables. Let us see with an example.
+
+#include <stdio.h>  
+int main(void) 
+{ 
+    int i = 10; 
+    int j = 20; 
+/* constant pointer to constant integer */
+    const int *const ptr = &i;         
+   
+    printf("ptr: %d\n", *ptr); 
+   
+    ptr = &j;     /* error */
+    *ptr = 100;   /* error */
+   
+    return 0; 
+} 
+Output:
+     error: assignment of read-only variable ‘ptr’
+     error: assignment of read-only location ‘*ptr’
+
+
+
+
+
+Changing Value of a const variable through pointer
+
+The variables declared using const keyword, get stored in .rodata segment, but we can still access the variable through the pointer and change the value of that variable. By assigning the address of the variable to a non-constant pointer, We are casting a constant variable to a non-constant pointer. The compiler will give warning while typecasting and will discard the const qualifier. Compiler optimization is different for variables and pointers. That is why we are able to change the value of a constant variable through a non-constant pointer.
+
+
+

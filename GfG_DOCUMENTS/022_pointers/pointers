@@ -1,0 +1,41 @@
+
+
+Pointers store address of variables or a memory location.
+
+// General syntax
+datatype *var_name; 
+
+// An example pointer "ptr" that holds
+// address of an integer variable or holds
+// address of a memory whose value(s) can
+// be accessed as integer values through "ptr"
+int *ptr;  
+we use the unary operator & (ampersand) that returns the address of that variable.
+ When a pointer variable is declared in C/C++, there must a * before its name.
+To access the value stored in the address we use the unary operator (*) that returns the value of the variable located at the address specified by its operand.
+
+
+What is Memory Leak? How can we avoid?
+Memory leak occurs when programmers create a memory in heap and forget to delete it.
+Memory leaks are particularly serious issues for programs like daemons and servers which by definition never terminate
+To avoid memory leaks, memory allocated on heap should always be freed when no longer needed.
+
+Pointer Mishaps:
+
+There is possibility of potential error while dealing with pointer arithmetic. For example, dereferencing a generic pointer (void *) as shown below can cause misaligned exception,
+
+
+
+// Deferencing a generic pointer (not safe)
+// There is no guarantee that pGeneric is integer aligned
+*(int *)pGeneric;
+It is possible above type of code in programming. If the pointer pGeneric is not aligned as per the requirements of casted data type, there is possibility to get misaligned exception.
+
+Infact few processors will not have the last two bits of address decoding, and there is no way to access misaligned address. The processor generates misaligned exception, if the programmer tries to access such address.
+
+A note on malloc() returned pointer
+
+The pointer returned by malloc() is void *. It can be converted to any data type as per the need of programmer. The implementer of malloc() should return a pointer that is aligned to maximum size of primitive data types (those defined by compiler). It is usually aligned to 8 byte boundary on 32 bit machines.
+
+
+

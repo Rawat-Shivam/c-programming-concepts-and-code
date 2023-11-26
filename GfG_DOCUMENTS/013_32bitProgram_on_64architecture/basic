@@ -1,0 +1,79 @@
+
+
+Now in order to compile with 32-bit gcc, just add a flag -m32 in the command line of compling the ‘C’ language program. For instance, to compile a file of geek.c through Linux terminal, you must write the following commnad with -m32 flag.
+Command: gcc -m32 geek.c -o geek
+If you get an error as follows:
+
+fatal error: bits/predefs.h: No such file or directory
+
+
+Then it indicates that a standard library of gcc is been missing. In that case you must install gcc-multlib by using the following command:
+
+For C language:
+sudo apt-get install gcc-multilib
+For C++ language:
+sudo apt-get install g++-multilib
+After that you will be able to compile a 32-bit binary on a 64-bit system.
+
+
+
+
+How to check whether a program is compiled with 32-bit after adding a “-m32” flag?
+Well we can easily check this by the following program.
+
+// C program to demonstrate difference 
+// in output in 32-bit and 64-bit gcc 
+// File name: geek.c 
+#include<stdio.h> 
+int main() 
+{ 
+    printf("Size = %lu", sizeof(size_t)); 
+} 
+Compile the above program in Linux by these two different commands,
+Default 64-bit compilation,
+
+Input: gcc -m64 geek.c -o out
+Output: ./out
+Size = 8
+Forced 32-bit compilation,
+
+Input: gcc -m32 geek.c -o out
+Output: ./out
+Size = 4
+
+Can we conclude anything from above program. Yes maybe, let’s try to understand more.
+Since the size of data types like long, size_t, pointer data type(int*, char* etc) is compiler dependent, therefore it will generate a different output according to bit of compiler.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

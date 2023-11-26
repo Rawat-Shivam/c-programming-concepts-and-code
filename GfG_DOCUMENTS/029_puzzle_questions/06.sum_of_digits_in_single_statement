@@ -1,0 +1,114 @@
+
+
+1. Iterative:
+
+// C program to compute sum of digits in 
+// number. 
+# include<stdio.h> 
+
+/* Function to get sum of digits */
+int getSum(int n) 
+{ 
+int sum = 0; 
+while (n != 0) 
+{ 
+	sum = sum + n % 10; 
+	n = n/10; 
+} 
+return sum; 
+} 
+
+int main() 
+{ 
+int n = 687; 
+printf(" %d ", getSum(n)); 
+return 0; 
+} 
+
+
+
+How to compute in single line?
+Below function has three lines instead of one line but it calculates sum in line. It can be made one line function if we pass pointer to sum.
+
+# include<stdio.h> 
+/* Function to get sum of digits */
+int getSum(int n) 
+{ 
+	int sum; 
+
+	/* Single line that calculates sum */
+	for (sum = 0; n > 0; sum += n % 10, n /= 10); 
+
+	return sum; 
+} 
+
+int main() 
+{ 
+int n = 687; 
+printf(" %d ", getSum(n)); 
+return 0; 
+} 
+
+
+
+2. Recursive
+int sumDigits(int no) 
+{ 
+return no == 0 ? 0 : no%10 + sumDigits(no/10) ; 
+} 
+
+int main(void) 
+{ 
+	printf("%d", sumDigits(687)); 
+	return 0; 
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

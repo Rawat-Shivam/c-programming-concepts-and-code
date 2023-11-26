@@ -1,0 +1,117 @@
+
+varadic macros in c
+Variable length arguments for Macros
+
+For this we will use the following preprocessor identifiers.
+To support variable length arguments in macro, we must include ellipses (…) in macro definition. There is also “__VA_ARGS__” preprocessing identifier which takes care of variable length argument substitutions which are provided to macro. Concatenation operator ## (aka paste operator) is used to concatenate variable arguments.
+
+#include <stdio.h> 
+#define INFO 1 
+#define ERR 2 
+#define STD_OUT stdout 
+#define STD_ERR stderr 
+
+#define LOG_MESSAGE(prio, stream, msg, ...) do {\ 
+						char *str;\ 
+						if (prio == INFO)\ 
+							str = "INFO";\ 
+						else if (prio == ERR)\ 
+							str = "ERR";\ 
+						fprintf(stream, "[%s] : %s : %d : "msg" \n", \ 
+								str, __FILE__, __LINE__, ##__VA_ARGS__);\ 
+					} while (0) 
+
+int main(void) 
+{ 
+	char *s = "Hello"; 
+
+		/* display normal message */
+	LOG_MESSAGE(ERR, STD_ERR, "Failed to open file"); 
+
+	/* provide string as argument */
+	LOG_MESSAGE(INFO, STD_OUT, "%s Geeks for Geeks", s); 
+
+	/* provide integer as arguments */
+	LOG_MESSAGE(INFO, STD_OUT, "%d + %d = %d", 10, 20, (10 + 20)); 
+
+	return 0; 
+} 
+
+In standard C, you are not allowed to leave the variable argument out entirely; but you are allowed to pass an empty argument. For example, this invocation is invalid in ISO C, because there is no comma after the string:
+
+debug ("A message")
+GNU CPP permits you to completely omit the variable arguments in this way. In the above examples, the compiler would complain, though since the expansion of the macro still has the extra comma after the format string.
+
+To help solve this problem, CPP behaves specially for variable arguments used with the token paste operator, ‘##’. If instead you write
+
+#define debug(format, ...) fprintf (stderr, format, ## __VA_ARGS__)
+and if the variable arguments are omitted or empty, the ‘##’ operator causes the preprocessor to remove the comma before it. If you do provide some variable arguments in your macro invocation, GNU CPP does not complain about the paste operation and instead places the variable arguments after the comma. Just like any other pasted macro argument, these arguments are not macro expanded.
+
+
+How to Count Variable Numbers of Arguments in C?
+C supports variable numbers of arguments. But there is no language provided way for finding out total number of arguments passed. User has to handle this in one of the following ways:
+1) By passing first argument as count of arguments.
+2) By passing last argument as NULL (or 0).
+3) Using some printf (or scanf) like mechanism where first argument has placeholders for rest of the arguments.
+
+Variable Length Argument in C
+Variable number of arguments are represented by three dotes (…)
+// C program to demonstrate use of variable 
+// number of arguments. 
+#include <stdarg.h> 
+#include <stdio.h> 
+
+// this function returns minimum of integer 
+// numbers passed. First argument is count 
+// of numbers. 
+int min(int arg_count, ...) 
+{ 
+	int i; 
+	int min, a; 
+
+	// va_list is a type to hold information about 
+	// variable arguments 
+	va_list ap; 
+
+	// va_start must be called before accessing 
+	// variable argument list 
+	va_start(ap, arg_count); 
+
+	// Now arguments can be accessed one by one 
+	// using va_arg macro. Initialize min as first 
+	// argument in list 
+	min = va_arg(ap, int); 
+
+	// traverse rest of the arguments to find out minimum 
+	for (i = 2; i <= arg_count; i++) 
+		if ((a = va_arg(ap, int)) < min) 
+			min = a; 
+
+	// va_end should be executed before the function 
+	// returns whenever va_start has been previously 
+	// used in that function 
+	va_end(ap); 
+
+	return min; 
+} 
+
+// Driver code 
+int main() 
+{ 
+	int count = 5; 
+	printf("Minimum value is %d", min(count, 12, 67, 6, 7, 100)); 
+	return 0; 
+} 
+
+Here we use macros to implement the functionality of variable arguments.
+
+Use va_list type variable in the function definition.
+int a_function(int x, ...)
+{
+    va_list a_list;
+    va_start( a_list, x );
+}
+Use int parameter and va_start macro to initialize the va_list variable to an argument list. The macro va_start is defined in stdarg.h header file.
+Use va_arg macro and va_list variable to access each item in argument list.
+macro va_end to clean up the memory assigned to va_list variable.
+

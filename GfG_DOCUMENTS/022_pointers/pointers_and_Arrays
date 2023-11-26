@@ -1,0 +1,83 @@
+
+Array Name as Pointers
+An array name acts like a pointer constant. The value of this pointer constant is the address of the first element
+For example, if we have an array named val then val and &val[0] can be used interchangeably.
+
+// C++ program to illustrate Array Name as Pointers in C++ 
+#include <bits/stdc++.h> 
+using namespace std; 
+void geeks() 
+{ 
+    int val[3] = { 5, 10, 15}; 
+    int *ptr; 
+    /*******************************************************************
+    // Assign address of val[0] to ptr. 
+    // We can use ptr=&val[0];(both are same) 
+    /*******************************************************************
+    ptr = val ; 
+    cout << "Elements of the array are: "; 
+    cout << ptr[0] << " " << ptr[1] << " " << ptr[2]; 
+    return; 
+} 
+// Driver program 
+int main() 
+{ 
+    geeks(); 
+    return 0; 
+} 
+Output:
+Elements of the array are: 5 10 15
+********* 
+Now if this ptr is sent to a function as an argument then the array val can be accessed in a similar fashion
+*********
+
+Array parameters treated as pointers because of efficiency. It is inefficient to copy the array data in terms of both memory and time; and most of the times, when we pass an array our intention is to just tell the array we interested in, not to create a copy of the array.
+
+An Uncommon representation of array elements
+int main( ) 
+{ 
+  int arr[2] = {0,1}; 
+  printf("First Element = %d\n",arr[0]); 
+  getchar(); 
+  return 0; 
+} 
+Pretty Simple program.. huh… Output will be 0.
+
+Now if you replace arr[0] with 0[arr], the output would be same. 
+
+*************************************************
+Because compiler converts the array operation in pointers before accessing the array elements.
+
+*************************************************
+e.g. arr[0] would be *(arr + 0) and therefore 0[arr] would be *(0 + arr) and you know that both *(arr + 0) and *(0 + arr) are same.
+
+
+Pointer vs Array in C
+
+Most of the time, pointer and array accesses can be treated as acting the same, the major exceptions being:
+
+1) the sizeof operator
+o sizeof(array) returns the amount of memory used by all elements in array
+o sizeof(pointer) only returns the amount of memory used by the pointer variable itself
+
+2) the & operator
+o &array is an alias for &array[0] and returns the address of the first element in array
+o &pointer returns the address of pointer
+
+3) a string literal initialization of a character array
+o char array[] = “abc” sets the first four elements in array to ‘a’, ‘b’, ‘c’, and ‘\0’
+o char *pointer = “abc” sets pointer to the address of the “abc” string (which may be stored in read-only memory and thus unchangeable)
+
+4) Pointer variable can be assigned a value whereas array variable cannot be.
+
+int a[10];
+int *p; 
+p=a; /*legal*/
+a=p; /*illegal*/ 
+5) Arithmetic on pointer variable is allowed.
+
+p++; /*Legal*/
+a++; /*illegal*/ 
+
+
+

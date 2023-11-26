@@ -1,0 +1,58 @@
+
+
+
+
+
+Character arithmetic in C and C++
+As already known character known character range is between -128 to 127 or 0 to 255. This point has to be kept in mind while doing character arithmetic. To understand better let’s take an example.
+
+
+// C program to demonstrate character arithmetic. 
+#include <stdio.h>   
+int main() 
+{ 
+    char ch1 = 125, ch2 = 10; 
+    ch1 = ch1 + ch2; 
+    printf("%d\n", ch1); 
+    printf("%c\n", ch1 - ch2 - 4); 
+    return 0; 
+} 
+Output:
+-121
+y 
+
+
+
+
+So %d specifier causes an integer value to be printed and %c specifier causes a character value to printed. But care has to taken that while using %c specifier the integer value should not exceed 127.
+So far so good.
+
+
+But for c++ it plays out a little different.
+
+Look at this example to understand better.
+
+// A C++ program to demonstrate character 
+// arithmetic in C++. 
+#include <bits/stdc++.h> 
+using namespace std; 
+  
+int main() 
+{ 
+    char ch = 65; 
+    cout << ch << endl; 
+    cout << ch + 0 << endl; 
+    cout << char(ch + 32) << endl; 
+    return 0; 
+} 
+Output:
+A
+65
+a 
+
+Without a ‘+’ operator character value is printed. But when used along with ‘+’ operator behaved differently. Use of ‘+’ operator implicitly typecasts it to an ‘int’. So to conclude, in character arithmetic, typecasting of char variable to ‘char’ is explicit and to ‘int’ it is implicit.
+
+
+
+
+

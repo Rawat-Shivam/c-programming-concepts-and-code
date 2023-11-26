@@ -1,0 +1,388 @@
+
+Implement Your Own sizeof
+#include<stdio.h> 
+#define my_sizeof(type) (char *)(&type+1)-(char*)(&type) 
+int main() 
+{ 
+    double x; 
+    printf("%ld", my_sizeof(x)); 
+    getchar(); 
+    return 0; 
+} 
+
+Why does sizeof(x++) not increment x in C?
+According to C99 Standards, the sizeof() operator only takes into account the type of the operand, which may be an expression or the name of a type (i.e int, double, float etc) and not the value obtained on evaluating the expression. Hence, the operand inside the sizeof() operator is not evaluated. It is evaluated only if the type of the operand is variable length array because in that case, the size can be determined only after the expression is evaluated.
+
+Sizeof is a much used operator in the C or C++. It is a compile time unary operator which can be used to compute the size of its operand. The result of sizeof is of unsigned integral type which is usually denoted by size_t. sizeof can be applied to any data-type, including primitive types such as integer and floating-point types, pointer types, or compound datatypes such as Structure, union etc.
+
+//////////////////////////////////////			Usage			///////////////////////////////
+
+sizeof() operator is used in different way according to the operand type.
+
+
+1. When operand is a Data Type.
+When sizeof() is used with the data types such as int, float, char… etc it simply returns the amount of memory is allocated to that data types.
+#include <stdio.h> 
+int main() 
+{ 
+    printf("%lu\n", sizeof(char)); 
+    printf("%lu\n", sizeof(int)); 
+    printf("%lu\n", sizeof(float)); 
+    printf("%lu", sizeof(double)); 
+    return 0; 
+} Note: sizeof() may give different output according to machine(32/64 bit machine)
+
+
+2. When operand is an expression.
+When sizeof() is used with the expression, it returns size of the expression. Let see example:
+#include <stdio.h> 
+int main() 
+{ 
+    int a = 0; 
+    double d = 10.21; 
+    printf("%lu", sizeof(a + d)); 
+    return 0; 
+} 
+Output:
+8
+
+//////////////////////	Need of Sizeof	/////////////////////////////
+
+1. To find out number of elements in a array.
+Sizeof can be used to calculate number of elements of the array automatically. Let see Example :
+#include <stdio.h> 
+int main() 
+{ 
+    int arr[] = { 1, 2, 3, 4, 7, 98, 0, 12, 35, 99, 14 }; 
+    printf("Number of elements:%lu ", sizeof(arr) / sizeof(arr[0])); 
+    return 0; 
+} 
+
+************* so does sizeof() works on address or value or.....somethng else?
+
+
+2. To allocate a block of memory dynamically.
+sizeof is greatly used in dynamic memory allocation. For example, if we want to allocate memory for which is sufficient to hold 10 integers and we don’t know the sizeof(int) in that particular machine. We can allocate with the help of sizeof.
+int* ptr = (int*)malloc(10 * sizeof(int)); 
+
+
+Operands for sizeof operator
+The sizeof operator is used to return the size of its operand, in bytes. This operator always precedes its operand. The operand either may be a data-type or an expression. Let’s look at both the operands through proper examples.
+
+1)type-name: The type-name must be specified in parentheses
+sizeof(type - name) 
+
+
+#include <stdio.h>  
+int main()  
+{  
+    printf("%lu\n", sizeof(char));  
+    printf("%lu\n", sizeof(int));  
+    printf("%lu\n", sizeof(float));  
+    printf("%lu", sizeof(double)); 
+    return 0;  
+} 
+
+2)expression: The expression can be specified with or without the parentheses.
+// First type 
+sizeof expression 
+  
+// Second type 
+sizeof(expression)
+
+The expression is used only for getting the type of operand and not evaluation. For example, below code prints value of i as 5 and the size of i a
+#include <stdio.h> 
+  
+int main() 
+{ 
+    int i = 5; 
+    int int_size = sizeof(i++); 
+  
+    // Displaying the size of the operand 
+    printf("\n size of i = %d", int_size); 
+  
+    // Displaying the value of the operand 
+    printf("\n Value of i = %d", i); 
+  
+    getchar(); 
+    return 0; 
+} 
+
+
+Is sizeof for a struct equal to the sum of sizeof of each member?
+
+
+The sizeof for a struct is not always equal to the sum of sizeof of each individual member. This is because of the padding added by the compiler to avoid alignment issues. Padding is only added when a structure member is followed by a member with a larger size or at the end of the structure.
+
+Different compilers might have different alignment constraints as C standards state that alignment of structure totally depends on the implementation.
+
+
+Let’s take a look at the following examples for better understanding:
+
+
+Case 1:
+// C program to illustrate 
+// size of struct 
+#include <stdio.h> 
+  
+int main() 
+{ 
+  
+    struct A { 
+  
+        // sizeof(int) = 4 
+        int x; 
+        // Padding of 4 bytes 
+  
+        // sizeof(double) = 8 
+        double z; 
+  
+        // sizeof(short int) = 2 
+        short int y; 
+        // Padding of 6 bytes 
+    }; 
+  
+    printf("Size of struct: %ld", sizeof(struct A)); 
+  
+    return 0; 
+} 
+Output:
+Size of struct: 24
+
+The red portion represents the padding added for data alignment and the green portion represents the struct members. In this case, x (int) is followed by z (double), which is larger in size as compared to x. Hence padding is added after x. Also, padding is needed at the end for data alignment.
+
+
+
+
+
+Case 2:
+// C program to illustrate 
+// size of struct 
+#include <stdio.h> 
+  
+int main() 
+{ 
+  
+    struct B { 
+        // sizeof(double) = 8 
+        double z; 
+  
+        // sizeof(int) = 4 
+        int x; 
+  
+        // sizeof(short int) = 2 
+        short int y; 
+        // Padding of 2 bytes 
+    }; 
+  
+    printf("Size of struct: %ld", sizeof(struct B)); 
+  
+    return 0; 
+} 
+Output:
+Size of struct: 16
+
+In this case, the members of the structure are sorted in decreasing order of their sizes. Hence padding is required only at the end.
+
+
+
+
+
+Case 3:
+// C program to illustrate 
+// size of struct 
+#include <stdio.h> 
+  
+int main() 
+{ 
+  
+    struct C { 
+        // sizeof(double) = 8 
+        double z; 
+  
+        // sizeof(short int) = 2 
+        short int y; 
+        // Padding of 2 bytes 
+  
+        // sizeof(int) = 4 
+        int x; 
+    }; 
+  
+    printf("Size of struct: %ld", sizeof(struct C)); 
+  
+    return 0; 
+} 
+Output:
+Size of struct: 16
+
+In this case, y (short int) is followed by x (int) and hence padding is required after y. No padding is needed at the end in this case for data alignment.
+
+C language doesn’t allow the compilers to reorder the struct members to reduce the amount of padding. In order to minimize the amount of padding, the struct members must be sorted in a descending order (similar to the case 2).
+
+
+
+
+Why does sizeof(x++) not increment x in C?
+
+According to C99 Standards, the sizeof() operator only takes into account the type of the operand, which may be an expression or the name of a type (i.e int, double, float etc) and not the value obtained on evaluating the expression. Hence, the operand inside the sizeof() operator is not evaluated. It is evaluated only if the type of the operand is variable length array because in that case, the size can be determined only after the expression is evaluated.
+
+
+
+Case 1:
+When the sizeof() method is passed a fixed size structure:
+In this case, the sizeof() operator does not evaluate the parameter. Only the type of the parameter is checked and its size is returned.
+
+Example 1:
+
+The output value of x after increment is still 3 as compared to the expected value which is 4. This is because sizeof operator doesn’t need to evaluate the expression to obtain the size as the data type of the operand doesn’t change and hence the size remains the same.
+#include <stdio.h> 
+int main() 
+{ 
+    int x = 3; 
+    printf("%d\n", sizeof(x++)); 
+    printf("x = %d", x); 
+  
+    return 0; 
+} 
+Output:
+4
+x = 3
+
+Case 2:
+When the sizeof() method is passed a variable size structure:
+In this case, the sizeof() operator evaluates the parameter to see if there is any change of size. If found, then first the size is modified then the final size is returned
+
+Below example illustrate the sizeof() operator in this scenario:
+
+Example 2:
+In this example, the sizeof operator needs to evaluate the expression in order to calculate the size of the array which is shown in the figure. Hence, in this case, we get the value of x after incrementation.
+#include <stdio.h>   
+int main() 
+{ 
+    int x = 3; 
+    printf("%d\n", sizeof(int[x++])); 
+    printf("x = %d", x); 
+  
+    return 0; 
+} 
+Output:
+12
+x = 4
+
+Example 3:
+Again in this example, the sizeof operator needs to evaluate the expression in order to calculate the size of the array which is shown in the figure. In this example, the post-increment operator is used and hence the output in the first line is 16. In the second line, the value of x is printed after incrementation.
+#include <stdio.h> 
+int main() 
+{ 
+    int x = 3; 
+    printf("%d\n", sizeof(int[++x])); 
+    printf("x = %d", x); 
+  
+    return 0; 
+} 
+Output:
+16
+x = 4
+
+
+Difference between strlen() and sizeof() for string in C
+sizeof()
+
+Sizeof operator is a compile time unary operator which can be used to compute the size of its operand.
+
+
+
+
+The result of sizeof is of unsigned integral type which is usually denoted by size_t.
+sizeof can be applied to any data-type, including primitive types such as integer and floating-point types, pointer types, or compound datatypes such as Structure, union etc.
+strlen()
+
+strlen() is a predefined function in C whose definition is contained in the header file “string.h”.
+
+strlen() accepts a pointer to an array as argument and walks through memory at run time from the address we give it looking for a NULL character and counts up how many memory locations it passed before it finds one.
+The main task of strlen() is to count the length of an array or string.
+sizeof vs strlen()
+
+Type: Sizeof operator is a unary operator whereas strlen() is a predefined function in C
+Data types supported: Sizeof gives actual size of any type of data (allocated) in bytes (including the null values) whereas get the length of an array of chars/string.
+Evaluation size: sizeof() is a compile-time expression giving you the size of a type or a variable’s type. It doesn’t care about the value of the variable.
+Strlen on the other hand, gives you the length of a C-style NULL-terminated string.
+Summary: The two are almost different concepts and used for different purposes.
+In context of C++: In C++, you do not need any of them as such.
+strlen() in C-style strings can be replaced by C++ std::strings.
+sizeof() in C is as an argument to functions like malloc(), memcpy() or memset() can be replaced by C++ (use new, std::copy(), and std::fill() or constructors).
+
+
+
+How to find size of array in C/C++ without using sizeof ?
+
+
+We can find size of an array using sizeof operator as shown below.
+
+// Finds size of arr[] and stores in 'size'
+int size = sizeof(arr)/sizeof(arr[0]);
+Can we do the same without using sizeof operator?
+
+Method 1 (Writing our own sizeof)
+
+Given an array (you dont know the type of elements in the array), find the total number of elements in the array without using sizeof operator?
+
+
+One solution is to write our own sizeof operator (See this for details)
+
+// C++ program to find size of an array by writing our 
+// sizeof 
+#include <bits/stdc++.h> 
+using namespace std; 
+  
+// User defined sizeof macro 
+# define my_sizeof(type) ((char *)(&type+1)-(char*)(&type))  
+int main() 
+{ 
+    int  arr[] = {1, 2, 3, 4, 5, 6}; 
+    int size = my_sizeof(arr)/my_sizeof(arr[0]); 
+    cout << "Number of elements in arr[] is " 
+         << size;
+    return 0; 
+} 
+Output :
+Number of elements in arr[] is 6
+
+Method 2(Using a pointer hack)
+The following solution is very short when compared to the above solution. Number of elements in an array A can be found out using the expression
+int size = *(&arr + 1) - arr;
+
+// C++ program to find size of an array by using a  
+// pointer hack
+#include <bits/stdc++.h> 
+using namespace std; 
+int main() 
+{ 
+    int  arr[] = {1, 2, 3, 4, 5, 6}; 
+    int size = *(&arr + 1) - arr; 
+    cout << "Number of elements in arr[] is "
+         << size; 
+    return 0; 
+} 
+Output :
+Number of elements in arr[] is 6
+How does this work?
+Here the pointer arithmetic does its part. We don’t need to explicitly convert each of the locations to character pointers.
+
+&arr ==> Pointer to an array of 6 elements.
+         [See this for difference between &arr
+          and arr]   
+
+(&arr + 1) ==> Address of 6 integers ahead as
+               pointer type is pointer to array
+               of 6 integers.
+
+*(&arr + 1) ==> Same address as (&arr + 1), but 
+                type of pointer is "int *".
+
+*(&arr + 1) - arr ==> Since *(&arr + 1) points 
+                   to the address 6 integers
+                   ahead of arr, the difference
+                   between two is 6.         
+
+

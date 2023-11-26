@@ -1,0 +1,77 @@
+
+
+memmove() in C/C++
+memmove() is used to copy a block of memory from a location to another. It is declared in string.h
+
+// Copies "numBytes" bytes from address "from" to address "to"
+void * memmove(void *to, const void *from, size_t numBytes);
+Below is a sample C program to show working of memmove().
+
+/* A C program to demonstrate working of memmove */
+#include <stdio.h> 
+#include <string.h> 
+int main () 
+{ 
+char str1[] = "Geeks"; // Array of size 100 
+char str2[] = "Quiz"; // Array of size 5 
+puts("str1 before memmove "); 
+puts(str1); 
+/* Copies contents of str2 to sr1 */
+memmove(str1, str2, sizeof(str2)); 
+puts("\nstr1 after memmove "); 
+puts(str1); 
+return 0; 
+} 
+output:
+str1 before memmove 
+Geeks
+
+str1 after memmove 
+Quiz
+
+
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+How is it different from memcpy()?
+memcpy() simply copies data one by one from one location to another. On the other hand memmove() copies the data first to an intermediate buffer, then from buffer to destination.
+
+memcpy() leads to problems when strings overlap. For example consider below program
+
+// Sample program to show that memcpy() can loose data. 
+#include <stdio.h> 
+#include <string.h> 
+int main() 
+{ 
+   char csrc[100] = "Geeksfor"; 
+   memcpy(csrc+5, csrc, strlen(csrc)+1); 
+   printf("%s", csrc); 
+   return 0; 
+} 
+Output:
+GeeksGeeksGeek
+
+
+Since the input addresses are overlapping, the above program overwrites the original string and causes data loss.
+
+// Sample program to show that memmove() is better than memcpy() 
+// when addresses overlap. 
+#include <stdio.h> 
+#include <string.h> 
+int main() 
+{ 
+   char csrc[100] = "Geeksfor"; 
+   memmove(csrc+5, csrc, strlen(csrc)+1); 
+   printf("%s", csrc); 
+   return 0; 
+} 
+Output:
+GeeksGeeksfor
+
+Write your own memcpy() and memmove()?
+
+
+
+
+

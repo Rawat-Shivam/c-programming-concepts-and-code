@@ -1,0 +1,33 @@
+
+exit() terminates the process normally.
+status: Status value returned to the parent process. Generally, a status value of 0 or EXIT_SUCCESS indicates success, and any other value or the constant EXIT_FAILURE is used to indicate an error. exit() performs following operations.
+* Flushes unwritten buffered data.
+* Closes all open files.
+* Removes temporary files.
+* Returns an integer exit status to the operating system.
+
+The C standard atexit() function can be used to customize exit() to perform additional actions at program termination
+
+When exit() is called, any open file descriptors belonging to the process are closed and any children of the process are inherited by process 1, init, and the process parent is sent a SIGCHLD signal.
+
+The mystery behind exit() is that it takes only integer args in the range 0 – 255 . Out of range exit values can result in unexpected exit codes. An exit value greater than 255 returns an exit code modulo 256.
+For example, exit 9999 gives an exit code of 15 i.e. (9999 % 256 = 15).
+
+
+abort()
+
+void abort ( void ); 
+
+Unlike exit() function, abort() may not close files that are open. It may also not delete temporary files and may not flush stream buffer. Also, it does not call functions registered with atexit().
+If we want to make sure that data is written to files and/or buffers are flushed then we should either use exit() or include a signal handler for SIGABRT.
+This function actually terminates the process by raising a SIGABRT signal, and your program can include a handler to intercept this signal 
+
+
+void assert( int expression ); 
+If expression evaluates to 0 (false), then the expression, sourcecode filename, and line number are sent to the standard error, and then abort() function is called. If the identifier NDEBUG (“no debug”) is defined with #define NDEBUG then the macro assert does nothing.
+
+exit() vs _Exit() in C and C++
+In C, exit() terminates the calling process without executing the rest code which is after the exit() function.
+Now the question is that if we have exit() function then why C11 standard introduced _Exit()? Actually exit() function performs some cleaning before termination of the program like connection termination, buffer flushes etc. The _Exit() function in C/C++ gives normal termination of a program without performing any cleanup tasks. For example it does not execute functions registered with atexit.
+
+

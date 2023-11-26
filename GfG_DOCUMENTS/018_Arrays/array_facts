@@ -1,0 +1,150 @@
+
+ “array” is a “pointer to the first element of array” but “&array” is a “pointer to whole array of 5 int”. Since “array” is pointer to int, addition of 1 resulted in an address with increment of 4 (assuming int size in your machine is 4 bytes). Since “&array” is pointer to array of 5 ints, addition of 1 resulted in an address with increment of 4 x 5 = 20 = 0x14.
+
+
+Why C treats array parameters as pointers?
+In C, array parameters are treated as pointers. The following two definitions of foo() look different, but to the compiler they mean exactly the same thing. It’s preferable to use whichever syntax is more accurate for readability. If the pointer coming in really is the base address of a whole array, then we should use [ ].
+
+void foo(int arr_param[])  
+{ 
+  /* Silly but valid. Just changes the local pointer */
+  arr_param = NULL;  
+} 
+  
+void foo(int *arr_param)  
+{ 
+  /* ditto */
+  arr_param = NULL;  
+} 
+Array parameters treated as pointers because of efficiency. It is inefficient to copy the array data in terms of both memory and time; and most of the times, when we pass an array our intention is to just tell the array we interested in, not to create a copy of the array.
+
+collection of items stored at contiguous memory locations and 
+elements can be accessed randomly using indices of an array
+but in link list we need to travel along the links from the first_node generally!
+
+They are used to store similar type of elements as in the data type must be the same for all elements
+and it could be array of integers ,float ,char, struture, even though linked list, array of pointer,array of function pointer.
+
+Why do we need arrays?
+if we want to store a large number of instances, it becomes difficult to manage them with normal variables. The idea of an array is to represent many instances in one variable.
+
+Advantages of an Array in C/C++:
+Random access of elements using array index.
+Use of less line of code as it creates a single array of multiple elements.
+Easy access to all the elements.
+Traversal through the array becomes easy using a single loop.
+Sorting becomes easy as it can be accomplished by writing less line of code.
+
+Disadvantages of an Array in C/C++:
+Allows a fixed number of elements to be entered which is decided at the time of declaration. Unlike a linked list, an array in C is not dynamic.
+Insertion and deletion of elements can be costly since the elements are needed to be managed in accordance with the new memory allocation.
+
+No Index Out of bound Checking:
+There is no index out of bounds checking in C/C++, for example, the following program compiles fine but may produce unexpected output when run.
+// This C program compiles fine 
+// as index out of bound 
+// is not checked in C. 
+#include <stdio.h> 
+int main() 
+{ 
+    int arr[2]; 
+    printf("%d ", arr[3]); 
+    printf("%d ", arr[-2]); 
+    return 0; 
+} 
+Output:
+2008101287 4195777
+
+In C, it is not compiler error to initialize an array with more elements than the specified size. For example, the below program compiles fine and shows just Warning.
+#include <stdio.h> 
+int main() 
+{ 
+  
+    // Array declaration by initializing it with more 
+    // elements than specified size. 
+    int arr[2] = { 10, 20, 30, 40, 50 }; 
+    return 0; 
+} 
+Warnings:
+prog.c: In function 'main':
+prog.c:7:25: warning: excess elements in array initializer
+  int arr[2] = { 10, 20, 30, 40, 50 };
+                         ^
+prog.c:7:25: note: (near initialization for 'arr')
+prog.c:7:29: warning: excess elements in array initializer
+  int arr[2] = { 10, 20, 30, 40, 50 };
+                             ^
+prog.c:7:29: note: (near initialization for 'arr')
+prog.c:7:33: warning: excess elements in array initializer
+  int arr[2] = { 10, 20, 30, 40, 50 };
+                                 ^
+prog.c:7:33: note: (near initialization for 'arr')
+Note: The program won’t compile in C++. If we save the above program as a .cpp, the program generates compiler error “error: too many initializers for ‘int [2]'”.
+
+The elements are stored at contiguous memory locations
+Example:
+// C program to demonstrate that array elements are stored 
+// contiguous locations 
+#include <stdio.h> 
+int main() 
+{ 
+    // an array of 10 integers.  If arr[0] is stored at 
+    // address x, then arr[1] is stored at x + sizeof(int) 
+    // arr[2] is stored at x + sizeof(int) + sizeof(int) 
+    // and so on. 
+    int arr[5], i; 
+    printf("Size of integer in this compiler is %lu\n", sizeof(int)); 
+  
+    for (i = 0; i < 5; i++) 
+        // The use of '&' before a variable name, yields 
+        // address of variable. 
+        printf("Address arr[%d] is %p\n", i, &arr[i]); 
+  
+    return 0; 
+} 
+Output:
+Size of integer in this compiler is 4
+Address arr[0] is 0x7ffd636b4260
+Address arr[1] is 0x7ffd636b4264
+Address arr[2] is 0x7ffd636b4268
+Address arr[3] is 0x7ffd636b426c
+Address arr[4] is 0x7ffd636b4270
+
+What are the data types for which it is not possible to create an array?
+In C, it is possible to have array of all types except following.
+1) void.
+2) functions.
+
+For example, below program throws compiler error
+int main()
+{
+    void arr[100];
+}
+Output:
+error: declaration of 'arr' as array of voids 
+
+But we can have array of void pointers and function pointers. The below program works fine.
+int main()
+{
+    void *arr[100];
+}
+
+ We hope that we could clarify that any array name itself is a pointer to the first element but & (i.e. address-of) for the array name is a pointer to the whole array itself.
+Now you see why these two seemingly similar pointers are different at core level. This logic can be extended to multidimensional arrays as well. Suppose double twoDarray[5][4] is a 2D array. Here, “twoDarray” is a pointer to array of 4 int but “&twoDarray” is pointer to array of 5 rows arrays of 4 int”.
+
+In this post array properties in C are discussed.
+
+1) In C, it is possible to have array of all types except void and functions. See this for details.
+3) Arrays are always passed as pointer to functions. 
+4) A character array initialized with double quoted string has last element as ‘\0’. See this for details.
+5) Like other variables, arrays can be allocated memory in any of the three segments, data, heap, and stack (See this for details). Dynamically allocated arrays are allocated memory on heap, static or global arrays are allocated memory on data segment and local arrays are allocated memory on stack segment.
+
+Are array members deeply copied?
+In C/C++, we can assign a struct (or class in C++ only) variable to another variable of same type. When we assign a struct variable to another, all members of the variable are copied to the other struct variable. But what happens when the structure contains pointer to dynamically allocated memory and what if it contains an array?
+
+In the following C++ program, struct variable st1 contains pointer to dynamically allocated memory. When we assign st1 to st2, str pointer of st2 also start pointing to same memory location. This kind of copying is called Shallow Copy.
+
+Now, what about arrays? The point to note is that the array members are not shallow copied, compiler automatically performs Deep Copy for array members.. In the following program, struct test contains array member str[]. When we assign st1 to st2, st2 has a new copy of the array. So st2 is not changed when we change str[] of st1.
+
+
+

@@ -1,0 +1,35 @@
+#include <stdio.h>
+int main(void)
+{
+int i, j, *p;
+here you declared p as a pointr to an int.
+i = 25;
+j = 100;
+int *p = &i;
+here, you tried to declare it again.
+
+Both declarations don't specify the linkage - that is, they don't say that the object is extern (external linkage) or static (internal linkage) .Such objects have 'no linkage' and you can't have two of them in the same scope. See 6.2.2 of the Standard.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

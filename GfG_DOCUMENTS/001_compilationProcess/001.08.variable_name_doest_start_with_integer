@@ -1,0 +1,21 @@
+
+
+
+					001.08.variable_name_doest_start_with_integer
+
+
+Why variable name does not start with numbers in C ?
+In C, apart from keywords everything in the C program is treated as Identifier. Identifier can be the names given to variables, constants, functions and user-defined data. A variable name can consist of alphabets (upper case, lower case), numbers (0-9) and _ (underscore) character. But the name of any variable must not start with a number. Now we must have the answer that why can’t we name a variable starting with number. Following might be the reason for it. The compiler has 7 phase as fellows:
+
+    Lexical Analysis
+    Syntax Analysis
+    Semantic Analysis
+    Intermediate Code Generation
+    Code Optimization
+    Code Generation
+    Symbol Table
+Backtracking is avoided in lexical analysis phase while compiling the piece of code. The variable like Apple; , the compiler will know its a identifier right away when it meets letter ‘A’ character in the lexical Analysis phase. However, a variable like 123apple; , compiler won’t be able to decide if its a number or identifier until it hits ‘a’ and it needs backtracking to go in the lexical analysis phase to identify that it is a variable. But it is not supported in compiler.
+When you’re parsing the token you only have to look at the first character to determine if it’s an identifier or literal and then send it to the correct function for processing. So that’s a performance optimization.
+
+
+

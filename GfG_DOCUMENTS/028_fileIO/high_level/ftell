@@ -1,0 +1,10 @@
+
+ftell() in C with example
+ftell() in C is used to find out the position of file pointer in the file with respect to starting of the file. Syntax of ftell() is:
+
+long ftell(FILE *pointer)
+Consider below C program. The file taken in the example contains the following data :
+“Someone over there is calling you. We are going for work. Take care of yourself.” (without the quotes)
+When the fscanf statement is executed word “Someone” is stored in string and the pointer is moved beyond “Someone”. Therefore ftell(fp) returns 7 as length of “someone” is 6.
+
+

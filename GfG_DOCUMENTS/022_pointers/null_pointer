@@ -1,0 +1,49 @@
+
+NULL Pointer
+“An integer constant expression with the value 0, or such an expression cast to type void *, is called a null pointer constant. If a null pointer constant is converted to a pointer type, the resulting pointer, called a null pointer, is guaranteed to compare unequal to a pointer to any object or function.”
+
+NULL Pointer is a pointer which is pointing to nothing. In case, if we don’t have address to be assigned to a pointer, then we can simply use NULL.
+#include <stdio.h> 
+int main() 
+{ 
+    // Null Pointer 
+    int *ptr = NULL; 
+    printf("The value of ptr is %p", ptr); 
+    return 0; 
+} 
+Output :
+The value of ptr is (nil)
+
+Important Points
+NULL vs Uninitialized pointer – An uninitialized pointer stores an undefined value. A null pointer stores a defined value, but one that is defined by the environment to not be a valid address for any member or object.
+NULL vs Void Pointer – Null pointer is a value, while void pointer is a type
+
+
+a) To initialize a pointer variable when that pointer variable isn’t assigned any valid memory address yet.
+b) To check for a null pointer before accessing any pointer variable. 
+   By doing so, we can perform error handling in pointer related code e.g. dereference pointer variable only if it’s not NULL.
+c) To pass a null pointer to a function argument when we don’t want to pass any valid memory address.
+
+
+Coming to our discussion, NULL macro is defined as ((void *)0) in header files of most of the C compiler implementations. But C standard is saying that 0 is also a null pointer constant. It means that the following is also perfectly legal as per standard.
+
+int * ptr = 0; 
+
+Please note that 0 in the above C statement is used in pointer-context and it’s different from 0 as integer. This is one of the reasons why the usage of NULL is preferred because it makes it explicit in code that programmer is using null pointer, not integer 0
+
+You can try few other things in above program such as printf(“‘%c“,NULL) or printf(“%s”,NULL) and even printf(“%f”,NULL). The outputs of these are going to be different depending on the platform used but it’d be interesting especially usage of %f with NULL!
+
+Can we use sizeof() operator on NULL in C? Well, usage of sizeof(NULL) is allowed but the exact size would depend on platform.
+
+Since NULL is defined as ((void*)0), we can think of NULL as a special pointer and its size would be equal to any pointer. If the pointer size of a platform is 4 bytes, the output of the above program would be 4. But if pointer size on a platform is 8 bytes, the output of the above program would be 8.
+
+#include<stdio.h> 
+int main() 
+{ 
+ printf("%lu",sizeof(void *)); 
+ return 0; 
+} 
+
+If an argument to a function has an invalid value (such as a value outside the domain of the function, or a pointer outside the address space of the program, or a null pointer, or a pointer to non-modifiable storage when the corresponding parameter is not const-qualified) or a type (after promotion) not expected by a function with variable number of arguments, the behavior is undefined.
+
+

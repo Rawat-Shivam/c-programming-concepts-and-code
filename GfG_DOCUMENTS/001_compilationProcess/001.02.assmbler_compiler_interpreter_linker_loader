@@ -1,0 +1,54 @@
+
+
+					001.02.assmbler_compiler_interpreter_linker_loader
+
+
+
+Assembler
+assembler is a program which converts assembly language into machine code. A computer doesn’t understand human languages like English or french, but it deals in a much simpler language called binary language, but a programmer can not write the whole program with its complexity in a binary language therefore we need a program that can convert the human written language (assembly language) into binary language, these softwares are called assemblers
+
+In assembler, a programmer can write a program into sequence of assembler instructions, the sequence of assembler instruction is known as source code and source program.
+------------------------------------------------------------------
+Compiler
+A Compiler is a program that converts a number of statement of program into binary language, but it is more intelligent than interpreter because it goes through the entire code at once and can tell the possible errors and limits and ranges.But this makes it’s operating time a little slower.it is platform-dependent.its help to detect error and get displayed after reading the entire code by compiler.
+
+In other words we can say that, “Compilers turns the high level language to binary language or machine code  at only time once”, it is known as Compiler.
+----------------------------------------------------------------
+Interpreter
+An interpreter is also a program like a compiler that converts assembly language into binary but an interpreter goes through one line of code at a time and executes it and then goes on to the next line of the code and then the next and keeps going on until there is an error in the line or the code has completed.It is 5 to 25 times faster than a compiler but it stops at the line where error occurs and then again if the next line has an error too, where as a compiler gives all the errors in the code at once.if changes are made on that code which is already compiled then the changed code will need to  be compiled and added to compiled code or the entire code need to be re-compiled.
+
+Also, a compiler saves the machine codes for future use permanently but an interpreter doesn’t, but an interpreter occupies less memory.
+
+Interpreter is differ from compiler such as::
+Interpreter is faster than compiler.
+It contains less memory.
+Interpreter executes the instructions in to source programming language.
+
+There are several types of interpreter::
+Syntax-directed interpreter
+Threaded interpreter
+Bytecode interpreter
+------------------------------------------------------------------
+Linker
+For a code to run we need to include a header file or a file saved from the library which are pre-defined if they are not included in the beginning of the program then after execution the compiler will generate errors, and the code will not work.
+
+Linker is a program that holds one or more object files which is created by compiler, combines them into one executable file.Linking is implemented  at both time,load time and compile time. Compile time is when high level language is turns to machine code and load time is when the code is loaded into the memory by loader.
+
+Linker is of two types:
+
+1.Dynamic Linker:-          
+It is implemented during run time.
+It requires less memory.
+In dynamic linking there are many chances of error and failure chances.
+Linking stored the program in virtual memory to save RAM,So we have need to shared library
+2.Static Linker:-
+It is implemented during compilation of source program.
+It requires more memory.
+ Linking is implemented before execution in static linking.
+It is faster and portable.
+In static linking there are less chances to error and No chances to failure.
+------------------------------------------------------------------
+Loader
+Loader is a program that loads machine codes of a program into the system memory.It is part of the OS of the computer that is responsible for loading the program. It is the bare beginning of the execution of a program. Loading a program involves reading the contents of executable file( executable file is executable code ,which linker makes as an output  ) into memory. Only after the program is loaded the operating system starts the program by passing control to the loaded program code. All the OS that support loading have loader and many have loaders permanently in their memory.
+
+

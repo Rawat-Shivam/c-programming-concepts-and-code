@@ -1,0 +1,307 @@
+
+
+strdup() and strndup() functions in C/C++
+The strdup() and strndup() functions are used to duplicate a string.
+
+strdup() :
+Syntax : char *strdup(const char *s);
+
+This function returns a pointer to a null-terminated byte string, which is a duplicate of the string pointed to by s. The memory obtained is done dynamically using malloc and hence it can be freed using free().
+It returns a pointer to the duplicated string s.
+
+Below is the C implementation to show the use of strdup() function in C:
+
+// C program to demonstrate strdup() 
+#include<stdio.h> 
+#include<string.h> 
+int main() 
+{ 
+    char source[] = "GeeksForGeeks"; 
+    // A copy of source is created dynamically 
+    // and pointer to copy is returned. 
+    char* target = strdup(source);  
+    printf("%s", target); 
+    return 0; 
+} 
+Output:
+GeeksForGeeks
+
+
+strndup() :
+syntax: char *strndup(const char *s, size_t n);
+This function is similar to strdup(), but copies at most n bytes.
+
+Note: If s is longer than n, then only n bytes are copied, and a NULL (”) is added at the end.
+
+Below is the C implementation to show the use of strndup() function in C:
+// C program to demonstrate strndup() 
+#include<stdio.h> 
+#include<string.h> 
+int main() 
+{ 
+    char source[] = "GeeksForGeeks"; 
+    // 5 bytes of source are copied to a new memory 
+    // allocated dynamically and pointer to copied 
+    // memory is returned. 
+    char* target = strndup(source, 5); 
+    printf("%s", target); 
+    return 0; 
+} 
+Output:
+Geeks
+
+strpbrk() in C
+This function finds the first character in the string s1 that matches any character specified in s2 (It excludes terminating null-characters).
+Syntax :: char *strpbrk(const char *s1, const char *s2)
+
+Parameters ::
+s1 : string to be scanned.
+s2 : string containing the characters to match.
+
+Return Value ::
+It returns a pointer to the character in s1 that 
+matches one of the characters in s2, else returns NULL.
+
+
+// C code to demonstrate the working of 
+// strpbrk 
+#include <stdio.h> 
+#include <string.h> 
+// Driver function 
+int main() 
+{ 
+    // Declaring three strings 
+    char s1[] = "geeksforgeeks"; 
+    char s2[] = "app"; 
+    char s3[] = "kite"; 
+    char* r, *t; 
+  
+    // Checks for matching character 
+    // no match found 
+    r = strpbrk(s1, s2);  
+    if (r != 0) 
+        printf("First matching character: %c\n", *r); 
+    else
+        printf("Character not found"); 
+  
+    // Checks for matching character 
+    // first match found at "e" 
+    t = strpbrk(s1, s3); 
+    if (t != 0) 
+        printf("\nFirst matching character: %c\n", *t); 
+    else
+        printf("Character not found"); 
+  
+    return (0); 
+} 
+Output:
+Character not found
+First matching character: e
+
+Practical Application ::
+This function can be used in game of lottery where the person having string with letter
+coming first in victory wins, i.e. this can be used at any place where first person wins.
+
+// C code to demonstrate practical application 
+// of strpbrk 
+#include <stdio.h> 
+#include <string.h> 
+// Driver function 
+int main() 
+{ 
+    // Initializing victory string 
+    char s1[] = "victory"; 
+  
+    // Declaring lottery strings 
+    char s2[] = "a23"; 
+    char s3[] = "i22"; 
+    char* r, *t; 
+    // Use of strpbrk() 
+    r = strpbrk(s1, s2); 
+    t = strpbrk(s1, s3); 
+  
+    // Checks if player 1 has won lottery 
+    if (r != 0) 
+        printf("Congrats u have won"); 
+    else
+        printf("Better luck next time"); 
+  
+    // Checks if player 2 has won lottery 
+    if (t != 0) 
+        printf("\nCongrats u have won"); 
+    else
+        printf("Better luck next time"); 
+  
+    return (0); 
+} 
+Output:
+Better luck next time
+Congrats u have won
+
+
+strcmp() in C/C++
+strcmp() is a built-in library function and is declared in <string.h> header file. This function takes two strings as arguments and compare these two strings lexicographically.
+
+Syntax::
+int strcmp(const char *leftStr, const char *rightStr );
+
+In the above prototype, function srtcmp takes two strings as parameters and returns an integer value based on the comparison of strings.
+it starts comparison character by character starting from the first character until the characters in both strings are equal or a NULL character is encountered.
+This process will be continued until a character in either string is NULL or the characters are unequal.
+
+What does strcmp() return?
+This function can return three different integer values based on the comparison:
+
+1) 
+Zero ( 0 ): A value equal to zero when both strings are found to be identical. That is, That is, All of the characters in both strings are same.
+
+2)
+Greater than zero ( >0 ): A value greater than zero is returned when the first not matching character in leftStr have the greater ASCII value than the corresponding character in rightStr or we can also say
+If character in leftStr is lexicographically
+after the character of rightStr 
+
+3)
+Less than Zero ( <0 ): A value less than zero is returned when the first not matching character in leftStr have lesser ASCII value than the corresponding character in rightStr.
+If character in leftStr is lexicographically
+before the character of rightStr
+
+Important point : When the strings are not same, you will find that the value returned by the strcmp() function is the difference between the ASCII values of first unmatched character in leftStr and rightStr in both the cases.
+
+
+strcpy in C/C++
+strcpy() is a standard library function in C/C++ and is used to copy one string to another. In C it is present in string.h header file and in C++ it is present in cstring header file.
+
+Syntax:
+char* strcpy(char* dest, const char* src);
+
+This function only works with C style strings and not C++ style strings i.e. it only works with strings of type char str[]; and not string s1; which are created using standard string data type available in C++ and not C.
+Return Value: After copying the source string to the destination string, the strcpy() function returns a pointer to the destination string.
+
+strcoll() in C/C++
+strcoll() is a built-in library function and is declared in <string.h> header file. This function compares the string pointed to by str1 with the one pointed by str2.The strcoll() function performs the comparison based on the rules of the current locale’s LC_COLLATE category.
+Syntax:: int strcoll(const char *str1, const char *str2)
+Parameters: Function strcoll() takes two strings as parameters and returns an integer value.
+Value                   Meaning
+less than zero          str1 is less than str2
+zero                    str1 is equal to str2
+greater than zero       str1 is greater than str2
+
+
+
+ispunct() function in C
+The ispunct() function checks whether a character is a punctuation character or not.
+The term “punctuation” as defined by this function includes all printable characters that are neither alphanumeric nor a space. For example ‘@’, ‘$’, etc.
+This function is defined in ctype.h header file.
+
+syntax:
+int ispunct(int ch);
+ch: character to be checked.
+Return Value  : function return nonzero
+ if character is a punctuation character;
+ otherwise zero is returned. 
+
+strspn() function in C
+The strspn() function returns the length of the initial substring of the string pointed to by str1 that is made up of only those character contained in the string pointed to by str2.
+
+Syntax :: size_t strspn(const char *str1, const char *str2)
+str1 : string to be scanned.
+str2 : string containing the characters to match.
+Return Value : This function returns the number of characters in the initial segment of str1 which consist only of characters from str2.
+   
+// C program to illustrate strspn() function 
+#include <stdio.h> 
+#include <string.h> 
+int main () { 
+   int len = strspn("geeks for geeks","geek"); 
+   printf("Length of initial segment matching : %d\n", len );     
+   return(0); 
+} 
+Output:
+Length of initial segment matching 4
+
+
+// C program to illustrate strspn() function 
+#include <stdio.h> 
+#include <string.h> 
+int main () { 
+   int len = strspn("i am","xyz"); 
+   printf("Length of initial segment matching : %d\n", len ); 
+   return(0); 
+} 
+Output:
+Length of initial segment matching 0
+
+
+strtok() and strtok_r() functions in C with examples
+C provides two functions strtok() and strtok_r() for splitting a string by some delimiter. Splitting a string is a very common task. For example, we have a comma separated list of items from a file and we want individual items in an array.
+
+strtok()
+
+// Splits str[] according to given delimiters.
+// and returns next token. It needs to be called
+// in a loop to get all tokens. It returns NULL
+// when there are no more tokens.
+char * strtok(char str[], const char *delims);
+
+
+// A C/C++ program for splitting a string 
+// using strtok() 
+#include <stdio.h> 
+#include <string.h> 
+int main() 
+{ 
+    char str[] = "Geeks-for-Geeks"; 
+  
+    // Returns first token 
+    char* token = strtok(str, "-"); 
+  
+    // Keep printing tokens while one of the 
+    // delimiters present in str[]. 
+    while (token != NULL) { 
+        printf("%s\n", token); 
+        token = strtok(NULL, "-"); 
+    } 
+    return 0; 
+}
+Output:
+Geeks
+for
+Geeks 
+
+
+strtok_r()
+Just like strtok() function in C, strtok_r() does the same task of parsing a string into a sequence of tokens. strtok_r() is a reentrant version of strtok()
+
+There are two ways we can call strtok_r()
+
+// The third argument saveptr is a pointer to a char * 
+// variable that is used internally by strtok_r() in 
+// order to maintain context between successive calls
+// that parse the same string.
+char *strtok_r(char *str, const char *delim, char **saveptr);
+Below is a simple C program to show the use of strtok_r() :
+
+// C program to demonstrate working of strtok_r() 
+// by splitting string based on space character. 
+#include <stdio.h> 
+#include <string.h> 
+  
+int main() 
+{ 
+    char str[] = "Geeks for Geeks"; 
+    char* token; 
+    char* rest = str; 
+  
+    while ((token = strtok_r(rest, " ", &rest))) 
+        printf("%s\n", token); 
+  
+    return (0); 
+} 
+Output:
+
+Geeks
+for
+Geeks
+
+
+

@@ -1,0 +1,38 @@
+
+
+
+// C program to print a string without 
+// quote in the program 
+#include <stdio.h> 
+#define get(x) #x 
+int main() 
+{ 
+	printf(get(vignesh)); 
+	return 0; 
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

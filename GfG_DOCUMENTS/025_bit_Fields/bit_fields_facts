@@ -1,0 +1,328 @@
+
+
+Following are some interesting facts about bit fields in C.
+4) Use bit fields in C to figure out a way whether a machine is little-endian or big-endian.
+1) A special unnamed bit field of size 0 is used to force alignment on next boundary. For example consider the following program.
+
+#include <stdio.h> 
+// A structure without forced alignment 
+struct test1 { 
+	unsigned int x : 5; 
+	unsigned int y : 8; 
+}; 
+// A structure with forced alignment 
+struct test2 { 
+	unsigned int x : 5; 
+	unsigned int : 0; 
+	unsigned int y : 8; 
+}; 
+int main() 
+{ 
+	printf("Size of test1 is %lu bytes\n", 
+		sizeof(struct test1)); 
+	printf("Size of test2 is %lu bytes\n", 
+		sizeof(struct test2)); 
+	return 0; 
+}
+Output:
+Size of test1 is 4 bytes
+Size of test2 is 8 bytes
+
+
+
+
+2) We cannot have pointers to bit field members as they may not start at a byte boundary.
+#include <stdio.h> 
+struct test { 
+    unsigned int x : 5; 
+    unsigned int y : 5; 
+    unsigned int z; 
+}; 
+int main() 
+{ 
+    struct test t; 
+  
+    // Uncommenting the following line will make 
+    // the program compile and run 
+    printf("Address of t.x is %p", &t.x); 
+  
+    // The below line works fine as z is not a 
+    // bit field member 
+    printf("Address of t.z is %p", &t.z); 
+    return 0; 
+} 
+Output:
+prog.c: In function 'main':
+prog.c:14:1: error: cannot take address of bit-field 'x'
+ printf("Address of t.x is %p", &t.x); 
+
+
+
+
+3) It is implementation defined to assign an out-of-range value to a bit field member.
+#include <stdio.h> 
+struct test { 
+    unsigned int x : 2; 
+    unsigned int y : 2; 
+    unsigned int z : 2; 
+}; 
+int main() 
+{ 
+    struct test t; 
+    t.x = 5; 
+    printf("%d", t.x); 
+    return 0; 
+} 
+Output: 
+main.c:10:11: warning: large integer implicitly truncated to unsigned type [-Woverflow]                                        
+1 
+//Implementation-Dependent
+//if t.x=4; then output=0; so only data is  stored in two bits (last two bits of the binary representation of integer value)
+
+
+
+5) Array of bit fields is not allowed. For example, the below program fails in the compilation.
+
+struct test { 
+    unsigned int x[10] : 5; 
+}; 
+int main() 
+{ 
+} 
+Output:
+prog.c:3:1: error: bit-field 'x' has invalid type
+ unsigned int x[10]: 5; 
+ ^
+
+
+Exercise:
+Predict the output of following programs. Assume that unsigned int takes 4 bytes and long int takes 8 bytes.
+
+#include <stdio.h> 
+struct test { 
+	unsigned int x; 
+	unsigned int y : 33; 
+	unsigned int z; 
+}; 
+int main() 
+{ 
+	printf("%lu", sizeof(struct test)); 
+	return 0; 
+}
+main.c:4:15: error: width of ‘y’ exceeds its type
+  unsigned int y : 33;
+               ^
+
+
+#include <stdio.h> 
+struct test { 
+	unsigned int x; 
+	long int y : 33; 
+	unsigned int z; 
+}; 
+int main() 
+{ 
+	struct test t; 
+	unsigned int* ptr1 = &t.x; 
+	unsigned int* ptr2 = &t.z; 
+	printf("%d", ptr2 - ptr1); 
+	return 0; 
+} 
+main.c:12:11: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long int’ [-Wformat=]              
+4 
+
+
+#include <stdio.h> 
+struct test { 
+	unsigned int x; 
+	double y : 5 ;
+	unsigned int z; 
+}; 
+int main() 
+{ 
+	struct test t; 
+	unsigned int* ptr1 = &t.x; 
+	unsigned int* ptr2 = &t.z; 
+	printf("%d", ptr2 - ptr1); 
+	return 0; 
+} 
+main.c:5:9: error: bit-field ‘y’ has invalid type
+  double y : 5 ;
+         ^
+main.c: In function ‘main’:
+main.c:13:11: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long int’ [-Wformat=]
+  printf("%d", ptr2 - ptr1);
+           ^
+
+#include <stdio.h> 
+struct test { 
+	unsigned int x; 
+	float y : 5 ;
+	unsigned int z; 
+}; 
+int main() 
+{ 
+	struct test t; 
+	unsigned int* ptr1 = &t.x; 
+	unsigned int* ptr2 = &t.z; 
+	printf("%d", ptr2 - ptr1); 
+	return 0; 
+} 
+main.c:5:8: error: bit-field ‘y’ has invalid type
+  float y : 5 ;
+        ^
+main.c: In function ‘main’:
+main.c:13:11: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long int’ [-Wformat=]
+  printf("%d", ptr2 - ptr1);
+           ^
+
+#include <stdio.h> 
+struct test { 
+	unsigned int x; 
+	long long int y : 5 ;
+	unsigned int z; 
+}; 
+int main() 
+{ 
+	struct test t; 
+	unsigned int* ptr1 = &t.x; 
+	unsigned int* ptr2 = &t.z; 
+	printf("%ld", ptr2 - ptr1); 
+	return 0; 
+} 
+
+2  
+
+
+#include <stdio.h> 
+struct test { 
+	unsigned int x; 
+	int y  ;
+	 int h  ;
+	unsigned int z; 
+}; 
+int main() 
+{ 
+	struct test t; 
+	unsigned int* ptr1 = &t.x; 
+	unsigned int* ptr2 = &t.z; 
+	printf("%ld", ptr2 - ptr1); 
+	return 0; 
+} 
+3
+
+
+#include <stdio.h> 
+struct test { 
+	unsigned int x; 
+	int y : 1 ;
+	 int h  :1;
+	unsigned int z; 
+}; 
+int main() 
+{ 
+	struct test t; 
+	unsigned int* ptr1 = &t.x; 
+	unsigned int* ptr2 = &t.z; 
+	printf("%ld", ptr2 - ptr1); 
+	return 0; 
+} 
+2
+
+
+#include <stdio.h> 
+struct test { 
+	unsigned int x; 
+	int y : 30 ;
+	 int h  :2;
+	unsigned int z; 
+}; 
+int main() 
+{ 
+	struct test t; 
+	unsigned int* ptr1 = &t.x; 
+	unsigned int* ptr2 = &t.z; 
+	printf("%ld", ptr2 - ptr1); 
+	return 0; 
+} 
+2
+
+#include <stdio.h> 
+struct test { 
+	unsigned int x; 
+	int y : 30 ;
+	 int h  :3;
+	unsigned int z; 
+}; 
+int main() 
+{ 
+	struct test t; 
+	unsigned int* ptr1 = &t.x; 
+	unsigned int* ptr2 = &t.z; 
+	printf("%ld", ptr2 - ptr1); 
+	return 0; 
+} 
+3
+
+#include<stdio.h>
+union test { 
+	unsigned int x : 3; 
+	unsigned int y : 3; 
+	int z; 
+}; 
+
+int main() 
+{ 
+	union test t; 
+	t.x = 5; 
+	t.y = 4; 
+	t.z = 1; 
+	printf("t.x = %d, t.y = %d, t.z = %d", 
+		t.x, t.y, t.z); 
+	return 0; 
+} 
+t.x = 1, t.y = 1, t.z = 1  
+
+
+--------------------------------------------------------------------------
+#include<stdio.h>
+union test { 
+	unsigned int x : 1; 
+	unsigned int y : 1; 
+	int z; 
+}; 
+
+int main() 
+{ 
+	union test t; 
+	t.z = 3; 
+	printf("t.x = %d, t.y = %d, t.z = %d", 
+		t.x, t.y, t.z); 
+	return 0; 
+} 
+t.x = 1, t.y = 1, t.z = 3  
+
+--------------------------------------------------------------------------
+#include<stdio.h>
+union test { 
+	unsigned int x : 1; 
+	unsigned int y : 1; 
+	int z; 
+}; 
+
+int main() 
+{ 
+	union test t; 
+	t.z = 4; 
+	printf("t.x = %d, t.y = %d, t.z = %d", 
+		t.x, t.y, t.z); 
+	return 0; 
+} 
+t.x = 0, t.y = 0, t.z = 4  
+
+--------------------------------------------------------------------------
+
+
+
+
+

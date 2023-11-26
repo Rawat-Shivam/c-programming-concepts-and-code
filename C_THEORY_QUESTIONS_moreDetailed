@@ -1,0 +1,317 @@
+
+1) man pages of : string , memorycopy functions to know the end cases and segfault conditions.
+2) man pages of all printf, scanf, get, put 
+3) compilation process in detail, every stage of compiler how it happens and by whom and when.
+4)  try all the options that gcc --help tells.
+5) how exactly linker works and links. 
+6) how does loader loads and how from where.
+7) how libraries work, everything indepth.
+8) how does the processor comes to know about the datatype of the variable.
+9) symbol table ?
+10) weak symbols and strong symbols, and how linker links them , their scope and superiority.
+11) when to make a variable run-time or compile-time constant. where we use compile time and run time constant.
+12) what type of varibales are allowed to be used for the size of array? const, enum, int , float,char, structure?
+13) why in enumeration only int, char, long, are used but not float, double, user defined datatypes?
+14)  how can we implement type checking with the MACROS.
+15) how dynamic loading happens, and how it is detected its time to load and from where to and to where, the exact position in the code ? 
+16) what kind of information distingusih that it will be static libray or dynamic library ?
+17) how can we create extra heap segments , and when we do so , and what happens in the executable, process context ?
+18) even when a const varible is in read-only data segment. how come a pointer changes it ? it also mean that it is not the read-only datasegments ? and the attributes of the segments are being voilated? and who has the permission to do so ? or only that memory is made write-read ? and at what point it is made...only when pointer will access it ? if these things does not happens then what happens ? does the value is brought in data-segment or stack frame ?
+19) how does using static limit the scope upto a file ? what is a file when the executable is combination of all .o files? so how it is decide that his belogs to this file and that belongs to that file ?
+20) as stiatic variable is for a file , so in two different file we can have static varibale with same name, so how does compiler comes to when to use when as all the static variables are in datasegment only ?.....this menas we need to understand more about datasegemnts .
+21) how a file(main.c or main.o) is maintained in the code segment ? what are the attributes which define a file and its boundries ?
+22) how extern extends the visibility ? in what part of datasegment it is kept that every function and file has access to it ? so what properties make it do so and on ther other hand limit the scope of static upto file. ? and when a file does not have that variable but still it can use it... so there must a link/stub so that file knows there is some varible out of it ..which file can access ?
+23) how come functions are being still inside a file are accessible through out the program ? it means they can cross the boundries of a file and have differnet attributes/properties of scope/visibility ? do they have hidden extern key-word with them by default?
+24)  what  happens internally, what attributes are set such that , when we say "int var;"  this 'var' is declared and defined and allocated memory , but when we say "extern int eVar;" this 'eVar' this is only declared but not defined and no memory is allocated to it ? so how this all happens from where does complier knows what to do and what not ? and what if by the time it is defined and system/datasegment runs out of memory ?
+25) access to registers are faster than memory ? prove it . because variable which are most frequently used are made regiser .
+26) if it is compiler choice to put the regiser type variable value into the register(ir...variable memory address is that of the register) . so how can we know that it is kept the register or not ? and if not we can access the address from process context .
+27) explain "static int *ptr;" and "const static int * ptr;" and "static const int *ptr;" and "register const int *ptr;" and "register const int;"
+28) why static and global varible are initialized with constant value or by compiler ? why cant they be initialzed at run time  ? 
+29) how compiler comes to know to generate the SIGSEGV and what happens next...what functions are called , who transfer the control and how and where to ? interms of functions and data structure?
+30) what is the diffrent between the "pointer to functions" and "pointer to varibale" and "pointer to arrays" in terms of, how compiler understand and read them, how they are stored and represnted by what datastructure in the memory. and how does compiler comes to know the difference between them ? ..ie.. in memory/sytem representation which differe pointer for function ,variable,array? 
+31) getchar() , fgetc(), getc() , fgets(), gets() understand their working and end cases .
+32) difference between the static global variable and global varible?
+33) what is the size of enum ? and how does memory work?
+34) how to detect which thread has crashed the application.
+35) where this information is stored that this is 32 bit executable or 64 bit? list all the changes happens in the code or compilation when we do this:  in order to compile with 32-bit gcc, just add a flag -m32 in the command line of compling the ‘C’ language program and similalry -m64     
+36) see the defination of printf() , scanf() and the arguments they can take nd special symbols like in printf( % ^ * )? also scanset for scanf()?
+37) check where we can use bitwise operators to improve the logic/efficeny/optimize our code ? 
+The following are many other interesting problems using XOR operator.
+
+		#Find the Missing Number
+		#swap two numbers without using a temporary variable
+		#A Memory Efficient Doubly Linked List
+		#Find the two non-repeating elements.
+		#Find the two numbers with odd occurences in an unsorted-array.
+		#Add two numbers without using arithmetic operators.
+		#Swap bits in a given number/.
+		#Count number of bits to be flipped to convert a to b .
+		#Find the element that appears once.
+		#Detect if two integers have opposite signs.
+38) how does inline functions work internally and how compiler replaces them? and what attributes of a function is changed when we use inline keyword?40 what are the attributes of a function ? how compiler comes to know that this is a function of a practicular type and then accordingly sets its attribute ...like for static function how does it limits its scope of calling ? so where is this infomation is maintained?
+39) how preprocessor resolves macros/pre-processor directives  and how it comes to know these exist in programam and how it replaces it ...like is there something called like symbol table which helps preprocessor ?
+40) pre-processor directive like "ifdef" "ifndef" how preprocessor understands them. can we see their source code or how they are being executed/analized/syntax check ?
+41) __FILE__ __func__ __LINE__ __DATE__ __TIME__  from where these macros gets value?  
+42) how it is monitored ? or where this info is stored that the macro is defined in this space or not or now it is undefined ?
+43) how "Stringizing" # convert the input to the string ? and how the token pasting ## is done? 
+44) #pragma startup and #pragma exit . how These directives helps us to specify the functions that are needed to run before program startup( before the control passes to main()) and just before program exit (just before the control returns from main()) ??? internal working
+45) typedef is resolved at run time or compiletime ? and how it know it isued to typedef the dataType not something else?
+46) why the new defination of the datatype given by typedef is limited with in the scope of the block ?
+47) in case of #define why the preprocessor replace all the occurances of it after it ? why so ? and how it comes to know at what point macro is defined and where not ?
+48) when and how to use X-macros?
+49) how internally this works? “array” is a “pointer to the first element of array” but “&array” is a “pointer to whole array.
+50) use of " #if defined "  ?
+51) why defined cant be used as macro?  what happens inside preprocessor?
+abc.c:7:9: error: "defined" cannot be used as a macro name
+ #define defined 126
+         ^~~~~~~
+52) what is the advantages and disadvanteges of Macro-function and normal function?
+53) what array are treated as pointers ?
+54) why end of the char arr[]={2,3,4} has '\0' but not char* string="" ? why string is made const/read only and not the arr[]?
+	char array[] = “abc” sets the first four elements in array to ‘a’, ‘b’, ‘c’, and ‘\0’
+	char *pointer = “abc” sets pointer to the address of the “abc” string (which may be stored in read-only memory and thus unchangeable)
+55) why pointer variable can be assigned a value but array variable cannot ? and then why array are implemented as pointer internally?
+	Pointer variable can be assigned a value whereas array variable cannot be.
+		int a[10]; int *p;
+		p=a; /*legal*/ , a=p; /*illegal*/
+		Arithmetic on pointer variable is allowed.
+		p++; /*Legal*/ , a++; /*illegal*/
+56) why string literals have static storage duration ?
+
+
+
+
+
+
+
+=================================================================================================================================================
+
+
+
+-----------------------------------------------------------------------
+if the processor word length is 32 bit, stack pointer also should be aligned to be multiple of 4 bytes.
+
+If char data is placed in a bank other bank 0, it will be placed on wrong data lines during memory read. How the processor handles char type?
+
+Usually, the processor will recognize the data type based on instruction.
+Depending on the bank it is stored, the processor shifts the byte onto least significant data lines.
+
+
+#include<stdio.h>
+void func(char c1, char c2)
+{
+   printf("Displacement %d\n", (int)&c2 - (int)&c1);
+   printf("Displacement %ld\n", &c2 - &c1);
+}
+int main()
+{
+        func('a',6,'b');
+}
+
+output:
+Displacement -4
+Displacement -4
+
+
+#include<stdio.h>
+void func(char c1, char c2)
+{
+   printf("Displacement %d\n", (int)&c2 - (int)&c1);
+   printf("Displacement %ld\n", &c2 - &c1);
+}
+int main()
+{
+        func('a',6,'b');
+}
+
+output:
+Displacement -8
+Displacement -8
+
+-----------------------------------------------------------------------
+
+enum
+Option Type	Default Value	#pragma options	
+-qoption	enum=int	ENUM=suboption	
+
+Syntax
+    -qenum=small | -qenum=int | -qenum=intlong | -qenum=1 | -qenum=2 | -qenum=4 | -qenum=8
+	ENUM=SMALL | ENUM=INT | ENUM=INTLONG | ENUM=1 | ENUM=2 | ENUM=4 | ENUM=8 | ENUM=RESET
+
+Purpose
+Specifies the amount of storage occupied by enumerations.
+
+https://caligari.dartmouth.edu/doc/ibmcxx/en_US/doc/complink/ref/ruoptenu.htm
+
+-----------------------------------------------------------------------
+
+Types of Literals in C/C++ 
+
+Integer Literals: These are used to represent and store the integer values. Integer literals are expressed in two types i.e.,
+Prefixes: The Prefix of the integer literal indicates the base in which it is to be read.
+For example:
+0x10 = 16
+
+Because 0x prefix represents a HexaDecimal base.
+So 10 in HexaDecimal is 16 in Decimal.
+Hence the value 16. 
+There are basically represent in four types.
+
+
+
+Decimal-literal(base 10): A non-zero decimal digit followed by zero or more decimal digits(0, 1, 2, 3, 4, 5, 6, 7, 8, 9).
+For example:
+
+56, 78
+Octal-literal(base 8): a 0 followed by zero or more octal digits(0, 1, 2, 3, 4, 5, 6, 7).
+For example:
+
+045, 076, 06210
+Hex-literal(base 16): 0x or 0X followed by one or more hexadecimal digits(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, A, b, B, c, C, d, D, e, E, f, F).
+For example:
+
+0x23A, 0Xb4C, 0xFEA
+Binary-literal(base 2): 0b or 0B followed by one or more binary digits(0, 1).
+For example:
+
+0b101, 0B111
+Suffixes: The Prefix of the integer literal indicates the type in which it is to be read.
+For example:
+
+12345678901234LL 
+indicates a long long integer value 12345678901234
+because of the suffix LL
+These are represented in many ways according to their data types.
+
+int: No suffix is required because integer constant is by default assigned as an int data type.
+unsigned int: character u or U at the end of an integer constant.
+long int: character l or L at the end of an integer constant.
+unsigned long int: character ul or UL at the end of an integer constant.
+long long int: character ll or LL at the end of an integer constant.
+unsigned long long int: character ull or ULL at the end of integer constant.
+
+Floating-Point Literals: These are used to represent and store real numbers. The real number has an integer part, real part, fractional part and an exponential part. The floating-point literals can be stored either in decimal form or exponential form. While representing the floating-point decimals one must keep two things in mind to produce valid literals:
+In the decimal form, one must include the decimal point, exponent part or both, otherwise, it will lead to an error.
+In the exponential form, one must include the integer part, fractional part or both, otherwise, it will lead to an error.
+Few floating-point literal representations are shown below:
+
+Valid Floating Literals:
+
+10.125
+1.215-10L
+10.5E-3
+Invalid Floating Literals:
+
+123E
+1250f
+0.e879
+
+Character Literal: This refers to the literals that are used to store a single character within a single quote. To store multiple characters, one needs to use a character array. Storing more than one character within a single quote will throw a warning and displays just the last character of the literal.
+
+String Literals: String literals are similar to that of the character literals, except that it can store multiple characters and uses a double quote to store the same. It can also accommodate the special characters and escape sequences
+const char str[] = "Welcome\nTo\nGeeks\tFor\tGeeks";
+
+
+Boolean Literals: This literal is provided only in C++ and not in C. They are used to represent the boolean datatypes
+
+
+
+
+-----------------------------------------------------------------------
+
+
+Resolving Conflicting Compiler Options
+
+In general, if more than one variation of the same option is specified (with the exception of xref and attr), the compiler uses the setting of the last one specified. Compiler options specified on the command line must appear in the order you want the compiler to process them.
+
+
+
+Options that Specify Linkage Options
+To:									See:
+Name the output file or directory					o
+Search specified libraries						l
+Search a path for libraries						L
+Produce an output file even if not all symbols are resolved		r
+Specify which types of library file are used by the linkage editor	brtl, bstatic, bdynamic
+Generate fast external linkage						inlglue
+
+
+Options that Specify Debugging Features
+To:									See:
+Produce only line number and source file name information for dbx	linedebug
+Produce debug information for dbx					g
+Enable debug versions of memory management functions			heapdebug
+Specify full path information when you use -g with dbx			fullpath
+Generate and set the charcateristics of the traceback table		tbtable
+Set up object files for profiling					p,pg
+Trap division of an integer by zero					check
+Ignore isolated_call aliasing pragmas					ignprag
+
+
+
+-fsyntax-only
+Check the code for syntax errors, but don’t do anything beyond that.
+
+-fmax-errors=n
+Limits the maximum number of error messages to n, at which point GCC bails out rather than attempting to continue processing the source code. If n is 0 (the default), there is no limit on the number of error messages produced. If -Wfatal-errors is also specified, then -Wfatal-errors takes precedence over this option.
+
+-w
+Inhibit all warning messages.
+
+-Werror
+Make all warnings into errors.
+
+-Werror=
+Make the specified warning into an error. The specifier for a warning is appended; for example -Werror=switch turns the warnings controlled by -Wswitch into errors. This switch takes a negative form, to be used to negate -Werror for specific warnings; for example -Wno-error=switch makes -Wswitch warnings not be errors, even when -Werror is in effect.
+
+The warning message for each controllable warning includes the option that controls the warning. That option can then be used with -Werror= and -Wno-error= as described above. (Printing of the option in the warning message can be disabled using the -fno-diagnostics-show-option flag.)
+
+Note that specifying -Werror=foo automatically implies -Wfoo. However, -Wno-error=foo does not imply anything.
+
+-Wfatal-errors
+This option causes the compiler to abort compilation on the first error occurred rather than trying to keep going and printing further error messages.
+
+
+
+
+https://gcc.gnu.org/onlinedocs/gcc/Invoking-GCC.html#Invoking-GCC
+https://gcc.gnu.org/onlinedocs/gcc/Overall-Options.html#Overall-Options
+https://gcc.gnu.org/onlinedocs/gcc/Static-Analyzer-Options.html#Static-Analyzer-Options
+https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html#Debugging-Options
+https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#Optimize-Options
+https://gcc.gnu.org/onlinedocs/gcc/Spec-Files.html#Spec-Files
+https://gcc.gnu.org/onlinedocs/gcc/Environment-Variables.html#Environment-Variables
+
+
+
+-----------------------------------------------------------------------
+
+we can also use our own heaps, i.e.. we can create them for our use
+
+When you allocate from a single heap, you may end up with memory blocks on different pages of memory. For example, you might have a linked list that allocates memory each time you add a node to the list. If you allocate memory for other data in between adding nodes, the memory blocks for the nodes could end up on many different pages. To access the data in the list, the system may have to swap many pages, which can significantly slow your program.
+
+With multiple heaps, you can specify which heap you allocate from. For example, you might create a heap specifically for the linked list. The list's memory blocks and the data they contain would remain close together on fewer pages, reducing the amount of swapping required
+
+In multithread applications, only one thread can access the heap at a time to ensure memory is safely allocated and freed. For example, say thread 1 is allocating memory, and thread 2 has a call to free. Thread 2 must wait until thread 1 has finished its allocation before it can access the heap. Again, this can slow down performance, especially if your program does a lot of memory operations.
+If you create a separate heap for each thread, you can allocate from them concurrently, eliminating both the waiting period and the overhead required to serialize access to the heap.
+
+With a single heap, you must explicitly free each block that you allocate. If you have a linked list that allocates memory for each node, you have to traverse the entire list and free each block individually, which can take some time.
+If you create a separate heap for that linked list, you can destroy it with a single call and free all the memory at once
+
+When you have only one heap, all components share it (including the IBM C and C++ Compilers runtime library, vendor libraries, and your own code). If one component corrupts the heap, another component might fail. You may have trouble discovering the cause of the problem and where the heap was damaged.
+With multiple heaps, you can create a separate heap for each component, so if one damages the heap (for example, by using a freed pointer), the others can continue unaffected. You also know where to look to correct the problem.
+
+
+
+
+
+https://caligari.dartmouth.edu/doc/ibmcxx/en_US/doc/libref/concepts/cumemmng.htm
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+

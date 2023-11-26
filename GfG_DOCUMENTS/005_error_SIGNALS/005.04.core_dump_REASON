@@ -1,0 +1,98 @@
+
+
+Core Dump/Segmentation fault is a specific kind of error caused by accessing memory that “does not belong to you.”
+
+When a piece of code tries to do read and write operation in a read only location in memory or freed block of memory, it is known as core dump.
+It is an error indicating memory corruption
+
+
+Modifying a string literal :
+The below program may crash (gives segmentation fault error) because the line *(str+1) = ‘n’ tries to write a read only memory.
+
+int main() 
+{ 
+   char *str;  
+  
+   /* Stored in read only part of data segment */
+   str = "GfG";      
+  
+   /* Problem:  trying to modify read only memory */
+   *(str+1) = 'n';  
+   return 0; 
+} 
+
+Accessing an address that is freed :
+Here in the below code, the pointer p is dereferenced after freeing the memory block, which is not allowed by the compiler. So it produces the error segment fault or abnormal program termination at runtime.
+Example:
+// C program to illustrate 
+// Core Dump/Segmentation fault 
+#include <stdio.h> 
+#include<alloc.h> 
+int main(void) 
+{ 
+    // allocating memory to p 
+    int* p = malloc(8); 
+    *p = 100; 
+      
+    // deallocated the space allocated to p 
+    free(p); 
+      
+    // core dump/segmentation fault 
+    //  as now this statement is illegal 
+    *p = 110; 
+      
+    return 0; 
+} 
+
+Accessing out of array index bounds :
+// C++ program to demonstrate segmentation 
+// fault when array out of bound is accessed. 
+#include <iostream> 
+using namespace std; 
+  
+int main()  
+{ 
+   int arr[2]; 
+   arr[3] = 10;  // Accessing out of bound 
+   return 0; 
+} 
+
+
+
+Improper use of scanf() :
+scanf() function expects address of a variable as an input.Here in this program n takes
+value of 2 and assume it’s address as 1000. If we pass n to scanf(), input fetched from STDIN is placed in invalid memory 2 which should be 1000 instead.It’s a memory corruption leading to Seg fault.
+// C program to demonstrate segmentation 
+// fault when value is passed to scanf 
+#include <stdio.h> 
+  
+int main()  
+{ 
+   int n = 2; 
+   scanf("%d",n); 
+   return 0; 
+} 
+
+
+Stack Overflow
+It’s not a pointer related problem even code may not have single pointer. It’s because of recursive function gets called repeatedly which eats up all the stack memory resulting in stack overflow. Running out of memory on the stack is also a type of memory corruption. It can be resolved by having a base condition to return from the recursive function.
+
+
+Dereferencing uninitialized pointer
+A pointer must point to valid memory before accessing it.
+// C program to demonstrate segmentation 
+// fault when uninitialized pointer is accessed. 
+#include <stdio.h> 
+  
+int main()  
+{ 
+   int *p; 
+   printf("%d",*p); 
+   return 0; 
+} 
+
+
+
+
+
+

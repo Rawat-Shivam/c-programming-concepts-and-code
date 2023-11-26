@@ -1,0 +1,35 @@
+
+“Array of pointers” is an array of the pointer variables. It is also known as pointer arrays.
+Syntax:
+
+int *var_name[array_size];
+Declaration of an array of pointers:
+
+ int *ptr[3];
+We can make separate pointer variables which can point to the different values or we can make one integer array of pointers that can point to all the values.
+
+We can likewise make an array of pointers to the character to store a list of strings.
+#include <stdio.h> 
+const int size = 4; 
+void main() 
+{ 
+    // array of pointers to a character 
+    // to store a list of strings 
+    char* names[] = { 
+        "amit", 
+        "amar", 
+        "ankit", 
+        "akhil"
+    }; 
+    int i = 0; 
+    for (i = 0; i < size; i++) { 
+        printf("%s\n", names[i]); 
+    } 
+} 
+Output:
+amit
+amar
+ankit
+akhil
+
+

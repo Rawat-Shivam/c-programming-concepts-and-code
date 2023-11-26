@@ -1,0 +1,35 @@
+
+EOF, getc() and feof() in C
+In C/C++, getc() returns EOF when end of file is reached. getc() also returns EOF when it fails. So, only comparing the value returned by getc() with EOF is not sufficient to check for actual end of file. To solve this problem, C provides feof() which returns non-zero value only if end of file has reached, otherwise it returns 0.
+
+#include <stdio.h> 
+
+int main() 
+{ 
+FILE *fp = fopen("test.txt", "r"); 
+int ch = getc(fp); 
+while (ch != EOF) 
+{ 
+	/* display contents of file on screen */
+	putchar(ch); 
+
+	ch = getc(fp); 
+} 
+	
+if (feof(fp)) 
+	printf("\n End of file reached."); 
+else
+	printf("\n Something went wrong."); 
+fclose(fp); 
+	
+getchar(); 
+return 0; 
+} 
+
+
+
+
+
+
+
+

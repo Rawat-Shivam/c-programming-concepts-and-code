@@ -1,0 +1,42 @@
+
+goto statement in C/C++
+The goto statement is a jump statement which is sometimes also referred to as unconditional jump statement. The goto statement can be used to jump from anywhere to _____*********anywhere within a function****____.
+
+Syntax:
+Syntax1      |   Syntax2
+----------------------------
+goto label;  |    label:  
+.            |    .
+.            |    .
+.            |    .
+label:       |    goto label;
+
+In this case, we will see a situation similar to as shown in Syntax1 above. Suppose we need to write a program which prints numbers from 1 to 10 using the goto statement. Below program explains how to do this.
+// C program to print numbers 
+// from 1 to 10 using goto statement 
+#include <stdio.h> 
+  
+// function to print numbers from 1 to 10 
+void printNumbers() 
+{ 
+    int n = 1; 
+label: 
+    printf("%d ",n); 
+    n++; 
+    if (n <= 10) 
+        goto label; 
+} 
+  
+// Driver program to test above function 
+int main() { 
+    printNumbers(); 
+    return 0; 
+} 
+Output:
+1 2 3 4 5 6 7 8 9 10
+Disadvantages of using goto statement:
+
+The use of goto statement is highly discouraged as it makes the program logic very complex.
+use of goto makes the task of analyzing and verifying the correctness of programs (particularly those involving loops) very difficult.
+Use of goto can be simply avoided using break and continue statements.
+

@@ -1,0 +1,31 @@
+
+
+To pass arguments by reference. Passing by reference serves two purposes
+(i) To modify variable of function in other. Example to swap two variables;
+(ii) For efficiency purpose. Example passing large structure without reference would create a copy of the structure (hence wastage of space).
+
+For accessing array elements. Compiler internally uses pointers to access array elements.
+
+To return multiple values. Example returning square and square root of numbers.
+
+Dynamic memory allocation : We can use pointers to dynamically allocate memory. The advantage of dynamically allocated memory is, it is not deleted until we explicitly delete it.
+
+To implement data structures.
+Example linked list, tree, etc. We cannot use C++ references to implement these data structures because references are fixed to a location (For example, we can not traverse a linked list using references)
+
+To do system level programming where memory addresses are useful. For example shared memory used by multiple threads. For more examples, see IPC through shared memory, Socket Programming in C/C++, etc
+
+
+Features of Pointers:
+
+Pointers save memory space.
+Execution time with pointers is faster because data are manipulated with the address, that is, direct access to
+memory location.
+Memory is accessed efficiently with the pointers. The pointer assigns and releases the memory as well. Hence it can be said the Memory of pointers is dynamically allocated.
+Pointers are used with data structures. They are useful for representing two-dimensional and multi-dimensional
+arrays.
+An array, of any type can be accessed with the help of pointers, without considering its subscript range.
+Pointers are used for file handling.
+Pointers are used to allocate memory dynamically.
+
+

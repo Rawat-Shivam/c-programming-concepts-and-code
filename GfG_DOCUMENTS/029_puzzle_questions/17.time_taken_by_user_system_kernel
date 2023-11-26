@@ -1,0 +1,61 @@
+
+
+
+
+How to find time taken by a command/program on Linux Shell?
+
+
+We have already discussed a way to find time taken by a function through C libraries. If we are on Linux, then it becomes very easy to find time taken by a program/command.
+
+We can use time command for this purpose. The time taken is shown in three forms.
+real: Total end to end time taken by program/command
+user: Time taken in user mode.
+sys: Time taken in kernel mode
+
+
+// Running the generated executable with time
+~$ time ./a.out
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

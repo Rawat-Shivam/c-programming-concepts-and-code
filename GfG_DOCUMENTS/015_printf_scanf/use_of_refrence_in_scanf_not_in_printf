@@ -1,0 +1,17 @@
+
+
+
+
+Why there is need of using ‘&’ in case if scanf function while not in case of printf function.
+
+Examples:
+
+scanf("%d %d", &a, &b);
+printf("%d %d", a, b);
+
+As a and b above are two variable and each has their own address assigned but instead of a and b, we send the address of a and b respectively. The reason is, scanf() needs to modify values of a and b and but they are local to scanf(). So in order to reflect changes in the variable a and b of the main function, we need to pass addresses of them. We cannot simply pass them by value.
+But in case of printf function as we are only going to print the values of the variables in output console, there are no changes going to be made in variable a and b’s values. So it is not required to send their addresses.
+
+
+
+

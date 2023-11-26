@@ -1,0 +1,8 @@
+
+Unlike arrays we do not need to print a string, character by character. The C language does not provide an inbuilt data type for strings but it has an access specifier “%s” which can be used to directly print and read strings.
+
+You can see in the above program that string can also be read using a single scanf statement. Also you might be thinking that why we have not used the ‘&’ sign with string name ‘str’ in scanf statement! To understand this you will have to recall your knowledge of scanf. We know that the ‘&’ sign is used to provide the address of the variable to the scanf() function to store the value read in memory. As str[] is a character array so using str without braces ‘[‘ and ‘]’ will give the base address of this string. That’s why we have not used ‘&’ in this case as we are already providing the base address of the string to scanf.
+
+
+
+

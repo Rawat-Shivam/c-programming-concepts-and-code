@@ -1,0 +1,102 @@
+
+restrict keyword in C
+In the C programming language (after 99 standard), a new keyword is introduced known as restrict.
+
+restrict keyword is mainly used in pointer declarations as a type qualifier for pointers.
+It doesn’t add any new functionality. It is only a way for programmer to inform about an optimizations that compiler can make.
+When we use restrict with a pointer ptr, it tells the compiler that ptr is the only way to access the object pointed by it and compiler doesn’t need to add any additional checks.
+If a programmer uses restrict keyword and violate the above condition, result is undefined behavior.
+restrict is not supported by C++. It is a C only keyword.
+
+// C program to use restrict keyword. 
+#include <stdio.h> 
+  
+// Note that the purpose of restrict is to 
+// show only syntax. It doesn't change anything 
+// in output (or logic). It is just a way for 
+// programmer to tell compiler about an  
+// optimization 
+void use(int* a, int* b, int* restrict c) 
+{ 
+    *a += *c; 
+  
+    // Since c is restrict, compiler will 
+    // not reload value at address c in 
+    // its assembly code. Therefore generated 
+    // assembly code is optimized 
+    *b += *c;   
+} 
+int main(void) 
+{ 
+    int a = 50, b = 60, c = 70; 
+    use(&a, &b, &c); 
+    printf("%d %d %d", a, b, c); 
+    return 0; 
+} 
+Output:
+120 130 70
+
+
+145
+
+The Wikipedia example is very illuminating.
+It clearly shows how it allows to save one assembly instruction.
+Without restrict:
+void f(int *a, int *b, int *x) {
+  *a += *x;
+  *b += *x;
+}
+Pseudo assembly:
+
+load R1 ← *x    ; Load the value of x pointer
+load R2 ← *a    ; Load the value of a pointer
+add R2 += R1    ; Perform Addition
+set R2 → *a     ; Update the value of a pointer
+; Similarly for b, note that x is loaded twice,
+; because a may be equal to x.
+load R1 ← *x
+load R2 ← *b
+add R2 += R1
+set R2 → *b
+With restrict:
+
+void fr(int *restrict a, int *restrict b, int *restrict x);
+Pseudo assembly:
+
+load R1 ← *x
+load R2 ← *a
+add R2 += R1
+set R2 → *a
+; Note that x is not reloaded,
+; because the compiler knows it is unchanged
+; load R1 ← *x
+load R2 ← *b
+add R2 += R1
+set R2 → *b
+Does GCC really do it?
+
+GCC 4.8 Linux x86-64:
+
+gcc -g -std=c99 -O0 -c main.c
+objdump -S main.o
+With -O0, they are the same.
+
+With -O3:
+
+void f(int *a, int *b, int *x) {
+    *a += *x;
+   0:   8b 02                   mov    (%rdx),%eax
+   2:   01 07                   add    %eax,(%rdi)
+    *b += *x;
+   4:   8b 02                   mov    (%rdx),%eax
+   6:   01 06                   add    %eax,(%rsi)  
+
+void fr(int *restrict a, int *restrict b, int *restrict x) {
+    *a += *x;
+  10:   8b 02                   mov    (%rdx),%eax
+  12:   01 07                   add    %eax,(%rdi)
+    *b += *x;
+  14:   01 06                   add    %eax,(%rsi) 
+
+
+

@@ -1,0 +1,77 @@
+
+getc() and fputc() in C
+
+fgetc()
+fgetc() is used to obtain input from a file single character at a time. This function returns the number of characters read by the function. It returns the character present at position indicated by file pointer. After reading the character, the file pointer is advanced to next character. If pointer is at end of file or if an error occurs EOF file is returned by this function.
+Syntax:
+int fgetc(FILE *pointer)
+pointer: pointer to a FILE object that identifies 
+the stream on which the operation is to be performed.
+
+// C program to illustate fgetc() function 
+#include <stdio.h> 
+int main () 
+{ 
+    // open the file 
+    FILE *fp = fopen("test.txt","r"); 
+    // Return if could not open file 
+    if (fp == NULL) 
+      return 0; 
+    do
+    { 
+        // Taking input single character at a time 
+        char c = fgetc(fp); 
+        // Checking for end of file 
+        if (feof(fp)) 
+            break ; 
+        printf("%c", c); 
+    }  while(1); 
+    fclose(fp); 
+    return(0); 
+} 
+Output:
+
+The entire content of file is printed character by
+character till end of file. It reads newline character
+as well.
+
+
+Using fputc()
+fputc() is used to write a single character at a time to a given file. It writes the given character at the position denoted by the file pointer and then advances the file pointer.
+This function returns the character that is written in case of successful write operation else in case of error EOF is returned.
+Syntax:
+int fputc(int char, FILE *pointer)
+char:  character to be written. 
+This is passed as its int promotion.
+pointer: pointer to a FILE object that identifies the 
+stream where the character is to be written.
+
+// C program to illustate fputc() function 
+#include<stdio.h> 
+int main() 
+{ 
+    int i = 0; 
+    FILE *fp = fopen("output.txt","w"); 
+    // Return if could not open file 
+    if (fp == NULL) 
+      return 0; 
+    char string[] = "good bye", received_string[20]; 
+    for (i = 0; string[i]!='\0'; i++) 
+        // Input string into the file 
+        // single character at a time 
+        fputc(string[i], fp); 
+    fclose(fp); 
+    fp = fopen("output.txt","r"); 
+    // Reading the string from file 
+    fgets(received_string,20,fp); 
+    printf("%s", received_string); 
+    fclose(fp); 
+    return 0; 
+} 
+Output:
+good bye
+
+When fputc() is executed characters of string variable are written into the file one by one. When we read the line from the file we get the same string that we entered.
+
+
+

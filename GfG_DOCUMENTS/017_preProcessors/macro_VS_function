@@ -1,0 +1,146 @@
+
+Macros are no longer recommended as they cause following issues. There is a better way in modern compilers that is inline functions and const variable.
+
+Macros vs Functions
+Macros are pre-processed which means that all the macros would be processed before your program compiles. However, functions are not preprocessed but compiled.
+**************************************
+See the following example of Macro:
+#include<stdio.h> 
+#define NUMBER 10 
+int main() 
+{ 
+     printf("%d", NUMBER); 
+     return 0; 
+} 
+Output:
+10
+
+See the following example of Function:
+#include<stdio.h> 
+int number() 
+{ 
+    return 10; 
+} 
+int main() 
+{ 
+    printf("%d", number()); 
+    return 0; 
+} 
+Output:
+10
+
+Now compile them using the command:
+gcc –E file_name.c
+This will give you the executable code , check the files created .
+This shows that the macros are preprocessed while functions are not.
+
+********************************
+In macros, no type checking(incompatible operand, etc.) is done and thus use of micros can lead to errors/side-effects in some cases. However, this is not the case with functions. Also, macros do not check for compilation error (if any). Consider the following two codes:
+
+Macros:
+#include<stdio.h> 
+#define CUBE(b) b*b*b 
+int main() 
+{ 
+     printf("%d", CUBE(1+2)); 
+     return 0; 
+} 
+Output: Unexpected output
+7
+
+Functions:
+#include<stdio.h> 
+int cube(int a) 
+{ 
+     return a*a*a; 
+} 
+int main() 
+{ 
+    printf("%d", cube(1+2)); 
+    return 0; 
+} 
+Output: As expected
+27
+
+Macros are usually one liner. However, they can consist of more than one line, Click here to see the usage. There are no such constraints in functions.
+The speed at which macros and functions differs. Macros are typically faster than functions as they don’t involve actual function call overhead.
+
+Conclusion:
+Macros are no longer recommended as they cause following issues. There is a better way in modern compilers that is inline functions and const variable. Below are disadvantages of macros:
+
+a) There is no type checking
+
+b) Difficult to debug as they cause simple replacement.
+
+c) Macro don’t have namespace, so a macro in one section of code can affect other section.
+
+d) Macros can cause side effects as shown in above CUBE() example
+There are certain situations in which macro expansions can lead to undesirable results 
+
+MACRO								FUNCTION
+Macro is Preprocessed						Function is Compiled
+No Type Checking is done in Macro				Type Checking is Done in Function
+Using Macro increases the code length				Using Function keeps the code length unaffected
+Use of macro can lead to side effect at later stages		Functions do not lead to any side effect in any case
+Speed of Execution using Macro is Faster			Speed of Execution using Function is Slower
+Before Compilation, macro name is replaced by macro value	During function call, transfer of control takes place
+Macros are useful when small code is repeated many times	Functions are useful when large code is to be written
+Macro does not check any Compile-Time Errors			Function checks Compile-Time Errors
+
+Hygienic Macros : An Introduction
+We are all familiar with the working of macros in languages like C. There are certain situations in which macro expansions can lead to undesirable results because of accidental capture of identifiers.
+For example:
+
+// C program to illustrate a situation known as  
+// accidental capture of identifiers - an undesirable result caused by unhygienic macros 
+
+#define INCI(i) do { int x = 0; ++i; } while(0) 
+int main(void) 
+{ 
+    int x = 4, y = 8; 
+    // macro called first time 
+    INCI(x); 
+    // macro called second time 
+    INCI(y); 
+    printf("x = %d, b = %d\n", x, y); 
+    return 0; 
+} 
+
+The code is actually equivalent to:
+// C program to illustrate unhygenic macros 
+// with Macro definition substituted in source code. 
+int main(void) 
+{ 
+    int x = 4, y = 8; 
+//macro called first time 
+    do { int x = 0; ++x; } while(0); 
+//macro called second time 
+    do { int x = 0; ++y; } while(0); 
+    printf("x = %d, b = %d\n", x, y); 
+    return 0; 
+} 
+Output:
+x = 4, y = 9
+The variable a declared in the scope of the main function is overshadowed by the variable a in the macro definition so a = 4 never gets updated (known as accidental capture).
+
+Hygienic macros
+Hygienic macros are macros whose expansion is guaranteed not to cause the accidental capture of identifiers. A hygienic macro doesn’t use variable names that can risk interfering with the code under expansion.
+The situation in the above code can be avoided simply by changing the name of the variable in the macro definition, which will produce a different output.
+
+// C program to illustrate Hygienic macros using  
+// identifier names such that they do not cause the accidental capture of identifiers 
+
+#define INCI(i) do { int m = 0; ++i; } while(0) 
+int main(void) 
+{ 
+    int x = 4, y = 8; 
+    INCI(x); 
+    INCI(y); 
+    printf("x = %d, y = %d\n", x, y); 
+    return 0; 
+} 
+Output:
+x = 5, y = 9
+
+
+

@@ -1,0 +1,50 @@
+
+
+
+C program to print characters without using format specifiers
+
+As we know that there are various format specifiers in C like %d, %f, %c etc, to help us print characters or other data types. We normally use these specifiers along with the printf() function to print any variables. But there is also a way to print characters specifically without the use of %c format specifier. This can be obtained by using the below-shown method to get the character value of any ASCII codes of any particular character.
+Example:
+
+
+
+// Prints characters without format specifiers 
+#include <stdio.h> 
+
+int main() 
+{ 
+	printf("\x47 \n"); 
+	printf("\x45 \n"); 
+	printf("\x45 \n"); 
+	printf("\x4b \n"); 
+	printf("\x53"); 
+	return 0; 
+} 
+
+Output:
+
+G 
+E 
+E 
+K 
+S
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,107 @@
+
+
+What are the differences between bitwise and logical AND operators in C/C++?
+A Bitwise And operator is represented as ‘&’ and a logical operator is represented as ‘&&’. Following are some basic differences between the two operators.
+
+a) The logical and operator ‘&&’ expects its operands to be boolean expressions (either 1 or 0) and returns a boolean value.
+The bitwise and operator ‘&’ works on Integral (short, int, unsigned, char, bool, unsigned char, long) values and return Integral value.
+
+b) If an integral value is used as an operand for ‘&&’ which is supposed to work on boolean values, following rule is used in C.
+…..A zero is considered as false and non-zero is considered as true.
+It is compiler error to use non-integral expression as operand for bitwise &. For example the following program shows compiler error.
+// Example that uses non-integral expression as  
+// operator for '&' 
+int main() 
+{ 
+   float x = 2.0, y = 5.0; 
+   printf("%d", x&y); 
+   return 0; 
+} 
+
+c) The ‘&&’ operator doesn’t evaluate second operand if first operand becomes false. Similarly ‘||’ doesn’t evaluate second operand when first operand becomes true. The bitwise ‘&’ and ‘|’ operators always evaluate their operands.
+
+interesting facts about bitwise operators
+
+1)The left shift and right shift operators should not be used for negative numbers.
+ If any of the operands is a negative number, it results in undefined behaviour. For example results of both -1 << 1 and 1 << -1 is undefined. Also, if the number is shifted more than the size of integer, the behaviour is undefined. For example, 1 << 33 is undefined if integers are stored using 32 bits.
+
+2)The bitwise XOR operator is the most useful operator from technical interview perspective. It is used in many problems. A simple example could be “Given a set of numbers where all elements occur even number of times except one number, find the odd occurring number” This problem can be efficiently solved by just doing XOR of all numbers.
+
+#include <stdio.h> 
+  
+// Function to return the only odd 
+// occurring element 
+int findOdd(int arr[], int n) 
+{ 
+    int res = 0, i; 
+    for (i = 0; i < n; i++) 
+        res ^= arr[i]; 
+    return res; 
+} 
+  
+// Driver Method 
+int main(void) 
+{ 
+    int arr[] = { 12, 12, 14, 90, 14, 14, 14 }; 
+    int n = sizeof(arr) / sizeof(arr[0]); 
+    printf("The odd occurring element is %d ", 
+           findOdd(arr, n)); 
+    return 0; 
+} 
+Output:
+The odd occurring element is 90
+The following are many other interesting problems using XOR operator.
+
+#Find the Missing Number
+#swap two numbers without using a temporary variable
+#A Memory Efficient Doubly Linked List
+#Find the two non-repeating elements.
+#Find the two numbers with odd occurences in an unsorted-array.
+#Add two numbers without using arithmetic operators.
+#Swap bits in a given number/.
+#Count number of bits to be flipped to convert a to b .
+#Find the element that appears once.
+#Detect if two integers have opposite signs.
+.
+
+
+3)The bitwise operators should not be used in place of logical operators. The result of logical operators (&&, || and !) is either 0 or 1, but bitwise operators return an integer value. Also, the logical operators consider any non-zero operand as 1.
+#include <stdio.h> 
+  
+int main() 
+{ 
+    int x = 2, y = 5; 
+    (x & y) ? printf("True ") : printf("False "); 
+    (x && y) ? printf("True ") : printf("False "); 
+    return 0; 
+} 
+Output:
+False True
+
+4)The left-shift and right-shift operators are equivalent to multiplication and division by 2 respectively. As mentioned in point 1, it works only if numbers are positive.
+
+5)The & operator can be used to quickly check if a number is odd or even. The value of expression (x & 1) would be non-zero only if x is odd, otherwise the value would be zero.
+#include <stdio.h> 
+int main() 
+{ 
+    int x = 19; 
+    (x & 1) ? printf("Odd") : printf("Even"); 
+    return 0; 
+} 
+Output:
+Odd
+
+6)The ~ operator should be used carefully. The result of ~ operator on a small number can be a big number if the result is stored in an unsigned variable. And the result may be a negative number if the result is stored in a signed variable (assuming that the negative numbers are stored in 2’s complement form where the leftmost bit is the sign bit)
+// Note that the output of the following 
+// program is compiler dependent 
+#include <stdio.h> 
+  
+int main() 
+{ 
+    unsigned int x = 1; 
+    printf("Signed Result %d \n", ~x); 
+    printf("Unsigned Result %ud \n", ~x); 
+    return 0; 
+} 
+
+

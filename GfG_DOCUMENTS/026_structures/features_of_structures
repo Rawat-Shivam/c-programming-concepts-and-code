@@ -1,0 +1,75 @@
+
+
+
+Limitations of C Structures
+
+In C language, Structures provide a method for packing together data of different types. A Structure is a helpful tool to handle a group of logically related data items. However, C structures have some limitations.
+
+The C structure does not allow the struct data type to be treated like built-in data types:
+We cannot use operators like +,- etc. on Structure variables. For example, consider the following code:
+struct number 
+{ 
+    float x; 
+}; 
+int main() 
+{ 
+    struct number n1,n2,n3; 
+    n1.x=4; 
+    n2.x=3; 
+    n3=n1+n2; 
+    return 0; 
+} 
+  
+/*Output: 
+  
+prog.c: In function 'main': 
+prog.c:10:7: error:  
+invalid operands to binary + (have 'struct number' and 'struct number') 
+  n3=n1+n2; 
+  
+*/
+
+
+No Data Hiding: C Structures do not permit data hiding. Structure members can be accessed by any function, anywhere in the scope of the Structure.
+Functions inside Structure: C structures do not permit functions inside Structure
+Static Members: C Structures cannot have static members inside their body
+Access Modifiers: C Programming language do not support access modifiers. So they cannot be used in C Structures.
+Construction creation in Structure: Structures in C cannot have constructor inside Structures.
+
+sizeof operator: This operator will generate 0 for an empty structure in C whereas 1 for an empty structure in C++.
+
+
+
+Constructor creation in structure: Structures in C cannot have constructor inside structure but Structures in C++ can have Constructor creation.
+// C program to demonstrate that Constructor is not allowed 
+#include <stdio.h> 
+
+struct Student { 
+	int roll; 
+	Student(int x) 
+	{ 
+		roll = x; 
+	} 
+}; 
+
+// Driver Program 
+int main() 
+{ 
+	struct Student s(2); 
+	printf("%d", s.x); 
+	return 0; 
+} 
+/* Output : Compiler Error 
+[Error] expected specifier-qualifier-list 
+	before 'Student' 
+[Error] expected declaration specifiers or 
+'...' before numeric constant 
+[Error] 's' undeclared (first use 
+5555555555in this function) 
+In function 'main': */
+
+
+
+
+
+

@@ -1,0 +1,87 @@
+
+
+Bit Fields in C
+In C, we can specify size (in bits) of structure and union members. The idea is to use memory efficiently when we know that the value of a field or group of fields will never exceed a limit or is withing a small range.
+
+For example, consider the following declaration of date without the use of bit fields.
+
+#include <stdio.h> 
+// A simple representation of the date 
+struct date { 
+    unsigned int d; 
+    unsigned int m; 
+    unsigned int y; 
+}; 
+int main() 
+{ 
+    printf("Size of date is %lu bytes\n", 
+           sizeof(struct date)); 
+    struct date dt = { 31, 12, 2014 }; 
+    printf("Date is %d/%d/%d", dt.d, dt.m, dt.y); 
+} 
+Output:
+Size of date is 12 bytes
+Date is 31/12/2014
+
+
+The above representation of ‘date’ takes 12 bytes on a compiler where an unsigned int takes 4 bytes. Since we know that the value of d is always from 1 to 31, the value of m is from 1 to 12, we can optimize the space using bit fields.
+
+#include <stdio.h> 
+// Space optimized representation of the date 
+struct date { 
+    // d has value between 1 and 31, so 5 bits 
+    // are sufficient 
+    unsigned int d : 5; 
+  
+    // m has value between 1 and 12, so 4 bits 
+    // are sufficient 
+    unsigned int m : 4; 
+  
+    unsigned int y; 
+}; 
+int main() 
+{ 
+    printf("Size of date is %lu bytes\n", sizeof(struct date)); 
+    struct date dt = { 31, 12, 2014 }; 
+    printf("Date is %d/%d/%d", dt.d, dt.m, dt.y); 
+    return 0; 
+}
+Output:
+Size of date is 8 bytes
+Date is 31/12/2014
+
+
+**************
+However if the same code is written using signed int and the value of the fields goes beyond the bits allocated to the variable and something interesting can happen
+**************
+
+For example consider the same code but with signed integers:
+
+#include <stdio.h> 
+struct date { 
+    // d has value between 1 and 31, so 5 bits 
+    // are sufficient 
+    int d : 5; 
+  
+    // m has value between 1 and 12, so 4 bits 
+    // are sufficient 
+    int m : 4; 
+  
+    int y; 
+}; 
+  
+int main() 
+{ 
+    printf("Size of date is %lu bytes\n", 
+           sizeof(struct date)); 
+    struct date dt = { 31, 12, 2014 }; 
+    printf("Date is %d/%d/%d", dt.d, dt.m, dt.y); 
+    return 0; 
+}
+Output:
+Size of date is 8 bytes
+Date is -1/-4/2014
+
+***********************
+The output comes out to be negative. What happened behind is that the value 31 was stored in 5 bit signed integer which is equal to 11111. The MSB is a 1, so it’s a negative number and you need to calculate the 2’s complement of the binary number to get its actual value which is what is done internally. By calculating 2’s complement you will arrive at the value 00001 which is equivalent to decimal number 1 and since it was a negative number you get a -1. A similar thing happens to 12 in which case you get 4-bit representation as 1100 which on calculating 2’s complement you get the value of -4.
+***********************

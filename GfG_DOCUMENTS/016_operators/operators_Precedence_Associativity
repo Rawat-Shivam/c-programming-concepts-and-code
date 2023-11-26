@@ -1,0 +1,147 @@
+
+Precedence of postfix ++ and prefix ++ in C/C++
+In C/C++, precedence of Prefix ++ (or Prefix –) has higher priority than dereference (*) operator, and precedence of Postfix ++ (or Postfix –) is higher than both Prefix ++ and *.
+If p is a pointer then *p++ is equivalent to *(p++) and ++*p is equivalent to ++(*p) (both Prefix ++ and * are right associative).
+
+For example, program 1 prints ‘h’ and program 2 prints ‘e’.
+
+// Program 1 
+#include<stdio.h> 
+int main() 
+{ 
+  char arr[] = "geeksforgeeks"; 
+  char *p = arr; 
+  ++*p; 
+  printf(" %c", *p); 
+  getchar(); 
+  return 0; 
+} 
+Output:
+  h
+
+
+// Program 2 
+#include<stdio.h> 
+int main() 
+{ 
+  char arr[] = "geeksforgeeks"; 
+  char *p = arr; 
+  *p++; 
+  printf(" %c", *p); 
+  getchar(); 
+  return 0; 
+} 
+Output:
+  e
+
+
+remembering following simple rules about postfix ++, prefix ++ and * (dereference) operators
+1) Precedence of prefix ++ and * is same. Associativity of both is right to left.
+2) Precedence of postfix ++ is higher than both * and prefix ++. Associativity of postfix ++ is left to right.
+
+The expression ++*p has two operators of same precedence, so compiler looks for assoiativity. Associativity of operators is right to left. Therefore the expression is treated as ++(*p). Therefore the output of first program is “arr[0] = 11, arr[1] = 20, *p = 11“.
+
+The expression *p++ is treated as *(p++) as the precedence of postfix ++ is higher than *. Therefore the output of second program is “arr[0] = 10, arr[1] = 20, *p = 20“.
+
+The expression *++p has two operators of same precedence, so compiler looks for assoiativity. Associativity of operators is right to left. Therefore the expression is treated as *(++p). Therefore the output of second program is “arr[0] = 10, arr[1] = 20, *p = 20“.
+
+Operator Precedence and Associativity in C
+Operator precedence determines which operator is performed first in an expression with more than one operators with different precedence.
+Operators Associativity is used when two operators of same precedence appear in an expression. Associativity can be either Left to Right or Right to Left.
+
+Operators Precedence and Associativity are two characteristics of operators that determine the evaluation order of sub-expressions in absence of brackets
+
+1) Associativity is only used when there are two or more operators of same precedence.
+The point to note is associativity doesn’t define the order in which operands of a single operator are evaluated
+For example, consider the following program, associativity of the + operator is left to right, but it doesn’t mean f1() is always called before f2(). The output of the following program is in-fact compiler dependent. See this for details.
+
+// Associativity is not used in the below program. 
+// Output is compiler dependent. 
+  
+#include <stdio.h> 
+  
+int x = 0; 
+int f1() 
+{ 
+    x = 5; 
+    return x; 
+} 
+int f2()  
+{ 
+    x = 10; 
+    return x; 
+} 
+int main() 
+{ 
+    int p = f1() + f2(); 
+    printf("%d ", x); 
+    return 0; 
+}
+
+
+2) All operators with the same precedence have same associativity
+This is necessary, otherwise, there won’t be any way for the compiler to decide evaluation order of expressions which have two operators of same precedence and different associativity. For example + and – have the same associativity.
+
+3) Precedence and associativity of postfix ++ and prefix ++ are different
+Precedence of postfix ++ is more than prefix ++, their associativity is also different. Associativity of postfix ++ is left to right and associativity of prefix ++ is right to left
+
+
+4) Comma has the least precedence among all operators and should be used carefully For example consider the following program, the output is 1.
+#include <stdio.h> 
+int main() 
+{ 
+    int a; 
+    a = 1, 2, 3; // Evaluated as (a = 1), 2, 3 
+    printf("%d", a); 
+    return 0; 
+}
+
+5) There is no chaining of comparison operators in C
+In Python, expression like “c > b > a” is treated as “c > b and b > a”, but this type of chaining doesn’t happen in C. For example consider the  following program. The output of following program is “FALSE”.
+
+#include <stdio.h> 
+int main() 
+{ 
+    int a = 10, b = 20, c = 30; 
+  
+    // (c > b > a) is treated as ((c  > b) > a), associativity of '>' 
+    // is left to right. Therefore the value becomes ((30 > 20) > 10) 
+    // which becomes (1 > 20) 
+    if (c > b > a) 
+        printf("TRUE"); 
+    else
+        printf("FALSE"); 
+    return 0; 
+}
+
+// C++ implementation 
+#include <bits/stdc++.h> 
+using namespace std; 
+int x = 0; 
+  
+int f1() 
+{ 
+    x = 5; 
+    return x; 
+} 
+  
+int f2() 
+{ 
+    x = 10; 
+    return x; 
+} 
+  
+int main() 
+{ 
+    int p = f1() + f2(); 
+    cout << ("%d ", x); 
+    getchar(); 
+    return 0; 
+} 
+
+Output:
+10
+What would the output of the above program – ‘5’ or ’10’?
+The output is undefined as the order of evaluation of f1() + f2() is not mandated by standard. The compiler is free to first call either f1() or f2(). Only when equal level precedence operators appear in an expression, the associativity comes into picture. For example, f1() + f2() + f3() will be considered as (f1() + f2()) + f3(). But among first pair, which function (the operand) evaluated first is not defined by the standard.
+
+

@@ -1,0 +1,34 @@
+
+
+
+					003.02.scopeRules
+
+
+Register variables are active only within the function. Register variables are alive until the end of a function.
+
+Scope of an identifier is the part of the program where the identifier may directly be accessible
+
+File Scope::
+Scope of a Identifier starts at the beginning of the file and ends at the end of the file. It refers to only those Identifiers that are declared outside of all functions. The Identifiers of File scope are visible all over the file Identifiers having file scope are global
+
+
+Block Scope::
+Scope of a Identifier begins at opening of the block / ‘{‘ and ends at the end of the block / ‘}’. Identifiers with block scope are local to their block
+ A variable declared inside a block is accessible in the block and all inner blocks of that block, but not accessible outside the block. Basically these are local to the blocks in which the variables are defined and are not accessible outside.
+
+
+Function Prototype Scope::
+The scope of the these variables begins right after the declaration in the function prototype and runs to the end of the declarations list. These scope doesnot include the function definition, but just the function prototype.Identifiers declared in function prototype are visible within the prototype
+
+Function scope::
+Function scope begins at the opening of the function and ends with the closing of it.
+ Function scope is applicable to labels only. A label declared is used as a target to goto statement and both goto and label statement must be in same function.label ignores block scope
+
+
+What if the inner block itself has one variable with the same name?
+If an inner block declares a variable with the same name as the variable declared by the outer block, then the visibility of the outer block variable ends at the pint of the declaration by inner block.
+
+Can variables of the block be accessed in another subsequent block?
+No, a variable declared in a block can only be accessed inside the block and all inner blocks of this block.
+
+

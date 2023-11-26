@@ -1,0 +1,45 @@
+
+// its incomplete...because lib must start from lib+something
+// but i made it from different starting name
+
+
+
+
+
+
+// this is what i did ..command used
+.. step by step.......
+
+ 1050  cd 002_libraries_shared+static+dynamic/
+
+ 1052  cd creatingSharedLibrary/
+ 1055  mkdir staticLibrary
+ 1056  cd staticLibrary/
+
+ 1061  vim libFunc.c
+ 1062  vim libHeader.h
+ 
+ 1069  gcc -c libFunc.c -o myLib.o
+ 1074  ar rcs myLib.a myLib.o 
+ 
+ 1079  ll
+ 1080  mkdir librarayStuff
+ 1081  ll
+ 
+ 1082  mv *.c librarayStuff/
+ 1083  mv *.h librarayStuff/
+ 1084  mv *.a librarayStuff/
+ 1085  mv *.o librarayStuff/
+ 1086  ll
+ 
+ 1094  vim main.c
+ 
+ 1095  gcc -c main.c -o main.o
+ 
+ 1097  gcc -o main main.o -L./librarayStuff -myLib
+ 1098  gcc -o main main.o -L./librarayStuff myLib
+ 1099  gcc -o main main.o -L./librarayStuff ./librarryStuff/myLib
+ 1100  gcc -o main main.o -L/librarayStuff -lmyLib.o 
+ 1101  gcc -o main main.o -L/librarayStuff -l myLib.o 
+
+

@@ -1,0 +1,13 @@
+
+
+What are near, far and huge pointers?
+
+These are some old concepts used in 16 bit intel architectures in the days of MS DOS, not much useful anymore.
+
+Near pointer is used to store 16 bit addresses means within current segment on a 16 bit machine. The limitation is that we can only access 64kb of data at a time.
+
+A far pointer is typically 32 bit that can access memory outside current segment.  To use this, compiler allocates a segment register to store segment address, then another register to store offset within current segment.
+
+Like far pointer, huge pointer is also typically 32 bit and can access outside segment. In case of far pointers, a segment is fixed. In far pointer, the segment part cannot be modified, but in Huge it can be
+
+

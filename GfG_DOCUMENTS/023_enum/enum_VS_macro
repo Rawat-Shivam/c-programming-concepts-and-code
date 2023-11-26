@@ -1,0 +1,35 @@
+
+Enum vs Macro
+We can also use macros to define names constants.
+There are multiple advantages of using enum over macro when many related named constants have integral values.
+a) Enums follow scope rules.
+b) Enum variables are automatically assigned values. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

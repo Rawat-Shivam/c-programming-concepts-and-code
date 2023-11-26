@@ -1,0 +1,61 @@
+
+
+How to avoid Structure Padding in C?
+
+In Structure, sometimes the size of the structure is more than the size of all structures members because of structure padding.
+#include <stdio.h> 
+struct s { 
+    int i; 
+    char ch; 
+    double d; 
+}; 
+int main() 
+{ 
+    struct s A; 
+    printf("Size of A is: %ld", sizeof(A)); 
+} 
+Output:
+Size of A is: 16
+Note: But what actual size of all structure member is 13 Bytes. So here total 3 bytes are wasted.
+
+
+So, to avoid structure padding we can use pragma pack as well as an attribute.
+Below are the solutions to avoid structure padding:
+
+Program-1: Using pragma pack
+#include <stdio.h> 
+// To force compiler to use 1 byte packaging 
+#pragma pack(1) 
+struct s { 
+    int i; 
+    char ch; 
+    double d; 
+}; 
+int main() 
+{ 
+    struct s A; 
+    printf("Size of A is: %ld", sizeof(A)); 
+} 
+Output:
+Size of A is: 13
+
+Program-2: Using attribute
+// C program to avoid structure 
+// padding using attribute 
+#include <stdio.h> 
+struct s { 
+    int i; 
+    char ch; 
+    double d; 
+} __attribute__((packed));  
+// Attribute informing compiler to pack all members 
+int main() 
+{ 
+    struct s A; 
+    printf("Size of A is: %ld", sizeof(A)); 
+} 
+Output:
+Size of A is: 13
+
+
+

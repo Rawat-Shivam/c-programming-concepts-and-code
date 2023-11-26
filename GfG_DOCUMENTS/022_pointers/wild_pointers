@@ -1,0 +1,30 @@
+
+What are Wild Pointers? How can we avoid?
+Uninitialized pointers are known as wild pointers because they point to some arbitrary memory location and may cause a program to crash or behave badly.
+int main() 
+{ 
+  int *p;  /* wild pointer */
+   /* Some unknown memory location is being corrupted.  
+   This should never be done. */ 
+  *p = 12;  
+   /**********************************************
+   // since pointer is a memeory location and as it stores address....so by default
+  // the garbage(already previous program data present called garbage ) is present  in pointer 
+  // which can be any address
+  // it could be used by some meaningfull variable by new program
+  // which can be corrupted 
+   /**********************************************
+
+} 
+
+a pointer p points to a known variable then it’s not a wild pointer, p is a wild pointer till this points to variable.
+
+therefore use Dynamic memory allocation,
+If we want pointer to a value (or set of values) without having a variable for the value, we should explicitly allocate memory and put the value in allocated memory.
+int main() 
+{ 
+   int *p = (int *)malloc(sizeof(int)); 
+  *p = 12; /* This is fine (assuming malloc doesn't return NULL) */ 
+} 
+
+

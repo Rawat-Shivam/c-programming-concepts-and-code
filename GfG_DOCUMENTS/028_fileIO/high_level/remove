@@ -1,0 +1,37 @@
+
+C program to delete a file
+The remove function in C/C++ can be used to delete a file. The function returns 0 if files is deleted successfully, other returns a non-zero value.
+
+#include<stdio.h> 
+  
+int main() 
+{ 
+   if (remove("abc.txt") == 0) 
+      printf("Deleted successfully"); 
+   else
+      printf("Unable to delete the file"); 
+  
+   return 0; 
+} 
+
+
+Using remove() function in C, we can write a program which can destroy itself after it is compiled and executed.
+Explanation: This can be done using the remove function in C. Note that, this is done in Linux environment. So, the remove function is fed the first parameter in command line argument i.e. a.out file (executable file) created after compiling . Hence the program will be destroyed.
+
+#include<stdio.h> 
+#include<stdlib.h> 
+int main(int c, char *argv[]) 
+{ 
+    printf("By the time you will compile me I will be destroyed \n"); 
+   // array of pointers to command line arguments 
+    remove(argv[0]);     
+  // Note: argv[0] will contain the executable file i.e. 'a.out' 
+      
+return 0; 
+} 
+Output:
+By the time you will compile me I will be destroyed
+After the output shown above, the a.out file will be removed.
+
+
+

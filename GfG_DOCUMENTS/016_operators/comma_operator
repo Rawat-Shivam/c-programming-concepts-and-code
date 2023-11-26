@@ -1,0 +1,167 @@
+
+
+Comma in C and C++
+In C and C++, comma (, ) can be used in two contexts:
+6)The ~ operator should be used carefully. The result of ~ operator on a small number can be a big number if the result is stored in an unsigned variable. And the result may be a negative number if the result is stored in a signed variable (assuming that the negative numbers are stored in 2’s complement form where the leftmost bit is the sign bit)
+
+1) Comma as an operator:
+The comma operator (represented by the token, ) is a binary operator that evaluates its first operand and discards the result, it then evaluates the second operand and returns this value (and type). The comma operator has the lowest precedence of any C operator, and acts as a sequence point
+
+/* comma as an operator */
+int i = (5, 10); /* 10 is assigned to i*/
+int j = (f1(), f2()); /* f1() is called (evaluated) first followed by f2().  
+                      The returned value of f2() is assigned to j */
+
+
+2) Comma as a separator:
+Comma acts as a separator when used with function calls and definitions, function like macros, variable declarations, enum declarations, and similar constructs.
+/* comma as a separator */
+int a = 1, b = 2; 
+void fun(x, y); 
+
+************
+
+The use of comma as a separator should not be confused with the use as an operator. For example, in below statement, f1() and f2() can be called in any order.
+/* Comma acts as a separator here and doesn't enforce any sequence.  
+    Therefore, either f1() or f2() can be called first */
+void fun(f1(), f2()); 
+
+***********
+
+Result of comma operator as l-value in C and C++
+Using result of comma operator as l-value is not valid in C. But in C++, result of comma operator can be used as l-value if the right operand of the comma operator is l-value.
+For example, if we compile the following program as a C++ program, then it works and prints b = 30. And if we compile the same program as C program, then it gives warning/error in compilation (Warning in Dev C++ and error in Code Blocks).
+#include<stdio.h> 
+int main() 
+{ 
+  int a = 10, b = 20; 
+  (a, b) = 30; // Since b is l-value, this statement is valid in C++, but not in C. 
+  printf("b = %d", b); 
+  getchar(); 
+  return 0; 
+} 
+
+You can try below programs to check your understanding of comma in C
+// PROGRAM 1 
+#include <stdio.h> 
+int main() 
+{ 
+    int x = 10; 
+    int y = 15; 
+  
+    printf("%d", (x, y)); 
+    getchar(); 
+    return 0; 
+} 
+15
+
+
+// PROGRAM 2:  Thanks to Shekhu for suggesting this program 
+#include <stdio.h> 
+int main() 
+{ 
+    int x = 10; 
+    int y = (x++, ++x); 
+    printf("%d", y); 
+    getchar(); 
+    return 0; 
+} 
+12
+
+// PROGRAM 3:  Thanks to Venki for suggesting this program 
+#include <stdio.h> 
+int main() 
+{ 
+    int x = 10, y; 
+  
+    // The following is equivalent 
+    // to y = x + 2 and x += 3, 
+    // with two printings 
+    y = (x++, 
+         printf("x = %d\n", x), 
+         ++x, 
+         printf("x = %d\n", x), 
+         x++); 
+  
+    // Note that last expression is evaluated 
+    // but side effect is not updated to y 
+    printf("y = %d\n", y); 
+    printf("x = %d\n", x); 
+  
+    return 0; 
+} 
+x = 11
+x = 12
+y = 12
+x = 13
+
+3) Comma operator in place of a semicolon.
+We know that in C and C++, every statement is terminated with a semicolon but comma operator also used to terminate the statement after satisfying the following rules.
+
+The variable declaration statements must be terminated with semicolon.
+The statements after declaration statement can be terminated by comma operator.
+The last statement of the program must be terminated by semicolon.
+Examples:
+
+#include <iostream> 
+using namespace std; 
+int main() 
+{ 
+    cout << "First Line\n", 
+        cout << "Second Line\n", 
+        cout << "Third Line\n", 
+        cout << "Last line"; 
+    return 0; 
+} 
+Output:
+First Line
+Second Line
+Third Line
+Last line
+
+A comma operator question
+Consider the following C programs.
+
+#include<stdio.h> 
+int main(void) 
+{ 
+    int a = 1, 2, 3; 
+    printf("%d", a); 
+    return 0; 
+} 
+
+
+#include<stdio.h> 
+int main(void) 
+{ 
+    int (a = 1), 2, 3; 
+    printf("%d", a); 
+    return 0; 
+} 
+
+#include<stdio.h> 
+int main(void) 
+{ 
+    int (a = 1, 2,) 3; 
+    printf("%d", a); 
+    return 0; 
+} 
+
+
+#include<stdio.h> 
+int main(void) 
+{ 
+int a = 1, 2, 3; 
+    printf("%d", a); 
+    return 0; 
+} 
+
+#include<stdio.h> 
+int main(void) 
+{ 
+    int a; 
+    a = (1, 2, 3); 
+    printf("%d", a); 
+    return 0; 
+} 
+In a C/C++ program, comma is used in two contexts: (1) A separator (2) An Operator. (See this for more details).

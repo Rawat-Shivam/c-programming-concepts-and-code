@@ -1,0 +1,3 @@
+
+In general, nums[i][j] is equivalent to *(*(nums+i)+j)
+

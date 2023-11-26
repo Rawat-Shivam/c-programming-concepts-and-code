@@ -1,0 +1,108 @@
+
+__STDC__ Macro is used to confirm the compiler standard. Generally it holds the value 1 which means that the compiler conforms to ISO Standard C.
+#include <stdio.h> 
+int main() 
+{ 
+	printf("Compiler Standard Number: %d\n", 
+		__STDC__); 
+	return 0; 
+} 
+
+
+__STDC__HOSTED Macro: This macro holds the value 1 if the compiler’s target is a hosted environment. A hosted environment is a facility in which a third-party holds the compilation data and runs the programs on its own computers. Generally, the value is set to 1.
+#include <stdio.h> 
+int main() 
+{ 
+	printf("STDC_HOSTDED Number: %d\n", 
+		__STDC_HOSTED__); 
+	return 0; 
+} 
+
+
+
+__STDC_VERSION__: This macro holds the C Standard’s version number in the form yyyymmL where yyyy and mm are the year and month of the Standard version. This signifies which version of the C Standard the compiler conforms to.
+Values hold by __STDC_VERSION__
+The value 199409L signifies the C89 standard amended in 1994. This is the current default standard.
+The value 199901L signifies the C99 standard
+The value 201112L signifies the 2011 revision of the C standard
+These standard values are changed when the user is required to use the function or header file in C89 standard which is removed in C99 standard. The compiler changes its standard of execution and runs the output.
+
+#include <stdio.h> 
+int main() 
+{ 
+	printf("Compiler Standard "
+		"VERSION Number: %ld\n", 
+		__STDC_VERSION__); 
+	return 0; 
+} 
+
+
+
+
+
+Predefined Macros in C99 standard:
+__cplusplus: __cplusplus Macro is defined when the C++ compiler is used. It is used to test whether a header is compiled by a C compiler or a C++ compiler. This macro gives value similar to __STDC_VERSION__, in that it expands to a version number.
+Values hold by __cplusplus
+199711L for the 1998 C++ standard
+201103L for the 2011 C++ standard
+201402L for the 2014 C++ standard
+201703L for the 2017 C++ standard
+
+
+__OBJC__ Macro:: __OBJC__ Macro has value 1 if the Objective-C compiler is in use. __OBJC__ is used to test whether a header is compiled by a C compiler or an Objective-C compiler.
+
+
+
+
+
+__LINE__ macro contains the current line number of the program in the compilation. It gives the line number where it is called. It is used in generating log statements, error messages, throwing exceptions and debugging codes. Whenever the compiler finds an error in compilation it first generates the line number at which error occurred using __LINE__ and prints error message along with line number so that user can easily fix that error easily.
+#include <stdio.h> 
+int main() 
+{ 
+    printf("Line number is: %d\n", 
+           __LINE__); 
+    return 0; 
+} 
+
+
+__FILE__ macro holds the file name of the currently executing program in the computer. It is also used in debugging, generating error reports and log messages.
+#include <stdio.h> 
+int main() 
+{ 
+    printf("File name of this"
+           " program is: %s\n", 
+           __FILE__); 
+    return 0; 
+} 
+
+
+__DATE__ macro gives the date at which source code of this program is converted into object code. Simply put, it returns the date at which the program was compiled. Date is in the format mmm dd yyyy. mmm is the abbrevated month name.
+#include <stdio.h> 
+int main() 
+{ 
+	printf("Program Compilation Date: %s\n", 
+		__DATE__); 
+	return 0; 
+} 
+
+
+__TIME__ macro gives the time at which program was compiled. Time is in the format hour:minute:second
+#include <stdio.h> 
+int main() 
+{ 
+	printf("Time of compilation is: %s\n", 
+		__TIME__); 
+	return 0; 
+} 
+
+Predefined Identifier __func__ in C
+Before we start discussing about __func__, let us write some code snippet and anticipate the output:
+#include “studio.h” 
+
+int main() 
+{ 
+printf(“%s”,__func__); 
+return 0; 
+} 
+
+

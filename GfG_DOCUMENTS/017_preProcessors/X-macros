@@ -1,0 +1,29 @@
+
+X-Macros in C
+X-Macros are based on the property of nested macros and the ability to define macros inside other macros. X-Macros are very powerful pre-processor technique in the sense that it can create a self-maintaining and inter-dependent piece of code. When the change of one part of a program leads to a change in another part, then the code is said to be inter-dependent.
+
+Syntax:
+An X macro application consists of two parts:
+
+The definition of the list’s elements:
+#define VARIABLES \
+    X(value1, 1)  \
+    .
+    .
+    .  \
+    X(valueN, N)
+Expansion(s) of the list to generate fragments of declarations or statements:
+#define X(name) int name;
+    VARIABLES
+#undef X
+
+Advantages of X-Macros
+X-Macros are extensively used in Operating System development by creating separate header files for maintainability as well as readability
+Helps to maintain complex programming easily
+it can create a self-maintaining and inter-dependent piece of code
+Disadvantages of X-Macros
+
+The code becomes less readable
+Code is complex to understand
+Commonly used for internal programming only, like OS programming.
+

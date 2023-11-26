@@ -1,0 +1,37 @@
+
+Write a C macro PRINT(x) which prints x
+At the first look, it seems that writing a C macro which prints its argument is child’s play. Following program should work i.e. it should print x
+
+#define PRINT(x) (x) 
+int main() 
+{  
+  printf("%s",PRINT(x)); 
+  return 0; 
+} 
+But it would issue compile error because the data type of x, which is taken as variable by the compiler, is unknown.
+
+But if we know one of lesser known traits of C language, writing such a macro is really a child’s play. 🙂 In C, there’s a # directive, also called ‘Stringizing Operator’, which does this magic. Basically # directive converts its argument in a string
+
+#define PRINT(x) (#x) 
+int main() 
+{  
+  printf("%s",PRINT(x)); 
+  return 0; 
+}
+
+***************************
+
+#include<stdio.h>
+#define PRINT(x) (#x) 
+int main() 
+{ 
+printf("%f",PRINT(5.009)); 
+return 0; 
+} 
+
+prog.c: In function ‘main’:
+prog.c:5:8: warning: format ‘%f’ expects argument of type ‘double’, but argument 2 has type ‘char *’ [-Wformat=]
+ printf("%f",PRINT(5.009)); 
+        ^
+***********************************
+

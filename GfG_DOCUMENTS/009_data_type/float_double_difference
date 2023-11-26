@@ -1,0 +1,96 @@
+
+
+float is a 32 bit IEEE 754 single precision Floating Point Number1 bit for the sign, (8 bits for the exponent, and 23* for the value), i.e. float has 7 decimal digits of precision.
+
+double is a 64 bit IEEE 754 double precision Floating Point Number (1 bit for the sign, 11 bits for the exponent, and 52* bits for the value), i.e. double has 15 decimal digits of precision.
+
+
+Let’s take a example :
+For a quadratic equation x2 – 4.0000000 x + 3.9999999 = 0, the exact roots to 10 significant digits are, r1 = 2.000316228 and r2 = 1.999683772
+
+
+// C program to demonstrate  
+// double and float precision values 
+  
+#include <stdio.h> 
+#include <math.h> 
+  
+// utility function which calculate roots of  
+// quadratic equation using double values 
+void double_solve(double a, double b, double c){ 
+    double d = b*b - 4.0*a*c; 
+    double sd = sqrt(d); 
+    double r1 = (-b + sd) / (2.0*a); 
+    double r2 = (-b - sd) / (2.0*a); 
+    printf("%.5f\t%.5f\n", r1, r2); 
+} 
+  
+// utility function which calculate roots of  
+// quadratic equation using float values 
+void float_solve(float a, float b, float c){ 
+    float d = b*b - 4.0f*a*c; 
+    float sd = sqrtf(d); 
+    float r1 = (-b + sd) / (2.0f*a); 
+    float r2 = (-b - sd) / (2.0f*a); 
+    printf("%.5f\t%.5f\n", r1, r2); 
+}    
+  
+// driver program 
+int main(){ 
+    float fa = 1.0f; 
+    float fb = -4.0000000f; 
+    float fc = 3.9999999f; 
+    double da = 1.0; 
+    double db = -4.0000000; 
+    double dc = 3.9999999; 
+  
+    printf("roots of equation x2 - 4.0000000 x + 3.9999999 = 0 are : \n"); 
+    printf("for float values: \n"); 
+    float_solve(fa, fb, fc); 
+  
+    printf("for double values: \n"); 
+    double_solve(da, db, dc); 
+    return 0; 
+}   
+Output:
+
+roots of equation x2 - 4.0000000 x + 3.9999999 = 0 are : 
+for float values: 
+2.00000    2.00000
+for double values: 
+2.00032    1.99968
+
+sizeof() for Floating Constant in C
+
+In C language, we have three floating data types i.e. float, double and long double. And the exact size of each of these 3 types depends on the C compiler implementation/platform. The following program can be used to find out the size of each floating data type on your machine.
+
+#include "stdio.h" 
+int main() 
+{ 
+ printf("%d %d %d",sizeof(float), sizeof(double), sizeof(long double)); 
+ return 0; 
+} 
+
+But what about the size of a floating point constant (e.g. 31.4 or 2.718)? For example if we have PI macro defined as follows, what would be the sizeof(3.14).
+
+#define PI 3.14
+
+Now if we do sizeof(PI), what will be its size? Is is equal to sizeof(float) ? Or is it also compiler implementation dependent. Well, for floating constants, C standard (C11 i.e. ISO/IEC 9899:2011) has given guideline. As per C11 clause 6.4.4.2, “An unsuffixed floating constant has type double. If suffixed by the letter f or F, it has type float. If suffixed by the letter l or L, it has type long double.“
+
+It means the type of a floating constant is same as that of double data type. So if size of a double on a machine is 8 bytes, the size of floating constant would be 8 bytes. One can find out this using the below program
+#include "stdio.h" 
+#define PI 3.14 
+int main() 
+{ 
+ printf("%d",sizeof(PI)); 
+ return 0; 
+} 
+As per the above mentioned C standard clause, a floating constant can be converted to float type by using f or F. Similarly, a floating constant can be converted to long double by using l or L. So it shouldn’t take much thought on guessing the output of the following:
+#include "stdio.h" 
+int main() 
+{ 
+ printf("%d %d",sizeof(3.14F), sizeof(3.14L)); 
+ return 0; 
+} 
+
+

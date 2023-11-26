@@ -1,0 +1,351 @@
+
+scanf() and fscanf() in C – Simple Yet Poweful
+
+Many of us know the traditional uses of scanf. Well, here are some of the lesser known facts
+
+How to read only a part of the input that we need? For example, consider some input stream that contains only characters followed by an integer or a float. And we need to scan only that integer or float.
+That is ,
+Input: “this is the value 100”,
+Output: value read is 100
+
+Input : “this is the value 21.2”,
+Output : value read is 21.2
+
+
+/* C program to demonstrate that we can 
+   ignore some string in scanf() */
+#include <stdio.h> 
+int main() 
+{ 
+    int a; 
+    scanf("This is the value %d", &a); 
+    printf("Input value read : a = %d", a); 
+    return 0; 
+} 
+// Input  : This is the value 100 
+// Output : Input value read : a = 100 
+Now, assume we don’t know what the preceding characters are but we surely know that the last value is an integer. How can we scan the last value as an integer?
+
+Below solution works only if input string has no spaces.
+
+
+/* Sample C program to demonstrate use of *s */
+#include<stdio.h> 
+int main() 
+{ 
+    int a; 
+    scanf("%*s %d", &a); 
+    printf("Input value read : a=%d",a); 
+    return 0; 
+} 
+  
+// Input: "blablabla 25" 
+// Output: Value read : 25 
+Explanation: The %*s in scanf is used to ignore some input as required. In this case, it ignores the input until the next space or new line. Similarly if you write %*d it will ignore integers until the next space or new line.
+
+The above fact may not seem as an useful trick at the first glance. Inorder to understand its usage, let us first see fscanf().
+
+fscanf() : Tired of all the clumpsy syntax to read from files? well, fscanf comes to the rescue.
+
+int fscanf(FILE *ptr, const char *format, ...) 
+fscanf reads from a file pointed by the FILE pointer (ptr), instead of reading from the input stream.
+
+Consider the following text file abc.txt
+
+NAME    AGE   CITY
+abc     12    hyderbad
+bef     25    delhi
+cce     65    bangalore  
+Now, we want to read only the city field of the above text file, ignoring all the other fields. A combination of fscanf and the trick mentioned above does this with ease
+
+
+
+/*c program demonstrating fscanf and its usage*/
+#include<stdio.h> 
+int main() 
+{ 
+    FILE* ptr = fopen("abc.txt","r"); 
+    if (ptr==NULL) 
+    { 
+        printf("no such file."); 
+        return 0; 
+    } 
+  
+    /* Assuming that abc.txt has content in below 
+       format 
+       NAME    AGE   CITY 
+       abc     12    hyderbad 
+       bef     25    delhi 
+       cce     65    bangalore */
+    char* buf[100]; 
+    while (fscanf(ptr,"%*s %*s %s ",buf)==1) 
+        printf("%s\n", buf); 
+  
+    return 0; 
+} 
+Output:
+CITY
+hyderbad
+delhi
+bangalore 
+
+Exercise: Count the number of words, characters and lines in a file using fscanf!
+
+scanf(“%[^\n]s”, str) Vs gets(str) in C with Examples
+
+gets()
+
+gets is a more convenient method of reading a string of text containing whitespaces.
+Unlike scanf(), it does not skip whitespaces.
+It is used to read the input until it encounters newline.
+Syntax:
+
+gets(string);
+where string-it is a string variable
+Example:
+
+#include <stdio.h>  
+int main() 
+{ 
+    char name[50]; 
+    gets(name); 
+    printf("Entered name: %s", name); 
+} 
+Output:
+Entered name: GFG
+
+%[^\n]
+It is an edit conversion code.
+The edit conversion code %[^\n] can be used as an alternative of gets.
+C supports this format specification with scanf() function.
+This edit conversion code can be used to read a line containing characters like variables and even whitespaces.
+In general scanf() function with format specification like %s and specification with the field width in the form of %ws can read-only strings till non-whitespace part.
+It means they cannot be used for reading a text containing more than one word, especially with Whitespaces.
+Syntax:
+
+scanf("%[^\n]", variable_name);
+Example:
+
+#include <stdio.h>  
+int main() 
+{ 
+    char name[50]; 
+    scanf("%[^\n]", name); 
+    printf("Entered name: %s", name); 
+} 
+Output:
+Entered name: GFG
+
+Table of difference between gets() and %[^\n]
+GETS()								%[^\N]
+
+1)gets() is used to read strings				%[^\n] is an edit conversion code used to read strings
+
+2)Unlike scanf(), gets() reads strings even with whitespaces	%[^\n] also terminates with a newline character
+
+3)when it reads a newline character then the 
+gets() function will be terminated				%[^\n] also reads strings with whitespaces
+
+
+The main difference between them is:
+scanf() reads input until it encounters whitespace, newline or End Of File(EOF) whereas gets() reads input until it encounters newline or End Of File(EOF), gets() does not stop reading input when it encounters whitespace instead it takes whitespace as a string.
+
+Problem with scanf() when there is fgets()/gets()/scanf() after it
+Consider below simple program in C. The program reads an integer using scanf(), then reads a string using fgets().
+
+// C program to demonstrate the problem when 
+// fgets()/gets() is used after scanf() 
+#include<stdio.h> 
+int main() 
+{ 
+   int x; 
+   char str[100]; 
+   scanf("%d", &x); 
+   fgets(str, 100, stdin); 
+   printf("x = %d, str = %s", x, str); 
+   return 0; 
+} 
+Input
+10
+test
+Output:
+x = 10, str =  
+The problem with above code is scanf() reads an integer and leaves a newline character in buffer. So fgets() only reads newline and the string “test” is ignored by the program.
+
+
+The similar problem occurs when scanf() is used in a loop.
+
+// C program to demonstrate the problem when 
+// scanf() is used in a loop 
+#include<stdio.h> 
+int main() 
+{ 
+    char c; 
+    printf("......Enter q to quit......\n"); 
+    do
+    { 
+        printf("Enter a character\n"); 
+        scanf("%c", &c); 
+        printf("%c\n", c); 
+    } 
+    while (c != 'q'); 
+    return 0; 
+} 
+Input
+a
+b
+q
+Output:
+......Enter q to quit......
+Enter a character
+a
+Enter a character
+
+
+Enter a character
+b
+Enter a character
+
+
+Enter a character
+q
+
+We can notice that above program prints an extra “Enter a character” followed by an extra new line. This happens because every scanf() leaves a newline character in buffer that is read by next scanf.
+
+How to solve above problem?
+	1)We can make scanf() to read a new line by using an extra “\n”, i.e., scanf(“%d\n”, &x) . 
+	  In fact scanf(“%d “, &x	) also works (Note extra space).
+	2)We can add a getchar() after scanf() to read an extra newline.
+
+
+Why to use fgets() over scanf() in C?
+Any time you use an *f function, whether it be printf, scanf, or their derivatives (fprintf, fscanf, etc…), you are doing more things than you might realize. Not only are you reading (or writing) something, but-and here’s the problem- you are interpreting it. The format string can be thought of as kind of an ‘eval’ function like you would see if you program in Lisp. So the problem with simply reading input from the user and echoing it back out is that a malevolent actor can simply insert a function pointer or executable code and voila, you are no longer in control.
+
+Advantage of using scanf():
+The user doesn’t need to know the size of the stack, which is the starter code is one-hundred bytes. That’s kind of good, although anyone can just sit there trying longer and longer input strings until BufferOverflow error occur. Ideally, you would just write a script that automatically tries increasing string sizes and reads the exit code of the program. Once it detects an error, you simply work your way back to a close estimate of the stack. Any modern operating system using memory address randomization to make the whole process of hijacking an application harder, but it’s by no means impossible.
+
+fgets() over scanf():
+fgets function is short for file-get-string. Remember that files can be pretty much anything on *nix systems (sockets, streams, or actual files), so we can use it to read from standard input, which again, is also technically a file. This also makes our program more robust, because as mentioned in the source, simply adjust the code to read from the command line, a file, or stdin, without much trouble.
+
+Crucially, the fgets function also allows us to specify a specific buffer length, thereby disallowing any buffer overflow attacks. If you look at the full code below, you’ll notice that a default buffer size has been defined as a macro.
+
+****   Remember that C can’t use ‘const int’ variables to initialize an array properly. You can hack it using variable-length arrays (VLA’s), but it’s not ideal, and I strongly recommend against it. So while in C++ we would normally use literally anything else, here we do use preprocessor macros, but keep in mind that C and C++ have vastly different capabilities when it comes to their static type checking, namely that C++ is good over C. Hence fgets() method can actually Handle Errors during I/O.
+
+So the code to actually read the user input is as follows:
+
+char* inputBuffer = malloc(sizeof(char) * DEFAULT_BUFFER_SIZE); 
+memset(inputBuffer, NUL, DEFAULT_BUFFER_SIZE); 
+  
+char* result = NULL; 
+  
+while (result == NULL) { 
+    result = fgets(inputBuffer, DEFAULT_BUFFER_SIZE, stdin); 
+  
+    if (inputBuffer[strlen(inputBuffer) - 1] != '\n') { 
+        ErrorInputStringTooLong(); 
+  
+        // Since 'result' is the canary 
+        // we are using to notify of a failure 
+        // in execution, set it to NULL, to indicate an error. 
+        // This is a useful value because 
+
+        // if for some reason the fgets f/nction were 
+        // to fail, the return value would also be NULL. 
+  
+        result = NULL; 
+    } 
+} 
+As expected, we dynamically allocate a buffer of predetermined size. Dynamically allocating it as opposed to stack-allocating it gives us another layer of protection against stack smashing.
+
+
+As expected, we dynamically allocate a buffer of predetermined size. Dynamically allocating it as opposed to stack-allocating it gives us another layer of protection against stack smashing.
+
+Note: We are explicitly zeroing out the memory in the inputBuffer. C does nothing for you, and malloc is no exception. The call to malloc returns a pointer to the first memory cell of the requested memory, but the values in every single one of those cells are unchanged from before the call. For all intents and purposes, they are garbage, so we zero them out. Note also that by zeroing out, we are automatically giving ourselves the null terminator,
+
+
+************   	although the fgets function does actually append a null to the end of the input string, provided there is enough room in the buffer.
+Usually, to clear the input buffer, one would just call fseek(stdin, 0, SEEK_END); but it doesn’t seem to work on every platform. Hence, the above-described method is used.
+When the user inputs too long string:
+
+You’ll notice that I check to make sure the last read value was not a new line. If that is true, this means that the user passed in an input string that was too long. To fix this, we need to set our ‘result’ variable to NULL so we cycle through the loop again, but we also need to clear out the input buffer. Otherwise, the program will simply read from the old input, which has not yet been used, rather than prompting the user for additional input
+Note: if fgets returns an error, you should call ferror() to figure out what went wrong.
+
+Why “&” is not used for strings in scanf() function?
+Below is syntax of Scanf. It requires two arguments:
+
+scanf("Format Specifier", Variable Address);
+
+Format Specifier: Type of value to expect while input
+Variable Address: &variable returns the variable's memory address.
+In case of a string (character array), the variable itself points to the first element of the array in question. Thus, there is no need to use the ‘&’ operator to pass the address.
+
+// C program to illustrate  not using "&" 
+// in scanf statement 
+#include<stdio.h> 
+int main() 
+{ 
+    char name[25]; 
+  
+    // Syntax to scan a String 
+    scanf("%s", name); 
+  
+    // Comparing base address of String with adrress 
+    // of first element of array which must return 
+    // true as both must be same 
+    printf("(Is Base address = address of first element)? \n %d", 
+           (name == &name[0])); 
+} 
+Output:
+(Is Base address = address of first element)?
+1
+
+Important Points
+‘&’ is used to get the address of the variable. C does not have a string type, String is just an array of characters and an array variable stores the address of the first index location.
+By default the variable itself points to the base address and therefore to access base address of string, there is no need of adding an extra ‘&’
+
+
+Differentiate printable and control character in C ?
+
+Given a character we need to find if it printable or not. We also need to find if it is control character or not. A character is known as printable character if it occupies printing space.
+For the standard ASCII character set (used by the “C” locale), control characters are those between ASCII codes 0x00 (NUL) and 0x1f (US), plus 0x7f (DEL).
+
+Input : a
+Output :a is printable character
+        a is not control character
+Input :\r
+Output : is not printable character
+         is control character
+
+To find the difference between a printable character and a control character we can use some predefined functions, which are declared in the “ctype.h” header file.
+
+The isprint() function checks whether a character is a printable character or not. isprint() function takes single argument in the form of an integer and returns a value of type int. We can pass a char type argument internally they acts as a int by specifying ASCII value.
+
+The iscntrl() function is used to checks whether a character is a control character or not. iscntrl() function also take a single argument and return an integer.
+
+// C program to illustrate isprint() and iscntrl() functions. 
+#include <stdio.h> 
+#include <ctype.h> 
+int main(void) 
+{ 
+    char ch = 'a'; 
+    if (isprint(ch)) { 
+        printf("%c is printable character\n", ch); 
+    } else { 
+        printf("%c is not printable character\n", ch); 
+    } 
+  
+    if (iscntrl(ch)) { 
+        printf("%c is control character\n", ch); 
+    } else { 
+        printf("%c is not control character", ch); 
+    } 
+    return (0); 
+} 
+Output:
+
+a is printable character
+a is not control character`
+
+
+
+

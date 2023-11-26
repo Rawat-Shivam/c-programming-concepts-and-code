@@ -1,0 +1,18 @@
+
+What is evaluation order of function parameters in C?
+It is compiler dependent in C. It is never safe to depend on the order of evaluation of side effects. For example, a function call like below may very well behave differently from one compiler to another:
+void func (int, int); 
+    
+int i = 2; 
+func (i++, i++); 
+There is no guarantee (in either the C or the C++ standard language definitions) that the increments will be evaluated in any particular order. Either increment might happen first. func might get the arguments `2, 3′, or it might get `3, 2′, or even `2, 2′.
+
+Does C support function overloading?
+First of all, what is function overloading? Function overloading is a feature of a programming language that allows one to have many functions with same name but with different signatures.
+This feature is present in most of the Object Oriented Languages such as C++ and Java. But C (not Object Oriented Language) doesn’t support this feature. However, one can achieve the similar functionality in C indirectly. One of the approach is as follows.
+
+Have a void * type of pointer as an argument to the function. And another argument telling the actual data type of the first argument that is being passed.
+
+   int foo(void * arg1, int arg2);
+
+

@@ -1,0 +1,29 @@
+
+sscanf() is a C style function similar to scanf(). It reads input from a string rather that standard input.
+#include<stdio.h> 
+int main() 
+{ 
+    const char *str = "12345"; 
+    int x; 
+    sscanf(str, "%d", &x); 
+    printf("\nThe value of x : %d", x); 
+    return 0; 
+}
+Output:
+Value of x : 12345
+
+Similarly we can read float and double using %f and %lf respectively.
+
+atoi() : The atoi() function takes a character array or string literal as an argument and returns its value. Following is a simple implementation:
+stoi() vs atoi()
+
+atoi() is a legacy C-style function. stoi() is added in C++ 11.
+atoi() works only for C-style strings (character array and string literal), stoi() works for both C++ strings and C style strings
+atoi() takes only one parameter and returns integer value.
+int atoi (const char * str); 
+stoi() can take upto three parameters, the second parameter is for starting index and third parameter is for base of input number.
+
+int stoi (const string&  str, size_t* index = 0, int base = 10); 
+Similarly, for converting String to Double, atof() can be used. The above function returns the converted integral number as an int value. If no valid conversion could be performed, it returns zero.
+
+

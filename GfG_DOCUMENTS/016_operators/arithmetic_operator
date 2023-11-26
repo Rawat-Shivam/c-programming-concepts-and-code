@@ -1,0 +1,34 @@
+
+Arithmetic Operators:
+These are used to perform arithmetic/mathematical operations on operands.
+
+binary operators falling in this category are:
+Addition: The ‘+’ operator adds two operands. For example, x+y.
+Subtraction: The ‘-‘ operator subtracts two operands. For example, x-y.
+Multiplication: The ‘*’ operator multiplies two operands. For example, x*y.
+Division: The ‘/’ operator divides the first operand by the second. For example, x/y.
+Modulus: The ‘%’ operator returns the remainder when first operand is divided by the second. For example, x%y
+
+unary arithmetic operators are:
+
+Increment: 
+The ‘++’ operator is used to increment the value of an integer. When placed before the variable name (also called pre-increment operator), its value is incremented instantly. For example, ++x.
+And when it is placed after the variable name (also called post-increment operator), its value is preserved temporarily until the execution of this statement and it gets updated before the execution of the next statement. For example, x++.
+
+Decrement:
+The ‘ – – ‘ operator is used to decrement the value of an integer. When placed before the variable name (also called pre-decrement operator), its value is decremented instantly. For example, – – x.
+And when it is placed after the variable name (also called post-decrement operator), its value is preserved temporarily until the execution of this statement and it gets updated before the execution of the next statement. For example, x – –.
+
+
+remembering following simple rules about postfix ++, prefix ++ and * (dereference) operators
+1) Precedence of prefix ++ and * is same. Associativity of both is right to left.
+2) Precedence of postfix ++ is higher than both * and prefix ++. Associativity of postfix ++ is left to right.
+
+
+The expression ++*p has two operators of same precedence, so compiler looks for assoiativity. Associativity of operators is right to left. Therefore the expression is treated as ++(*p). Therefore the output of first program is “arr[0] = 11, arr[1] = 20, *p = 11“.
+
+The expression *p++ is treated as *(p++) as the precedence of postfix ++ is higher than *. Therefore the output of second program is “arr[0] = 10, arr[1] = 20, *p = 20“.
+
+The expression *++p has two operators of same precedence, so compiler looks for assoiativity. Associativity of operators is right to left. Therefore the expression is treated as *(++p). Therefore the output of second program is “arr[0] = 10, arr[1] = 20, *p = 20“.
+
+

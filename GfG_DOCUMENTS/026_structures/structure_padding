@@ -1,0 +1,80 @@
+
+
+
+In C/C++ a structures are used as data pack. It doesn’t provide any data encapsulation or data hiding features (C++ case is an exception due to its semantic similarity with classes).
+
+Because of the alignment requirements of various data types, every member of structure should be naturally aligned. The members of structure allocated sequentially increasing order. Let us analyze each struct declared in the above program.
+
+For the sake of convenience, assume every structure type variable is allocated on 4 byte boundary (say 0x0000), i.e. the base address of structure is multiple of 4 (need not necessary always, see explanation of structc_t).
+// structure A 
+typedef struct structa_tag 
+{ 
+   char        c; 
+   short int   s; 
+} structa_t; 
+  
+printf("sizeof(structa_t) = %d\n", sizeof(structa_t));
+
+The structa_t first element is char which is one byte aligned, followed by short int. short int is 2 byte aligned. If the the short int element is immediately allocated after the char element, it will start at an odd address boundary. The compiler will insert a padding byte after the char to ensure short int will have an address multiple of 2 (i.e. 2 byte aligned). The total size of structa_t will be sizeof(char) + 1 (padding) + sizeof(short), 1 + 1 + 2 = 4 bytes.
+
+
+// structure B 
+typedef struct structb_tag 
+{ 
+   short int   s; 
+   char        c; 
+   int         i; 
+} structb_t; 
+
+   printf("sizeof(structb_t) = %d\n", sizeof(structb_t)); 
+
+The first member of structb_t is short int followed by char. Since char can be on any byte boundary no padding required in between short int and char, on total they occupy 3 bytes. The next member is int. If the int is allocated immediately, it will start at an odd byte boundary. We need 1 byte padding after the char member to make the address of next int member is 4 byte aligned. On total, the structb_t requires 2 + 1 + 1 (padding) + 4 = 8 bytes.
+
+
+
+// structure C 
+typedef struct structc_tag 
+{ 
+   char        c; 
+   double      d; 
+   int         s; 
+} structc_t; 
+
+   printf("sizeof(structc_t) = %d\n", sizeof(structc_t)); 
+
+structure C – Every structure will also have alignment requirements
+
+Applying same analysis, structc_t needs sizeof(char) + 7 byte padding + sizeof(double) + sizeof(int) = 1 + 7 + 8 + 4 = 20 bytes. However, the sizeof(structc_t) will be 24 bytes. It is because, along with structure members, structure type variables will also have natural alignment. Let us understand it by an example. Say, we declared an array of structc_t as shown below
+
+structc_t structc_array[3];
+Assume, the base address of structc_array is 0x0000 for easy calculations. If the structc_t occupies 20 (0x14) bytes as we calculated, the second structc_t array element (indexed at 1) will be at 0x0000 + 0x0014 = 0x0014. It is the start address of index 1 element of array. The double member of this structc_t will be allocated on 0x0014 + 0x1 + 0x7 = 0x001C (decimal 28) which is not multiple of 8 and conflicting with the alignment requirements of double. As we mentioned on the top, the alignment requirement of double is 8 bytes.
+
+Inorder to avoid such misalignment, compiler will introduce alignment requirement to every structure. It will be as that of the largest member of the structure. In our case alignment of structa_t is 2, structb_t is 4 and structc_t is 8. If we need nested structures, the size of largest inner structure will be the alignment of immediate larger structure.
+
+In structc_t of the above program, there will be padding of 4 bytes after int member to make the structure size multiple of its alignment. Thus the sizeof (structc_t) is 24 bytes. It guarantees correct alignment even in arrays. You can cross check.
+
+// structure D 
+typedef struct structd_tag 
+{ 
+   double      d; 
+   int         s; 
+   char        c; 
+} structd_t; 
+  
+   printf("sizeof(structd_t) = %d\n", sizeof(structd_t)); 
+
+structure D – How to Reduce Padding?
+
+By now, it may be clear that padding is unavoidable. There is a way to minimize padding. The programmer should declare the structure members in their increasing/decreasing order of size. An example is structd_t given in our code, whose size is 16 bytes in lieu of 24 bytes of structc_t.
+
+
+
+6. When memory reading is efficient in reading 4 bytes at a time on 32 bit machine, why should a double type be aligned on 8 byte boundary?
+
+It is important to note that most of the processors will have math co-processor, called Floating Point Unit (FPU). Any floating point operation in the code will be translated into FPU instructions. The main processor is nothing to do with floating point execution. All this will be done behind the scenes.
+
+As per standard, double type will occupy 8 bytes. And, every floating point operation performed in FPU will be of 64 bit length. Even float types will be promoted to 64 bit prior to execution.
+
+The 64 bit length of FPU registers forces double type to be allocated on 8 byte boundary. I am assuming (I don’t have concrete information) in case of FPU operations, data fetch might be different, I mean the data bus, since it goes to FPU. Hence, the address decoding will be different for double types (which is expected to be on 8 byte boundary). It means, the address decoding circuits of floating point unit will not have last 3 pins.
+
+

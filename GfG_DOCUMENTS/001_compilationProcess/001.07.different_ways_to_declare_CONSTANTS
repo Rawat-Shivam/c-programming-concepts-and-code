@@ -1,0 +1,80 @@
+
+
+Different ways to declare variable as constant in C and C++
+There are many different ways to make the variable as constant
+
+Using const keyword: The const keyword specifies that a variable or object value is constant and can’t be modified at the compilation time.
+// C program to demonstrate const specifier 
+#include <stdio.h> 
+int main() 
+{ 
+    const int num = 1; 
+  
+    num = 5; // Modifying the value 
+    return 0; 
+} 
+It will throw as error like:
+error: assignment of read-only variable ‘num’
+
+Using enum keyword: Enumeration (or enum) is a user defined data type in C and C++. It is mainly used to assign names to integral constants, that make a program easy to read and maintain.
+
+
+// In C and C++ internally the default 
+// type of 'var' is int 
+enum VARS { var = 42 }; 
+  
+// In C++ 11 (can have any integral type): 
+enum : type { var = 42; } 
+  
+// where mytype = int, char, long etc. 
+// but it can't be float, double or 
+// user defined data type. 
+Note: The data types of enum are of course limited as we can see in above example.
+
+Using constexpr keyword: Using constexpr in C++(not in C) can be used to declare variable as a guaranteed constant. But it would fail to compile if its initializer isn’t a constant expression.
+#include <iostream> 
+  
+int main() 
+{ 
+    int var = 5; 
+    constexpr int k = var; 
+    std::cout << k; 
+    return 0; 
+} 
+Above program will throw an error i.e.,
+
+error: the value of ‘var’ is not usable in a constant expression
+because the variable ‘var’ in not constant expression. Hence in order to make it as constant, we have to declare the variable ‘var’ with const keyword.
+
+Using Macros: We can also use Macros to define constant, but there is a catch,
+#define var 5
+Since Macros are handled by the pre-processor(the pre-processor does text replacement in our source file, replacing all occurrences of ‘var’ with the literal 5) not by the compiler.
+Hence it wouldn’t be recommended because Macros doesn’t carry type checking information and also prone to error. In fact not quite constant as ‘var’ can be redefined like this,
+
+C++
+// C++ program to demonstrate the problems 
+// in 'Macros' 
+#include <iostream> 
+using namespace std; 
+  
+#define var 5 
+int main() { 
+    printf("%d ", var); 
+  
+    #ifdef var 
+    #undef var 
+  
+    // redefine var as 10 
+    #define var 10 
+    #endif 
+  
+    printf("%d", var); 
+    return 0; 
+} 
+C
+Output:
+5 10
+Note: preprocessor and enum only works as a literal constant and integers constant respectively. Hence they only define the symbolic name of constant. Therefore if you need a constant variable with a specific memory address use either ‘const’ or ‘constexpr’ according to the requirement.
+
+
+

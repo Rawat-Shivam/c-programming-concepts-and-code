@@ -1,0 +1,11 @@
+
+Opaque Pointer
+What is an opaque pointer?
+Opaque as the name suggests is something we can’t see through. e.g. wood is opaque. Opaque pointer is a pointer which points to a data structure whose contents are not exposed at the time of its definition.
+
+Following pointer is opaque. One can’t know the data contained in STest structure by looking at the definition.
+
+struct STest* pSTest;
+It is safe to assign NULL to an opaque pointer.
+
+

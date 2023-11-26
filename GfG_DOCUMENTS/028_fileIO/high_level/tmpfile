@@ -1,0 +1,51 @@
+
+tmpfile() function in C
+In C Programming Language, the tmpfile() function is used to produce/create a temporary file.
+
+tmpfile() function is defined in the “stdio.h” header file.
+The created temporary file will automatically be deleted after the termination of program.
+It opens file in binary update mode i.e., wb+ mode.
+The syntax of tmpfile() function is:
+FILE *tmpfile(void) 
+The tmpfile() function always returns a pointer after the creation of file to the temporary file. If by chance temporary file can not be created, then the tmpfile() function returns NULL pointer.
+
+
+
+
+// C program to demonstrate working of tmpfile() 
+#include <stdio.h> 
+int main() 
+{ 
+    char str[] = "Hello GeeksforGeeks"; 
+    int i = 0; 
+  
+    FILE* tmp = tmpfile(); 
+    if (tmp == NULL) 
+    { 
+        puts("Unable to create temp file"); 
+        return 0; 
+    } 
+  
+    puts("Temporary file is created\n"); 
+    while (str[i] != '\0') 
+    { 
+        fputc(str[i], tmp); 
+        i++; 
+    } 
+  
+    // rewind() function sets the file pointer 
+    // at the beginning of the stream. 
+    rewind(tmp); 
+  
+    while (!feof(tmp)) 
+        putchar(fgetc(tmp)); 
+} 
+Output:
+Temporary file is created
+Hello GeeksforGeeks
+
+
+
+
+
+

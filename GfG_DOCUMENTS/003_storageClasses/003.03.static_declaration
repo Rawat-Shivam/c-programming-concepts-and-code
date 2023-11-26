@@ -1,0 +1,60 @@
+
+
+		003.03.static_declaration
+
+
+
+Initialization of global and static variables in C
+Predict the output of following C programs.
+
+// PROGRAM 1 
+#include <stdio.h> 
+#include <stdlib.h> 
+  
+int main(void) 
+{ 
+   static int *p = (int*)malloc(sizeof(p)); 
+   *p = 10; 
+   printf("%d", *p); 
+} 
+
+
+// PROGRAM 2 
+#include <stdio.h> 
+#include <stdlib.h> 
+int *p = (int*)malloc(sizeof(p)); 
+  
+int main(void) 
+{ 
+    *p = 10; 
+    printf("%d", *p); 
+} 
+Both of the above programs don’t compile in C. We get the following compiler error in C.
+
+error: initializer element is not constant
+In C, static and global variables are initialized by the compiler itself. Therefore, they must be initialized with a constant value.
+
+
+
+
+Note that the above programs compile and run fine in C++, and produce the output as 10.
+
+As an exercise, predict the output of following program in both C and C++.
+
+#include <stdio.h> 
+int fun(int x) 
+{ 
+    return (x+5); 
+} 
+  
+int y = fun(20); 
+  
+int main() 
+{ 
+    printf("%d ", y); 
+}
+
+
+
+
+

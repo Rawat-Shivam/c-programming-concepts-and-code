@@ -1,0 +1,72 @@
+
+
+Data type of case labels of switch statement in C++?
+In C++ switch statement, the expression of each case label must be an integer constant expression.
+/* Using non-const in case label */
+#include<stdio.h> 
+int main() 
+{ 
+  int i = 10; 
+  int c = 10; 
+  switch(c)  
+  { 
+    case i: // not a "const int" expression 
+         printf("Value of c = %d", c); 
+         break; 
+    /*Some more cases */
+                     
+  } 
+  return 0; 
+} 
+Putting const before i makes the above program work.
+
+Using range in switch case in C/C++
+
+You all are familiar with switch case in C/C++, but did you know you can use range of numbers instead of a single number or character in case statement.
+
+That is the case range extension of the GNU C compiler and not standard C or C++
+You can specify a range of consecutive values in a single case label, like this:
+case low ... high:
+It can be used for ranges of ASCII character codes like this:
+ case 'A' ... 'Z':
+You need to Write spaces around the ellipses … . For example, write this:
+// Correct  -   case 1 ... 5:
+// Wrong -    case 1...5:
+
+
+// C program to illustrate 
+// using range in switch case 
+#include <stdio.h> 
+int main() 
+{ 
+    int arr[] = { 1, 5, 15, 20 }; 
+  
+    for (int i = 0; i < 4; i++)  
+    { 
+        switch (arr[i])  
+        { 
+        case 1 ... 6: 
+            printf("%d in range 1 to 6\n", arr[i]); 
+            break; 
+        case 19 ... 20: 
+            printf("%d in range 19 to 20\n", arr[i]); 
+            break; 
+        default: 
+            printf("%d not in range\n", arr[i]); 
+            break; 
+        } 
+    } 
+    return 0; 
+} 
+Output:
+1 in range 1 to 6
+5 in range 1 to 6
+15 not in range
+20 in range 19 to 20
+Exercise : You can try above program for char array by modifying char array and case statement.
+
+Error conditions:
+low > high : The compiler gives with an error message.
+Overlapping case values : If the value of a case label is within a case range that has already been used in the switch statement, the compiler gives an error message.
+
+

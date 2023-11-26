@@ -1,0 +1,26 @@
+
+
+What are applications of union?
+Unions can be useful in many situations where we want to use the same memory for two or more members. For example, suppose we want to implement a binary tree data structure where each leaf node has a double data value, while each internal node has pointers to two children, but no data. If we declare this as:
+
+struct NODE { 
+    struct NODE* left; 
+    struct NODE* right; 
+    double data; 
+}; 
+then every node requires 16 bytes, with half the bytes wasted for each type of node. On the other hand, if we declare a node as following, then we can save space.
+
+struct NODE { 
+    bool is_leaf; 
+    union { 
+        struct
+        { 
+            struct NODE* left; 
+            struct NODE* right; 
+        } internal; 
+        double data; 
+    } info; 
+}; 
+
+
+
